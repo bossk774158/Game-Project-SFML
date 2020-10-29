@@ -6,26 +6,47 @@
 
 //Constructors/Destructors
 
+void Game::initVariables()
+{
+	this->window = NULL;
+	this->fullscreen = false;
+	this->dt = 0.f;
+}
+
 void Game::initWindow()
 {
 
 	std::ifstream ifs("Config/window.ini");
+	this->videoModes = sf::VideoMode::getFullscreenModes();
 
 	std::string title = "None";
-	sf::VideoMode window_bounds(800, 600);
+	sf::VideoMode window_bounds = sf::VideoMode::getDesktopMode();
+	bool fullscreen = false;
 	unsigned framerate_limit = 120;
 	bool vertical_sync_enabled = false;
+	unsigned antialiazing_level = 0;
+
+
 	if (ifs.is_open())
 	{
 		std::getline(ifs, title);
 		ifs >> window_bounds.width >> window_bounds.height;
+		ifs >> fullscreen; 
 		ifs >> framerate_limit;
 		ifs >> vertical_sync_enabled;
+		ifs >> antialiazing_level;
 	}
 
 	ifs.close();
 	
-	this->window = new sf::RenderWindow(window_bounds, title);
+	this->fullscreen = fullscreen;
+	this->windowSettings.antialiasingLevel = antialiazing_level;
+
+	if(this->fullscreen)
+		this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Default, windowSettings);
+	else
+		this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Titlebar | sf::Style::Close , windowSettings);
+
 	this->window->setFramerateLimit(framerate_limit);
 	this->window->setVerticalSyncEnabled(vertical_sync_enabled);
 }
