@@ -3,12 +3,13 @@
 void Player::initVariables()
 {
 	this->sprite.setScale(10.f,10.f);
+	this->attacking = false;
 	
 }
 
 void Player::initComponents()
 {
-	this->createMovementComponent(400.f,15.f,5.f);
+
 }
 
 
@@ -20,12 +21,12 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 	this->setPosition(x, y);
 
 	this->createHitboxComponent(this->sprite, 0.f, 0.f, 280.f, 315.f);
-	this->createMovementComponent(300.f, 15.f, 5.f);
+	this->createMovementComponent(400.f, 15.f, 5.f);
 	this->createAnimationComponent(texture_sheet);
 
 	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 0, 3, 0, 60, 36);
 	this->animationComponent->addAnimation("WALK", 1.1f, 0, 1, 5, 1, 40, 36);
-	this->animationComponent->addAnimation("ATTACK", 1.5f, 0, 2, 6, 2, 34, 36);
+	this->animationComponent->addAnimation("ATTACK", 1.f, 0, 2, 6, 2, 34, 36);
 }
 
 Player::~Player()
@@ -36,6 +37,17 @@ Player::~Player()
 void Player::update(const float& dt)
 {
 	this->movementComponent->update(dt);
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		this->attacking = true;
+	}
+
+	if (this->attacking)
+	{
+		if(this->animationComponent->play("ATTACK", dt, true))
+			this->attacking = false;
+	}
 
 	if (this->movementComponent->getState(IDLE))
 	{
