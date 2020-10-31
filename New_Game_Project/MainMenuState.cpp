@@ -53,29 +53,29 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new Button(880, 250, 150, 50,
+	this->buttons["GAME_STATE"] = new gui::Button(880.f, 250.f, 150.f, 50.f,
 		&this->font, "New Game", 50,
 		sf::Color(20, 20, 20, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150,0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["SETTING_STATE"] = new Button(880, 350, 150, 50,
+	this->buttons["SETTING_STATE"] = new gui::Button(880.f, 350.f, 150.f, 50.f,
 		&this->font, "Settings", 50,
 		sf::Color(20, 20, 20, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["EDITOR_STATE"] = new Button(880, 450, 150, 50,
+	this->buttons["EDITOR_STATE"] = new gui::Button(880.f, 450.f, 150.f, 50.f,
 		&this->font, "Editor", 50,
 		sf::Color(20, 20, 20, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["EXIT_STATE"] = new Button(880, 550, 150, 50,
+	this->buttons["EXIT_STATE"] = new gui::Button(880.f, 550.f, 150.f, 50.f,
 		&this->font, "Quit", 50,
 		sf::Color(20, 20, 20, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }
 
-MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	:State(window, supportedKeys, states)
+MainMenuState::MainMenuState(sf::RenderWindow* window,GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+	:State(window, supportedKeys, states), gfxSettings(gfxSettings)
 {
 	this->initVariables();
 	this->initBackground();
@@ -114,7 +114,7 @@ void MainMenuState::updateButtons()
 	//Settings
 	if (this->buttons["SETTING_STATE"]->isPressed())
 	{
-		this->states->push(new GameState(this->window, this->supportedKeys, this->states));
+		this->states->push(new SettingsState(this->window, this->gfxSettings, this->supportedKeys, this->states));
 	}
 
 	//Editor
