@@ -26,8 +26,13 @@ public:
 	void createAnimationComponent(sf::Texture& texture_sheet);
 
 	//Functions
-	virtual void setPosition(const float x, const float y);
 	virtual void move(const float dir_x, const float dir_y, const float& dt);
+
+	//Modifier
+	virtual void setPosition(const float x, const float y);
+
+	//Accessors
+	virtual const sf::Vector2f& getPosition() const;
 	
 	virtual void update(const float& dt);
 	virtual void render(sf::RenderTarget& target);
