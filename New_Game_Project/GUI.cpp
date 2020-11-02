@@ -23,7 +23,7 @@ gui::Button::Button(float x, float y, float width, float height,
 	this->text.setCharacterSize(character_size);
 	this->text.setPosition(
 		this->shape.getPosition().x + (this->shape.getGlobalBounds().width / 2.f) - this->text.getGlobalBounds().width / 2.f,
-		this->shape.getPosition().y + (this->shape.getGlobalBounds().height / 2.f) - this->text.getGlobalBounds().height / 2.f
+		this->shape.getPosition().y
 	);
 	this->textIdleColor = text_idle_color;
 	this->textHoverColor = text_hover_color;
@@ -239,7 +239,7 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
 	this->gridSize = gridSize;
 	this->active = false; 
 	this->hidden = false;
-	float offset = 60.f;
+	float offset = 100.f;
 
 	this->bounds.setSize(sf::Vector2f(width, height));
 	this->bounds.setPosition(x + offset, y);
@@ -270,9 +270,9 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
 
 	this->hide_btn = new gui::Button(
 		y, x, 50.f, 50.f,
-		&font, text, 30,
-		sf::Color(20, 20, 20, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));;
+		&font, text, 16,
+		sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 250), sf::Color(255, 255, 255, 50),
+		sf::Color(70, 70, 70, 2000), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50));;
 }
 
 gui::TextureSelector::~TextureSelector()

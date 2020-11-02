@@ -5,5 +5,6 @@ int main()
 
 	game.run();
 
+	//system("pause");
 	return 0;
 }
