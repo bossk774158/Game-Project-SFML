@@ -2,7 +2,7 @@
 //Initializer functions
 void Player::initVariables()
 {
-	this->sprite.setScale(10.f,10.f);
+	this->sprite.setScale(3.f,3.f);
 	this->attacking = false;
 	
 }
@@ -20,7 +20,7 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 
 	this->setPosition(x, y);
 
-	this->createHitboxComponent(this->sprite, 0.f, 0.f, 280.f, 315.f);
+	this->createHitboxComponent(this->sprite, 0.f, 0.f, 100.f, 123.f);
 	this->createMovementComponent(400.f, 15.f, 5.f);
 	this->createAnimationComponent(texture_sheet);
 
@@ -56,13 +56,13 @@ void Player::update(const float& dt)
 	else if (this->movementComponent->getState(MOVING_RIGHT))
 	{
 		this->sprite.setOrigin(0.f, 0.f);
-		this->sprite.setScale(10.f, 10.f);
+		this->sprite.setScale(3.f, 3.f);
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x,this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
 		this->sprite.setOrigin(23.f, 0.f);
-		this->sprite.setScale(-10.f, 10.f);
+		this->sprite.setScale(-3.f, 3.f);
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_UP))

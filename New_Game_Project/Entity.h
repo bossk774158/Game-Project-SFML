@@ -37,7 +37,7 @@ public:
 	//Accessors
 	virtual const sf::Vector2f& getPosition() const;
 	virtual const sf::Vector2u getGridPosition(const unsigned gridSizeU) const;
-	virtual const sf::FloatRect getGloabalBounds() const;
+	virtual const sf::FloatRect getGlobalBounds() const;
 	
 	virtual void update(const float& dt) = 0;
 	virtual void render(sf::RenderTarget& target) = 0;

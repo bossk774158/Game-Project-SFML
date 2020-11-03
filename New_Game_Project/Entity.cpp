@@ -62,7 +62,7 @@ const sf::Vector2u Entity::getGridPosition(const unsigned gridSizeU) const
 
 }
 
-const sf::FloatRect Entity::getGloabalBounds() const
+const sf::FloatRect Entity::getGlobalBounds() const
 {
 	if (this->hitboxComponent)
 		return this->hitboxComponent->getGlobalBounds();

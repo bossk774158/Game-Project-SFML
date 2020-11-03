@@ -19,6 +19,7 @@ HitboxComponent::HitboxComponent(sf::Sprite& sprite, float offset_x, float offse
 
 HitboxComponent::~HitboxComponent()
 {
+
 }
 
 const sf::Vector2f& HitboxComponent::getPosition() const
