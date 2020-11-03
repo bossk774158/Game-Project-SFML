@@ -73,7 +73,7 @@ void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, cons
 		y < this->maxSizeWorldGrid.y && y >= 0 &&
 		z <= layers && z >= 0)
 	{
-		if (this->map[x][y][z] == NULL) 
+		if (this->map[x][y][z] == NULL)
 		{
 			this->map[x][y][z] = new Tile(x, y, this->gridSizeF, this->tileSheet, texture_rect);
 			std::cout << "DEBUG: ADD TILE" << "\n";
@@ -109,17 +109,17 @@ void TileMap::saveToFile(const std::string file_name)
 			<< this->layers << "\n"
 			<< this->textureFile << "\n";
 
-			for (size_t x = 0; x < this->maxSizeWorldGrid.x; x++)
+		for (size_t x = 0; x < this->maxSizeWorldGrid.x; x++)
+		{
+			for (size_t y = 0; y < maxSizeWorldGrid.y; y++)
 			{
-				for (size_t y = 0; y < maxSizeWorldGrid.y; y++)
+				for (size_t z = 0; z < layers; z++)
 				{
-					for (size_t z = 0; z < layers; z++)
-					{
-						if(this->map[x][y][z]) 
-						out_file << x << " " << y << " " << z << " " << this->map[x][y][z]->getAsSting() << " "; 
-					}
+					if (this->map[x][y][z])
+						out_file << x << " " << y << " " << z << " " << this->map[x][y][z]->getAsSting() << " ";
 				}
 			}
+		}
 	}
 	else
 	{
@@ -204,12 +204,12 @@ void TileMap::updateCollision(Entity* entity)
 	//WORLD BOUNDS
 	if (entity->getPosition().x < 0.f)
 		entity->setPosition(0.f, entity->getPosition().y);
-	else if (entity->getPosition().x > this->maxSizeWorldF.x)
-		entity->setPosition(this->maxSizeWorldF.x, entity->getPosition().y);
+	else if (entity->getPosition().x + entity->getGloabalBounds().width > this->maxSizeWorldF.x)
+		entity->setPosition(this->maxSizeWorldF.x - entity->getGloabalBounds().width, entity->getPosition().y);
 	if (entity->getPosition().y < 0.f)
-		entity->setPosition(entity->getPosition().y, 0.f);
-	else if (entity->getPosition().y > this->maxSizeWorldF.y)
-		entity->setPosition(entity->getPosition().x, this->maxSizeWorldF.y);
+		entity->setPosition(entity->getPosition().x, 0.f);
+	else if (entity->getPosition().y + entity->getGloabalBounds().height > this->maxSizeWorldF.y)
+		entity->setPosition(entity->getPosition().x, this->maxSizeWorldF.y - entity->getGloabalBounds().height);
 
 	//TILES
 }
@@ -226,7 +226,7 @@ void TileMap::render(sf::RenderTarget& target, Entity* entity)
 	{
 		for (auto& y : x)
 		{
-			for (auto *z : y)
+			for (auto* z : y)
 			{
 				if (z != NULL)
 				{

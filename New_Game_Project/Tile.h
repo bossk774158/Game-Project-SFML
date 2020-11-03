@@ -5,7 +5,7 @@
 #include<fstream>
 #include<sstream>
 
-#include <SFML/Graphics.hpp>
+#include<SFML/Graphics.hpp>
 #include<SFML/Window.hpp>
 #include<SFML/Audio.hpp>
 #include<SFML/Network.hpp>
@@ -33,6 +33,7 @@ public:
 	//Functions
 	const bool& getCollision() const;
 	const sf::Vector2f& getPosition() const;
+	const bool intersects(const sf::FloatRect bounds) const;
 	const std::string getAsSting() const;
 
 	void update();
