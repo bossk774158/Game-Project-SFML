@@ -84,6 +84,9 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="AttributeComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="TileMap.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="AttributeComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
