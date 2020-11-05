@@ -57,13 +57,15 @@ void SettingsState::initKeybinds()
 void SettingsState::initGui()
 {
 	this->buttons["BACK"] = new gui::Button(
-		1600.f, 950.f, 150.f, 50.f,
+		this->p2pX(83.33f), this->p2pY(87.96f),
+		this->p2pX(7.81f), this->p2pY(4.63f),
 		&this->font, "Back", 30,
 		sf::Color(20, 20, 20, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 	this->buttons["APPLY"] = new gui::Button(
-		1400.f, 950.f, 150.f, 50.f,
+		this->p2pX(72.91f), this->p2pY(87.96f),
+		this->p2pX(7.81f), this->p2pY(4.63f),
 		&this->font, "Apply", 30,
 		sf::Color(20, 20, 20, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
