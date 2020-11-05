@@ -26,7 +26,7 @@ void PlayerGui::initEXPBar()
 	float width = 300.f;
 	float height = 30.f;
 	float x = 20.f;
-	float y = 90.f;
+	float y = 70.f;
 
 	this->expBarMaxWidth = width;
 
@@ -61,7 +61,7 @@ void PlayerGui::initHPBar()
 	this->hpBarInner.setPosition(this->hpBarBack.getPosition());
 
 	this->hpBarText.setFont(this->font);
-	this->expBarText.setCharacterSize(16);
+	this->hpBarText.setCharacterSize(18);
 	this->hpBarText.setPosition(this->hpBarInner.getPosition().x + 10.f, this->hpBarInner.getPosition().y + 5.f);
 }
 

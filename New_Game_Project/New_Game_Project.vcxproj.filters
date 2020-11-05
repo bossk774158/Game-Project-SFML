@@ -31,6 +31,12 @@
     <Filter Include="Map">
       <UniqueIdentifier>{428137df-2a03-4858-8480-2812a3abbe05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{154b28ac-407c-4225-8260-c332c7199626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item\RangedWeapon">
+      <UniqueIdentifier>{d097e48f-65fd-4727-85b4-deb3e0387347}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -90,6 +96,15 @@
     <ClCompile Include="PlayerGui.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="RangedWeapon.cpp">
+      <Filter>Item\RangedWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Bow.cpp">
+      <Filter>Item\RangedWeapon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h">
@@ -145,6 +160,15 @@
     </ClInclude>
     <ClInclude Include="PlayerGui.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="RangedWeapon.h">
+      <Filter>Item\RangedWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Bow.h">
+      <Filter>Item\RangedWeapon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

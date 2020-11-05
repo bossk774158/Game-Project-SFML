@@ -28,6 +28,8 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 0, 3, 0, 60, 36);
 	this->animationComponent->addAnimation("WALK", 1.1f, 0, 1, 5, 1, 40, 36);
 	this->animationComponent->addAnimation("ATTACK", 1.f, 0, 2, 6, 2, 34, 36);
+
+
 }
 
 Player::~Player()
@@ -80,7 +82,7 @@ void Player::update(const float& dt)
 
 	if (this->attacking)
 	{
-		if(this->animationComponent->play("ATTACK", dt, true))
+		if (this->animationComponent->play("ATTACK", dt, true))
 			this->attacking = false;
 	}
 
@@ -92,7 +94,7 @@ void Player::update(const float& dt)
 	{
 		this->sprite.setOrigin(0.f, 0.f);
 		this->sprite.setScale(3.f, 3.f);
-		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x,this->movementComponent->getMaxVelocity());
+		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
@@ -108,14 +110,15 @@ void Player::update(const float& dt)
 	{
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
-		
 
 	this->hitboxComponent->update();
+	this->bow.update();
 }
 
 void Player::render(sf::RenderTarget& target)
 {
 	target.draw(this->sprite);
+	this->bow.render(target);
 
 	this->hitboxComponent->render(target);
 }

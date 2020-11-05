@@ -9,7 +9,7 @@ class State;
 class StateData
 {
 public:
-	StateData() {};
+	StateData(){};
 
 	//Variables
 	float gridSize;

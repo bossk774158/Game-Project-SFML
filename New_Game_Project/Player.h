@@ -1,11 +1,13 @@
 #pragma once
 #include "Entity.h"
+#include "Bow.h"
 class Player :
     public Entity
 {
 private:
     //Varaibles
     bool attacking;
+    Bow bow;
 
     //Initializer functions
     void initVariables();
