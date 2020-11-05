@@ -11,7 +11,7 @@
 #include<SFML/Network.hpp>
 #include<SFML/System.hpp>
 
-enum TileType {DEFAULT = 0, DAMAGING};
+enum TileType {DEFAULT = 0, DAMAGING, TOPTILE};
 
 class Tile
 {
@@ -29,6 +29,9 @@ public:
 	Tile(int grid_x, int grid_y, float gridSizeF, const sf::Texture& texture, const sf::IntRect& texture_rect,
 		bool collision = false, short type = TileType::DEFAULT);
 	virtual ~Tile();
+
+	//Accessors
+	const short& getType() const;
 
 	//Functions
 	const bool& getCollision() const;
