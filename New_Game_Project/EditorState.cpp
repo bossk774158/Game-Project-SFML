@@ -5,19 +5,20 @@ void EditorState::initVariables()
 	this->collision = false;
 	this->type = TileType::DEFAULT;
 	this->cameraSpeed = 50.f;
+	this->layer = 0;
 }
 
 void EditorState::initView()
 {
 	this->view.setSize(
 		sf::Vector2f(
-			this->stateData->gfxSettings->resolution.width,
-			this->stateData->gfxSettings->resolution.height
+			static_cast<float>(this->stateData->gfxSettings->resolution.width),
+			static_cast<float>(this->stateData->gfxSettings->resolution.height)
 		)
 	);
 	this->view.setCenter(
-		this->stateData->gfxSettings->resolution.width / 2.f,
-		this->stateData->gfxSettings->resolution.height / 2.f
+		static_cast<float>(this->stateData->gfxSettings->resolution.width) / 2.f,
+		static_cast<float>(this->stateData->gfxSettings->resolution.height) / 2.f
 	);
 }
 
@@ -242,7 +243,8 @@ void EditorState::updateGui(const float& dt)
 		"\n" << this->mousePosGrid.x << " " << this->mousePosGrid.y <<
 		"\n" << this->textureRect.left << " " << this->textureRect.top <<
 		"\n" << "Collision: " << this->collision << 
-		"\n" << "Type: " << this->type;
+		"\n" << "Type: " << this->type <<
+		"\n" << "Tile:" << this->tileMap->getLayerSize(this->mousePosGrid.x, this->mousePosGrid.y ,this->layer);
 	this->cursorText.setString(ss.str());
 }
 
@@ -254,8 +256,9 @@ void EditorState::updatePauseMenuButtons()
 	if (this->pmenu->isButtonPressed("SAVE"))
 		this->tileMap->saveToFile("text.slmp");
 
-	if (this->pmenu->isButtonPressed("LOAD"))
+	if (this->pmenu->isButtonPressed("LOAD")) {
 		this->tileMap->loadFromFile("text.slmp");
+	}
 }
 
 void EditorState::update(const float& dt)
@@ -308,7 +311,7 @@ void EditorState::render(sf::RenderTarget* target)
 		target = this->window;
 
 	target->setView(this->view);
-	this->tileMap->render(*target);
+	this->tileMap->render(*target,this->mousePosGrid);
 
 	target->setView(this->window->getDefaultView());
 	this->renderButtons(*target);

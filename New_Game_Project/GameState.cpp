@@ -16,15 +16,15 @@ void GameState::initView()
 {
 	this->view.setSize(
 		sf::Vector2f(
-			this->stateData->gfxSettings->resolution.width,
-			this->stateData->gfxSettings->resolution.height
+			static_cast<float>(this->stateData->gfxSettings->resolution.width),
+			static_cast<float>(this->stateData->gfxSettings->resolution.height)
 		)
 	);
 
 	this->view.setCenter(
 		sf::Vector2f(
-			this->stateData->gfxSettings->resolution.width / 2.f,
-			this->stateData->gfxSettings->resolution.height / 2.f
+			static_cast<float>(this->stateData->gfxSettings->resolution.width) / 2.f,
+			static_cast<float>(this->stateData->gfxSettings->resolution.height) / 2.f
 		)
 	);
 }
@@ -77,6 +77,11 @@ void GameState::initPlayers()
 	this->player = new Player(0, 0, this->textures["PLAYER_IDLE"]);
 }
 
+void GameState::initPlayerGui()
+{
+	this->playerGui = new PlayerGui(this->player);
+}
+
 void GameState::initTileMap()
 {
 	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "Resources/Images/Tiles/grass2.png");
@@ -92,13 +97,16 @@ GameState::GameState(StateData* state_data)
 	this->initFonts();
 	this->initTextures();
 	this->initPauseMenu();
+
 	this->initPlayers(); 
+	this->initPlayerGui();
 	this->initTileMap();
 }
 GameState::~GameState()
 {
 	delete this->pmenu;
 	delete this->player;
+	delete this->playerGui;
 	delete this->tileMap;
 }
 
@@ -126,10 +134,24 @@ void GameState::updatePlayerInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
 		this->player->move(1.f, 0.f, dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
+	{
 		this->player->move(0.f, -1.f, dt);
+		if (this->getKeytime())
+			this->player->gainHP(1);
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
+	{
 		this->player->move(0.f, 1.f, dt);
+		if (this->getKeytime())
+			this->player->loseHP(1);
+	}
+	
 		
+}
+
+void GameState::updatePlayerGui(const float& dt)
+{
+	this->playerGui->update(dt);
 }
 
 void GameState::updatePauseMenuButtons()
@@ -140,8 +162,8 @@ void GameState::updatePauseMenuButtons()
 
 void GameState::updateTileMap(const float& dt)
 {
+	this->tileMap->updateCollision(this->player, dt);
 	this->tileMap->update();
-	this->tileMap->updateCollision(this->player,dt);
 }
 
 void GameState::update(const float& dt)
@@ -159,6 +181,8 @@ void GameState::update(const float& dt)
 		this->updateTileMap(dt);
 
 		this->player->update(dt);
+
+		this->playerGui->update(dt);
 	}
 	else //Pause
 	{
@@ -175,9 +199,13 @@ void GameState::render(sf::RenderTarget* target)
 	this->renderTexture.clear();
 
 	this->renderTexture.setView(this->view);
-	this->tileMap->render(this->renderTexture, this->player);
+	this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
 
 	this->player->render(this->renderTexture);
+
+	//Render Gui
+	this->renderTexture.setView(this->renderTexture.getDefaultView());
+	this->playerGui->render(this->renderTexture);
 
 	if (this->paused) //Pause menu render
 	{
@@ -187,6 +215,6 @@ void GameState::render(sf::RenderTarget* target)
 
 	//FINAL RENDER
 	this->renderTexture.display();
-	this->renderSprite.setTexture(this->renderTexture.getTexture());
+	//this->renderSprite.setTexture(this->renderTexture.getTexture());
 	target->draw(this->renderSprite);
 }
