@@ -61,7 +61,7 @@ TileMap::TileMap(float gridSize, int width, int height, std::string texture_file
 	}
 
 	this->collisionBox.setSize(sf::Vector2f(gridSize, gridSize));
-	this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
+	this->collisionBox.setFillColor(sf::Color(250, 0, 0, 50));
 }
 
 TileMap::~TileMap()

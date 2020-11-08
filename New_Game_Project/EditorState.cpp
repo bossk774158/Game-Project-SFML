@@ -6,6 +6,7 @@ void EditorState::initVariables()
 	this->type = TileType::DEFAULT;
 	this->cameraSpeed = 50.f;
 	this->layer = 0;
+	this->tileAddlock = false;
 }
 
 void EditorState::initView()
@@ -85,7 +86,7 @@ void EditorState::initButtons()
 
 void EditorState::initGui()
 {
-	this->sidebar.setSize(sf::Vector2f(80.f, static_cast<float>(this->stateData->gfxSettings->resolution.height)));
+	this->sidebar.setSize(sf::Vector2f(60.f, static_cast<float>(this->stateData->gfxSettings->resolution.height)));
 	this->sidebar.setFillColor(sf::Color(50, 50, 50, 100));
 	this->sidebar.setOutlineColor(sf::Color(200, 200, 200, 150));
 	this->sidebar.setOutlineThickness(1.f);
@@ -100,7 +101,7 @@ void EditorState::initGui()
 	this->selectorRect.setTextureRect(this->textureRect);
 
 	this->textureSelector = new gui::TextureSelector(
-		20.f, 20.f, 500.f, 500.f,
+		20.f, 20.f, 1792.f, 640.f,
 		this->stateData->gridSize, this->tileMap->getTileSheet(),
 		this->font, "TS"
 	);
@@ -108,7 +109,7 @@ void EditorState::initGui()
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/Images/Tiles/grass2.png");
+	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/Images/Tiles/realTileSheet.png");
 }
 
 EditorState::EditorState(StateData* state_data)
@@ -158,19 +159,19 @@ void EditorState::updateEditorInput(const float& dt)
 	//Move view
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_UP"))))
 	{
-		this->view.move(0, -this->cameraSpeed * dt);
+		this->view.move(0, -this->cameraSpeed);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_DOWN"))))
 	{
-		this->view.move(0, this->cameraSpeed * dt);
+		this->view.move(0, this->cameraSpeed);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_LEFT"))))
 	{
-		this->view.move(-this->cameraSpeed * dt, 0);
+		this->view.move(-this->cameraSpeed, 0);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_RIGHT"))))
 	{
-		this->view.move(this->cameraSpeed * dt, 0);
+		this->view.move(this->cameraSpeed, 0);
 	}
 	
 	//Add a tile
@@ -216,6 +217,15 @@ void EditorState::updateEditorInput(const float& dt)
 		if(this->type > 0)
 		--this->type;
 	}
+
+	//Set lock on/off
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TOGGLE_TILE_LOCK"))) && this->getKeytime())
+	{
+		if (this->tileAddlock)
+			this->tileAddlock = false;
+		else
+			this->tileAddlock = true;
+	}
 }
 
 void EditorState::updateButtons()
@@ -242,9 +252,12 @@ void EditorState::updateGui(const float& dt)
 	ss << this->mousePosView.x << " " << this->mousePosView.y <<
 		"\n" << this->mousePosGrid.x << " " << this->mousePosGrid.y <<
 		"\n" << this->textureRect.left << " " << this->textureRect.top <<
-		"\n" << "Collision: " << this->collision << 
+		"\n" << "Collision: " << this->collision <<
 		"\n" << "Type: " << this->type <<
-		"\n" << "Tile:" << this->tileMap->getLayerSize(this->mousePosGrid.x, this->mousePosGrid.y ,this->layer);
+		"\n" << "Tile:" << this->tileMap->getLayerSize(this->mousePosGrid.x, this->mousePosGrid.y, this->layer) <<
+		"\n" << "Tile lock: " << this->tileAddlock;
+
+
 	this->cursorText.setString(ss.str());
 }
 
