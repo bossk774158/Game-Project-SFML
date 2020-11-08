@@ -181,7 +181,18 @@ void EditorState::updateEditorInput(const float& dt)
 		{
 			if (!this->textureSelector->getActive())
 			{
-				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect, this->collision, this->type);
+				if (this->tileAddlock)
+				{
+					if (this->tileMap->tileEmpty(this->mousePosGrid.x, this->mousePosGrid.y, 0))
+					{
+						this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect, this->collision, this->type);
+					}
+				}
+				else
+				{
+					this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect, this->collision, this->type);
+				}
+				
 			}
 			else
 			{
