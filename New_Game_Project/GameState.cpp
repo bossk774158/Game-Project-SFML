@@ -102,8 +102,10 @@ GameState::GameState(StateData* state_data)
 	this->initPlayerGui();
 	this->initTileMap();
 
-	Bow bow;
-	Item* item = &bow;
+	this->testEnemy = new Enemy(200.f, 200.f, this->textures["PLAYER_IDLE"]);
+
+	//Bow bow;
+	//Item* item = &bow;
 }
 GameState::~GameState()
 {
@@ -111,6 +113,8 @@ GameState::~GameState()
 	delete this->player;
 	delete this->playerGui;
 	delete this->tileMap;
+
+	delete this->testEnemy;
 }
 
 void GameState::updateView(const float& dt)
@@ -165,8 +169,9 @@ void GameState::updatePauseMenuButtons()
 
 void GameState::updateTileMap(const float& dt)
 {
-	this->tileMap->updateCollision(this->player, dt);
 	this->tileMap->update();
+	this->tileMap->updateCollision(this->player, dt);
+	this->tileMap->updateCollision(this->testEnemy, dt);
 }
 
 void GameState::update(const float& dt)
@@ -186,6 +191,10 @@ void GameState::update(const float& dt)
 		this->player->update(dt);
 
 		this->playerGui->update(dt);
+
+		this->testEnemy->update(dt);
+
+		//this->testEnemy->move(-1.f, 0.f, dt);
 	}
 	else //Pause
 	{
@@ -202,10 +211,12 @@ void GameState::render(sf::RenderTarget* target)
 	this->renderTexture.clear();
 
 	this->renderTexture.setView(this->view);
+
 	this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
 
-	this->player->render(this->renderTexture);
+	this->testEnemy->render(this->renderTexture);
 
+	this->player->render(this->renderTexture);
 
 	//Render Gui
 	this->renderTexture.setView(this->renderTexture.getDefaultView());
