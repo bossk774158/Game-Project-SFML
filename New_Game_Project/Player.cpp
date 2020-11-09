@@ -12,18 +12,25 @@ void Player::initComponents()
 
 }
 
+void Player::initAnimation()
+{
+
+}
+
 
 //Constructors /Destructors 
 Player::Player(float x,float y,sf::Texture& texture_sheet)
 {
 	this->initVariables();
 
-	this->setPosition(x, y);
-
 	this->createHitboxComponent(this->sprite, 0.f, 0.f, 55.f, 70.f);
-	this->createMovementComponent(400.f, 1500.f, 500.f);
+	this->createMovementComponent(200.f, 1500.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
-	this->createAttributeComponent(0);
+	this->createAttributeComponent(1);
+	this->createSkillComponent();
+
+	this->setPosition(x, y);
+	this->initAnimation();
 
 	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 0, 3, 0, 60, 36);
 	this->animationComponent->addAnimation("WALK", 1.1f, 0, 1, 5, 1, 40, 36);

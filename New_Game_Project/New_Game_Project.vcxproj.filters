@@ -105,6 +105,9 @@
     <ClCompile Include="Bow.cpp">
       <Filter>Item\RangedWeapon</Filter>
     </ClCompile>
+    <ClCompile Include="SkillComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="Bow.h">
       <Filter>Item\RangedWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
