@@ -29,8 +29,6 @@ private:
     Player* player;
     PlayerGui* playerGui;
 
-    Enemy* testEnemy;
-
     TileMap* tileMap;
 
     //Functions

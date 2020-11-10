@@ -2,7 +2,7 @@
 
 void Enemy::initVariables()
 {
-
+	
 }
 
 void Enemy::initAnimation()
@@ -15,7 +15,8 @@ void Enemy::initAnimation()
 
 
 //Constructors /Destructors 
-Enemy::Enemy(float x, float y, sf::Texture& texture_sheet)
+Enemy::Enemy(EnemySpawner& enemy_spawner, float x, float y, sf::Texture& texture_sheet)
+	:enemySpawner(enemy_spawner)
 {
 	this->initVariables();
 

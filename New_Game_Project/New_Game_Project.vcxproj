@@ -155,6 +155,7 @@
     <ClCompile Include="AttributeComponent.cpp" />
     <ClCompile Include="Bow.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="EditorState.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="AttributeComponent.h" />
     <ClInclude Include="Bow.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="EditorState.h" />
     <ClInclude Include="Entity.h" />
