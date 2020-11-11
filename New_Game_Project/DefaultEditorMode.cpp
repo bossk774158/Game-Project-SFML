@@ -147,8 +147,8 @@ void DefaultEditorMode::updateGui(const float& dt)
 
 void DefaultEditorMode::update(const float& dt)
 {
-	//this->updateInput(dt);
-	//this->updateGui(dt);
+	this->updateInput(dt);
+	this->updateGui(dt);
 }
 
 void DefaultEditorMode::renderGui(sf::RenderTarget& target)
@@ -167,7 +167,7 @@ void DefaultEditorMode::renderGui(sf::RenderTarget& target)
 	target.draw(this->cursorText);
 }
 
-void DefaultEditorMode::render(sf::RenderTarget* target)
+void DefaultEditorMode::render(sf::RenderTarget& target)
 {
-	this->renderGui(*target);
+	this->renderGui(target);
 }

@@ -2,25 +2,27 @@
 
 void TileMap::clear()
 {
-	for (int x = 0; x < this->maxSizeWorldGrid.x; x++)
+	if (!this->map.empty())
 	{
-		for (int y = 0; y < maxSizeWorldGrid.y; y++)
+		for (int x = 0; x < this->map.size(); x++)
 		{
-			for (int z = 0; z < layers; z++)
+			for (int y = 0; y < this->map[x].size(); y++)
 			{
-				for (size_t k = 0; k < this->map[x][y][z].size() ; k++)
+				for (int z = 0; z < this->map[x][y].size(); z++)
 				{
-					delete this->map[x][y][z][k];
-					this->map[x][y][z][k] = NULL;
+					for (size_t k = 0; k < this->map[x][y][z].size(); k++)
+					{
+						delete this->map[x][y][z][k];
+						this->map[x][y][z][k] = NULL;
+					}
+					this->map[x][y][z].clear();
 				}
-				this->map[x][y][z].clear();
+				this->map[x][y].clear();
 			}
-			this->map[x][y].clear();
+			this->map[x].clear();
 		}
-		this->map[x].clear();
+		this->map.clear();
 	}
-	this->map.clear();
-
 	//std::cout << this->map.size() << "\n";
 }
 
