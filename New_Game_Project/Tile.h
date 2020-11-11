@@ -11,7 +11,7 @@
 #include<SFML/Network.hpp>
 #include<SFML/System.hpp>
 
-enum TileType {DEFAULT = 0, DAMAGING, TOPTILE};
+enum TileType {DEFAULT = 0, DAMAGING, TOPTILE, ENEMYSPAWNER};
 
 class Tile
 {
@@ -41,8 +41,8 @@ public:
 	const std::string getAsSting() const;
 
 	void setBound(bool bounded);
-	void update();
-	void render(sf::RenderTarget& target);
+	virtual void update();
+	virtual void render(sf::RenderTarget& target);
 
 };
 

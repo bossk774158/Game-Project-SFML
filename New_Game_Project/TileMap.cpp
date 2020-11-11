@@ -239,7 +239,7 @@ void TileMap::loadFromFile(const std::string file_name)
 	in_file.close();
 }
 
-void TileMap::updateCollision(Entity* entity, const float& dt)
+void TileMap::update(Entity* entity, const float& dt)
 {
 	//WORLD BOUNDS
 	if (entity->getPosition().x < 0.f)
@@ -263,32 +263,6 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 		entity->stopVelocityY();
 	}
 
-	////TILES
-	/*this->layer = 0;
-
-	this->fromX = entity->getGridPosition(this->gridSizeI).x - 1;
-	if (this->fromX < 0)
-		this->fromX = 0;
-	else if (this->fromX > this->maxSizeWorldGrid.x)
-		this->fromX = this->maxSizeWorldGrid.x;
-	this->toX = entity->getGridPosition(this->gridSizeI).x + 2;
-	if (this->toX < 0)
-		this->toX = 0;
-	else if (this->toX > this->maxSizeWorldGrid.x)
-		this->toX = this->maxSizeWorldGrid.x;
-	this->fromY = entity->getGridPosition(this->gridSizeI).y - 1;
-	if (this->fromY < 0)
-		this->fromY = 0;
-	else if (this->fromY > this->maxSizeWorldGrid.y)
-		this->fromY = this->maxSizeWorldGrid.y;
-	this->toY = entity->getGridPosition(this->gridSizeI).y + 2;
-	if (this->toY < 0)
-		this->toY = 0;
-	else if (this->toY > this->maxSizeWorldGrid.y)
-		this->toY = this->maxSizeWorldGrid.y;*/
-
-
-	//std::cout << fromX << " " << toX << " " << fromY << " " << toY << "\n";
 
 	for (int x = this->fromX; x < this->toX; x++)
 	{
@@ -296,6 +270,8 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 		{
 			for (size_t k = 0; k < this->map[x][y][this->layer].size(); k++)
 			{
+				this->map[x][y][this->layer][k]->update();
+
 				sf::FloatRect playerBounds = entity->getGlobalBounds();
 				sf::FloatRect wallBounds = this->map[x][y][this->layer][k]->getGlobalBounds();
 				sf::FloatRect nextPositionBounds = entity->getNextPositionBounds(dt);
@@ -359,36 +335,8 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 	}
 }
 
-void TileMap::update()
-{
-	
-}
-
-
 void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 {
-	/*this->layer = 0;
-
-		this->fromX = gridPosition.x - 4;
-		if (this->fromX < 0)
-			this->fromX = 0;
-		else if (this->fromX > this->maxSizeWorldGrid.x)
-			this->fromX = this->maxSizeWorldGrid.x;
-		this->toX = gridPosition.x + 6;
-		if (this->toX < 0)
-			this->toX = 0;
-		else if (this->toX > this->maxSizeWorldGrid.x)
-			this->toX = this->maxSizeWorldGrid.x;
-		this->fromY = gridPosition.y - 4;
-		if (this->fromY < 0)
-			this->fromY = 0;
-		else if (this->fromY > this->maxSizeWorldGrid.y)
-			this->fromY = this->maxSizeWorldGrid.y;
-		this->toY = gridPosition.y + 6;
-		if (this->toY < 0)
-			this->toY = 0;
-		else if (this->toY > this->maxSizeWorldGrid.y)
-			this->toY = this->maxSizeWorldGrid.y;*/
 
 		for (int x = this->fromX; x < this->toX; x++)
 		{

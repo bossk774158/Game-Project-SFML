@@ -72,7 +72,7 @@ void Tile::setBound(bool bounded)
 //Functions
 void Tile::update()
 {
-
+	
 }
 
 void Tile::render(sf::RenderTarget& target)
