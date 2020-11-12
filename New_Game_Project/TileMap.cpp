@@ -110,12 +110,25 @@ void TileMap::addTile(const int x, const int y, const int z, const sf::IntRect& 
 		y < this->maxSizeWorldGrid.y && y >= 0 &&
 		z <= layers && z >= 0)
 	{
-			this->map[x][y][z].push_back(new Tile(x, y, this->gridSizeF, this->tileSheet, texture_rect,collision,type));
-			std::cout << "DEBUG: ADD TILE" << "\n";
+			this->map[x][y][z].push_back(new RegularTile(type, x, y, this->gridSizeF, this->tileSheet, texture_rect,collision));
+
+			//std::cout << "DEBUG: ADD TILE" << "\n";
 	}
 }
 
-void TileMap::removeTile(const int x, const int y, const int z)
+void TileMap::addTile(const int x, const int y, const int z, const sf::IntRect& texture_rect,
+	const int enemy_type, const int enemy_am,const int enemy_tts,const int enemy_md)
+{
+	if (x < this->maxSizeWorldGrid.x && x >= 0 &&
+		y < this->maxSizeWorldGrid.y && y >= 0 &&
+		z <= layers && z >= 0)
+	{
+			this->map[x][y][z].push_back(new EnemySpawnerTile(x, y, this->gridSizeF, this->tileSheet, texture_rect,
+				enemy_type, enemy_am, enemy_tts, enemy_md));
+	}
+}
+
+void TileMap::removeTile(const int x, const int y, const int z, const int type)
 {
 	if (x < this->maxSizeWorldGrid.x && x >= 0 &&
 		y < this->maxSizeWorldGrid.y && y >= 0 &&
@@ -123,9 +136,21 @@ void TileMap::removeTile(const int x, const int y, const int z)
 	{
 		if (!this->map[x][y][z].empty())
 		{
-			delete this->map[x][y][z][this->map[x][y][z].size()-1];
-			this->map[x][y][z].pop_back();
-			std::cout << "DEBUG: REMOVED TILE" << "\n";
+			if (type >= 0)
+			{
+				if (this->map[x][y][z].back()->getType() == type)
+				{
+					delete this->map[x][y][z][this->map[x][y][z].size() - 1];
+					this->map[x][y][z].pop_back();
+					//std::cout << "DEBUG: REMOVED TILE" << "\n";
+				}
+			}
+			else
+			{
+				delete this->map[x][y][z][this->map[x][y][z].size() - 1];
+				this->map[x][y][z].pop_back();
+				//std::cout << "DEBUG: REMOVED TILE" << "\n";
+			}
 		}
 	}
 }
@@ -221,16 +246,45 @@ void TileMap::loadFromFile(const std::string file_name)
 			std::cout << "EROOR::TILEMAP::FAILED TO LOAD TEXTURESHEET::FILENAME" << texture_file << "\n";
 		}
 		//Load all tiles
-		while (in_file >> x >> y >> z >> trX >> trY >> collision >> type)
+		while (in_file >> x >> y >> z >> type)
 		{
-			this->map[x][y][z].push_back(
-				new Tile(
-				x, y,
-				this->gridSizeF,
-				this->tileSheet,
-				sf::IntRect(trX, trY, this->gridSizeI, this->gridSizeI),
-				collision,
-				type));
+			if (type == TileType::ENEMYSPAWNER)
+			{
+				int enemy_type = 0;
+				int enemy_am = 0;
+				int enemy_tts = 0;
+				int enemy_md = 0;
+
+				in_file >> trX >> trY >> enemy_type >> enemy_am >> enemy_tts >> enemy_md;
+
+				this->map[x][y][z].push_back(
+				new EnemySpawnerTile(
+					x, y,
+					this->gridSizeF,
+					this->tileSheet,
+					sf::IntRect(trX, trY, this->gridSizeI, this->gridSizeI),
+					enemy_type,
+					enemy_am,
+					enemy_tts,
+					enemy_md
+					)
+				);
+			}
+			else
+			{
+				in_file >> trX >> trY >> collision;
+
+				this->map[x][y][z].push_back(
+					new RegularTile(
+						type,
+						x, y,
+						this->gridSizeF,
+						this->tileSheet,
+						sf::IntRect(trX, trY, this->gridSizeI, this->gridSizeI),
+						collision
+					)
+				);
+			}
 		}
 	}
 	else
@@ -239,6 +293,11 @@ void TileMap::loadFromFile(const std::string file_name)
 	}
 
 	in_file.close();
+}
+
+const bool TileMap::checkType(const int x, const int y, const int z, const int type) const
+{
+	return this->map[x][y][this->layer].back()->getType() == type;
 }
 
 void TileMap::update(Entity* entity, const float& dt)
@@ -361,6 +420,11 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 							target.draw(this->collisionBox);
 						}
 					}
+					if (this->map[x][y][this->layer][k]->getType() == TileType::ENEMYSPAWNER)
+					{
+						this->collisionBox.setPosition(this->map[x][y][this->layer][k]->getPosition());
+						target.draw(this->collisionBox);
+					}
 				}
 			}
 		}
@@ -368,7 +432,7 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 
 void TileMap::renderDeffered(sf::RenderTarget& target)
 {
-	while (this->deferredRenderStack.empty())
+	while (!this->deferredRenderStack.empty())
 	{
 		deferredRenderStack.top()->render(target);
 		deferredRenderStack.pop();

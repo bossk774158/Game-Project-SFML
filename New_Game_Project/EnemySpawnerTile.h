@@ -18,7 +18,7 @@
 
 class Tile;
 
-class EnemySpawner
+class EnemySpawnerTile
 	:public Tile
 {
 private:
@@ -28,9 +28,11 @@ private:
 	float enemyMaxDistance;
 
 public:
-	EnemySpawner(int grid_x, int grid_y, float gridSizeF, const sf::Texture& texture, const sf::IntRect& texture_rect,
-		float gird_size, int enemy_type, int enemy_amount, int enemy_time_to_spawn, float enemy_max_distance);
-	virtual ~EnemySpawner();
+	EnemySpawnerTile(int grid_x, int grid_y, float gridSizeF, const sf::Texture& texture, const sf::IntRect& texture_rect,
+		int enemy_type, int enemy_amount, int enemy_time_to_spawn, float enemy_max_distance);
+	virtual ~EnemySpawnerTile();
+
+	virtual const std::string getAsSting() const;
 
 	void update();
 	void render(sf::RenderTarget& target);

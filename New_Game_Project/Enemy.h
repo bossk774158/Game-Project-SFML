@@ -1,28 +1,28 @@
 #pragma once
 #include "Entity.h"
-#include "EnemySpawner.h"
+#include "EnemySpawnerTile.h"
 
 class Entity;
-class EnemySpawner;
+class EnemySpawnerTile;
 
 class Enemy :
     public Entity
 {
 private:
     //Variables
-    EnemySpawner& enemySpawner;
+    //EnemySpawnerTile& enemySpawner;
 
     //Initializer functions
-    void initVariables();
-    void initAnimation();
+    virtual void initVariables() = 0;
+    virtual void initAnimation() = 0;
 
 public:
-    Enemy(EnemySpawner& enemy_spawner, float x, float y, sf::Texture& texture_sheet);
+    Enemy();
     virtual ~Enemy();
 
-    void updateAnimation(const float& dt);
+    virtual void updateAnimation(const float& dt) = 0;
 
-    void update(const float& dt);
-    void render(sf::RenderTarget& target);
+    virtual void update(const float& dt) = 0;
+    virtual void render(sf::RenderTarget& target) = 0;
 };
 

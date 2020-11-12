@@ -18,6 +18,7 @@ public:
     sf::View* view;
 
     sf::Font* font;
+    sf::Font* font_number;
 
     float* keytime;
     float* keytimeMax;

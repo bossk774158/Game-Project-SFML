@@ -63,6 +63,11 @@ void GameState::initTextures()
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_IDLE_TEXTURE";
 	}
+
+	if (!this->textures["MUMMY_IDLE"].loadFromFile("Resources/Images/Sprites/Enemies/enemy_mummy.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MUMMY_IDLE_TEXTURE";
+	}
 }
 
 void GameState::initPauseMenu()
@@ -102,6 +107,8 @@ GameState::GameState(StateData* state_data)
 	this->initPlayerGui();
 	this->initTileMap();
 
+	this->activeEnemies.push_back(new Mummy(273.f, 390.f, this->textures["MUMMY_IDLE"]));
+
 	//Bow bow;
 	//Item* item = &bow;
 }
@@ -111,6 +118,11 @@ GameState::~GameState()
 	delete this->player;
 	delete this->playerGui;
 	delete this->tileMap;
+
+	for (size_t i = 0; i < this->activeEnemies.size(); i++)
+	{
+		delete this->activeEnemies[i];
+	}
 
 }
 
@@ -167,6 +179,11 @@ void GameState::updatePauseMenuButtons()
 void GameState::updateTileMap(const float& dt)
 {
 	this->tileMap->update(this->player, dt);
+
+	for (auto* i : this->activeEnemies)
+	{
+		this->tileMap->update(i,dt);
+	}
 }
 
 void GameState::update(const float& dt)
@@ -187,7 +204,10 @@ void GameState::update(const float& dt)
 
 		this->playerGui->update(dt);
 
-		//this->testEnemy->move(-1.f, 0.f, dt);
+		for (auto* i : this->activeEnemies)
+		{
+			i->update(dt);
+		}
 	}
 	else //Pause
 	{
@@ -208,6 +228,11 @@ void GameState::render(sf::RenderTarget* target)
 	this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
 
 	this->player->render(this->renderTexture);
+
+	for (auto* i : this->activeEnemies)
+	{
+		i->render(this->renderTexture);
+	}
 
 	//Render Gui
 	this->renderTexture.setView(this->renderTexture.getDefaultView());

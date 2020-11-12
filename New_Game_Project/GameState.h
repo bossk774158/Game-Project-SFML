@@ -4,7 +4,7 @@
 #include "TileMap.h"
 #include "PlayerGui.h"
 #include "Bow.h"
-#include "Enemy.h"
+#include "Enemies_include.h"
 
 class PauseMenu;
 class Player;
@@ -30,6 +30,8 @@ private:
     PlayerGui* playerGui;
 
     TileMap* tileMap;
+
+    std::vector<Enemy*> activeEnemies;
 
     //Functions
     void initDeferredRender();
