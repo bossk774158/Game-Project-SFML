@@ -107,8 +107,6 @@ GameState::GameState(StateData* state_data)
 	this->initPlayerGui();
 	this->initTileMap();
 
-	this->activeEnemies.push_back(new Mummy(273.f, 390.f, this->textures["MUMMY_IDLE"]));
-
 	//Bow bow;
 	//Item* item = &bow;
 }
@@ -178,12 +176,24 @@ void GameState::updatePauseMenuButtons()
 
 void GameState::updateTileMap(const float& dt)
 {
-	this->tileMap->update(this->player, dt);
+	this->tileMap->updateWorldBoundCollision(this->player, dt);
+	this->tileMap->updateTilecollision(this->player, dt);
+	this->tileMap->updateTiles(this->player, dt);
 
 	for (auto* i : this->activeEnemies)
 	{
-		this->tileMap->update(i,dt);
+		this->tileMap->updateWorldBoundCollision(i, dt);
+		this->tileMap->updateTilecollision(i, dt);
 	}
+}
+
+void GameState::updatePlayer(const float& dt)
+{
+}
+
+void GameState::updateEnemies(const float& dt)
+{
+	//this->activeEnemies.push_back(new Mummy(273.f, 390.f, this->textures["MUMMY_IDLE"]));
 }
 
 void GameState::update(const float& dt)

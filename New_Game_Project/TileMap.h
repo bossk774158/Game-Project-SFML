@@ -52,6 +52,9 @@ public:
 	void loadFromFile(const std::string file_name);
 	const bool checkType(const int x, const int y, const int z, const int type) const;
 
+	void updateWorldBoundCollision(Entity* entity, const float& dt);
+	void updateTilecollision(Entity* entity, const float& dt);
+	void updateTiles(Entity* entity, const float& dt);
 	void update(Entity* entity, const float& dt);
 
 	void render(sf::RenderTarget& target, const sf::Vector2i& gridPosition);

@@ -300,7 +300,7 @@ const bool TileMap::checkType(const int x, const int y, const int z, const int t
 	return this->map[x][y][this->layer].back()->getType() == type;
 }
 
-void TileMap::update(Entity* entity, const float& dt)
+void TileMap::updateWorldBoundCollision(Entity* entity, const float& dt)
 {
 	//WORLD BOUNDS
 	if (entity->getPosition().x < 0.f)
@@ -323,16 +323,16 @@ void TileMap::update(Entity* entity, const float& dt)
 		entity->setPosition(entity->getPosition().x, this->maxSizeWorldF.y - entity->getGlobalBounds().height);
 		entity->stopVelocityY();
 	}
+}
 
-
+void TileMap::updateTilecollision(Entity* entity, const float& dt)
+{
 	for (int x = this->fromX; x < this->toX; x++)
 	{
 		for (int y = this->fromY; y < this->toY; y++)
 		{
 			for (size_t k = 0; k < this->map[x][y][this->layer].size(); k++)
 			{
-				this->map[x][y][this->layer][k]->update();
-
 				sf::FloatRect playerBounds = entity->getGlobalBounds();
 				sf::FloatRect wallBounds = this->map[x][y][this->layer][k]->getGlobalBounds();
 				sf::FloatRect nextPositionBounds = entity->getNextPositionBounds(dt);
@@ -396,6 +396,35 @@ void TileMap::update(Entity* entity, const float& dt)
 	}
 }
 
+void TileMap::updateTiles(Entity* entity, const float& dt)
+{
+	for (int x = this->fromX; x < this->toX; x++)
+	{
+		for (int y = this->fromY; y < this->toY; y++)
+		{
+			for (size_t k = 0; k < this->map[x][y][this->layer].size(); k++)
+			{
+				this->map[x][y][this->layer][k]->update();
+
+				if (this->map[x][y][this->layer][k]->getType() == TileType::ENEMYSPAWNER)
+				{
+					EnemySpawnerTile* es = dynamic_cast<EnemySpawnerTile*>(this->map[x][y][this->layer][k]);
+					if (es)
+					{
+						if(!es->getSpawned())
+							es->setSpawned(true);
+					}	
+				}
+			}
+		}
+	}
+}
+
+void TileMap::update(Entity* entity, const float& dt)
+{
+	
+}
+
 void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 {
 
@@ -405,15 +434,10 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 			{
 				for (size_t k = 0; k < this->map[x][y][this->layer].size(); k++)
 				{
-					if (this->map[x][y][this->layer][k]->getType() == TileType::TOPTILE)
-					{
-						this->deferredRenderStack.push(this->map[x][y][this->layer][k]);
-					}
-					else
-					{
 						this->map[x][y][this->layer][k]->render(target);
-					}
-					if (this->map[x][y][this->layer][k]) {
+
+					if (this->map[x][y][this->layer][k]) 
+					{
 						if (this->map[x][y][this->layer][k]->getCollision())
 						{
 							this->collisionBox.setPosition(this->map[x][y][this->layer][k]->getPosition());
