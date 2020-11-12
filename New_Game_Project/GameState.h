@@ -4,7 +4,6 @@
 #include "TileMap.h"
 #include "PlayerGui.h"
 #include "Bow.h"
-#include "Enemies_include.h"
 
 class PauseMenu;
 class Player;

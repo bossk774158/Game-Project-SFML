@@ -30,7 +30,7 @@ const std::string EnemySpawnerTile::getAsSting() const
 
 const bool& EnemySpawnerTile::getSpawned() const
 {
-	// TODO: insert return statement here
+	return this->spawned;
 }
 
 //Functions

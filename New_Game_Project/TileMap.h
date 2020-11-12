@@ -1,12 +1,13 @@
 #pragma once
 
-#include "Entity.h"
 #include "EnemySpawnerTile.h"
 #include "RegularTile.h"
+#include "Enemies_include.h"
 
 class Tile;
 class Entity;
 class EnemySpawnerTile;
+class Enemy;
 
 class TileMap
 {
@@ -54,7 +55,7 @@ public:
 
 	void updateWorldBoundCollision(Entity* entity, const float& dt);
 	void updateTilecollision(Entity* entity, const float& dt);
-	void updateTiles(Entity* entity, const float& dt);
+	void updateTiles(Entity* entity, const float& dt, std::vector<Enemy*>& activeEnemies, std::map<std::string, sf::Texture>& textures);
 	void update(Entity* entity, const float& dt);
 
 	void render(sf::RenderTarget& target, const sf::Vector2i& gridPosition);

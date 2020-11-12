@@ -178,7 +178,7 @@ void GameState::updateTileMap(const float& dt)
 {
 	this->tileMap->updateWorldBoundCollision(this->player, dt);
 	this->tileMap->updateTilecollision(this->player, dt);
-	this->tileMap->updateTiles(this->player, dt);
+	this->tileMap->updateTiles(this->player, dt, this->activeEnemies, this->textures);
 
 	for (auto* i : this->activeEnemies)
 	{
