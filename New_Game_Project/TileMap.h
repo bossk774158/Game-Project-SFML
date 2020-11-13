@@ -2,7 +2,8 @@
 
 #include "EnemySpawnerTile.h"
 #include "RegularTile.h"
-#include "Enemies_include.h"
+#include "Enemy.h"
+#include "EnemySystem.h"
 
 class Tile;
 class Entity;
@@ -55,7 +56,7 @@ public:
 
 	void updateWorldBoundCollision(Entity* entity, const float& dt);
 	void updateTilecollision(Entity* entity, const float& dt);
-	void updateTiles(Entity* entity, const float& dt, std::vector<Enemy*>& activeEnemies, std::map<std::string, sf::Texture>& textures);
+	void updateTiles(Entity* entity, const float& dt, EnemySystem& enemySystem);
 	void update(Entity* entity, const float& dt);
 
 	void render(sf::RenderTarget& target, const sf::Vector2i& gridPosition);

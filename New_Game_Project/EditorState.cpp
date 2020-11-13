@@ -1,7 +1,7 @@
 #include "EditorState.h"
 void EditorState::initVariables()
 {
-	this->cameraSpeed = 50.f;
+	this->cameraSpeed = 150.f;
 }
 
 void EditorState::initEditorStateData()
@@ -149,19 +149,19 @@ void EditorState::updateEditorInput(const float& dt)
 	//Move view
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_UP"))))
 	{
-		this->view.move(0, -this->cameraSpeed);
+		this->view.move(0, -this->cameraSpeed * dt);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_DOWN"))))
 	{
-		this->view.move(0, this->cameraSpeed);
+		this->view.move(0, this->cameraSpeed * dt);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_LEFT"))))
 	{
-		this->view.move(-this->cameraSpeed, 0);
+		this->view.move(-this->cameraSpeed * dt, 0);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_RIGHT"))))
 	{
-		this->view.move(this->cameraSpeed, 0);
+		this->view.move(this->cameraSpeed * dt, 0);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MODE_UP"))))

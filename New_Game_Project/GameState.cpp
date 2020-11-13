@@ -87,6 +87,11 @@ void GameState::initPlayerGui()
 	this->playerGui = new PlayerGui(this->player);
 }
 
+void GameState::initEnemySystem()
+{
+	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures);
+}
+
 void GameState::initTileMap()
 {
 	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/Images/Tiles/grass2.png");
@@ -103,18 +108,18 @@ GameState::GameState(StateData* state_data)
 	this->initTextures();
 	this->initPauseMenu();
 
+	this->initEnemySystem();
 	this->initPlayers(); 
 	this->initPlayerGui();
 	this->initTileMap();
 
-	//Bow bow;
-	//Item* item = &bow;
 }
 GameState::~GameState()
 {
 	delete this->pmenu;
 	delete this->player;
 	delete this->playerGui;
+	delete this->enemySystem;
 	delete this->tileMap;
 
 	for (size_t i = 0; i < this->activeEnemies.size(); i++)
@@ -178,7 +183,7 @@ void GameState::updateTileMap(const float& dt)
 {
 	this->tileMap->updateWorldBoundCollision(this->player, dt);
 	this->tileMap->updateTilecollision(this->player, dt);
-	this->tileMap->updateTiles(this->player, dt, this->activeEnemies, this->textures);
+	this->tileMap->updateTiles(this->player, dt, *this->enemySystem);
 
 	for (auto* i : this->activeEnemies)
 	{
@@ -193,7 +198,7 @@ void GameState::updatePlayer(const float& dt)
 
 void GameState::updateEnemies(const float& dt)
 {
-	//this->activeEnemies.push_back(new Mummy(273.f, 390.f, this->textures["MUMMY_IDLE"]));
+	this->activeEnemies.push_back(new Mummy(400.f, 400.f, this->textures["MUMMY_IDLE"]));
 }
 
 void GameState::update(const float& dt)

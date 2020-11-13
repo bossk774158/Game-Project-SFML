@@ -396,7 +396,7 @@ void TileMap::updateTilecollision(Entity* entity, const float& dt)
 	}
 }
 
-void TileMap::updateTiles(Entity* entity, const float& dt, std::vector<Enemy*>& activeEnemies, std::map<std::string, sf::Texture>& textures)
+void TileMap::updateTiles(Entity* entity, const float& dt, EnemySystem& enemySystem)
 {
 	for (int x = this->fromX; x < this->toX; x++)
 	{
@@ -413,7 +413,7 @@ void TileMap::updateTiles(Entity* entity, const float& dt, std::vector<Enemy*>& 
 					{
 						if (!es->getSpawned())
 						{
-							activeEnemies.push_back(new Mummy(x * this->gridSizeF, y * this->gridSizeF, textures["MUMMY_IDLE"]));
+							enemySystem.createEnemy(MUMMY, x * this->gridSizeF, y * this->gridSizeF);
 							es->setSpawned(true);
 						}
 					}	

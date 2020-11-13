@@ -135,6 +135,9 @@
     <ClCompile Include="EnemySpawnerTile.cpp">
       <Filter>Tile</Filter>
     </ClCompile>
+    <ClCompile Include="EnemySystem.cpp">
+      <Filter>Entities\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h">
@@ -221,14 +224,14 @@
     <ClInclude Include="Mummy.h">
       <Filter>Entities\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Enemies_include.h">
-      <Filter>Entities\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="RegularTile.h">
       <Filter>Tile</Filter>
     </ClInclude>
     <ClInclude Include="EnemySpawnerTile.h">
       <Filter>Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySystem.h">
+      <Filter>Entities\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

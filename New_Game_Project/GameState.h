@@ -5,15 +5,6 @@
 #include "PlayerGui.h"
 #include "Bow.h"
 
-class PauseMenu;
-class Player;
-class PlayerGui;
-class TileMap;
-class Enemy;
-class sf::View;
-class sf::Font;
-class sf::RenderTexture;
-
 class GameState :
     public State
 {
@@ -28,9 +19,11 @@ private:
     Player* player;
     PlayerGui* playerGui;
 
+    std::vector<Enemy*> activeEnemies;
+    EnemySystem* enemySystem;
+
     TileMap* tileMap;
 
-    std::vector<Enemy*> activeEnemies;
 
     //Functions
     void initDeferredRender();
@@ -41,7 +34,9 @@ private:
     void initPauseMenu();
     void initPlayers();
     void initPlayerGui();
+    void initEnemySystem();
     void initTileMap();
+ 
 
 public:
     GameState(StateData* state_data);
