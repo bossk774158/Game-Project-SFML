@@ -21,8 +21,10 @@ class Bow :
     public RangedWeapon
 {
 public:
-    Bow();
+    Bow(unsigned value);
     virtual ~Bow();
+
+    virtual Bow* clone();
 
     virtual void update();
     virtual void render(sf::RenderTarget& target);

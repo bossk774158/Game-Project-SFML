@@ -14,12 +14,24 @@
 #include<SFML/Audio.hpp>
 #include<SFML/Network.hpp>
 #include<SFML/System.hpp>
+
+enum ItemTypes {IT_DEFAULT = 0, IT_RANGEDWEAPON, IT_MELEEWEAPON};
+
 class Item
 {
 private:
+	void initVarialbles();
+	
+protected:
+	//variables
+	short unsigned type;
+	unsigned value;
 
 public:
-	Item();
+	Item(unsigned value);
 	virtual ~Item();
+
+	//functions
+	virtual Item* clone() = 0;
 };
 

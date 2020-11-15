@@ -1,18 +1,25 @@
 #pragma once
 #include "Entity.h"
-#include "Bow.h"
+#include "Items.h"
+#include "Inventory.h"
+
 class Player :
     public Entity
 {
 private:
     //Varaibles
+    Inventory* inventory;
+
     bool attacking;
-    Bow bow;
+    Bow* bow;
+    Sword* sword;
 
     //Initializer functions
     void initVariables();
     void initComponents();
     void initAnimation();
+    void initInventory();
+
 
 public:
     Player(float x, float y, sf::Texture& texture_sheet);

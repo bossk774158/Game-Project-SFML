@@ -32,8 +32,10 @@ protected:
 	int damageMax;
 
 public:
-	RangedWeapon();
+	RangedWeapon(unsigned value);
 	virtual ~RangedWeapon();
+
+	virtual RangedWeapon* clone() = 0;
 
 	virtual void update() = 0;
 	virtual void render(sf::RenderTarget& target) = 0;

@@ -43,6 +43,9 @@
     <Filter Include="Entities\Enemies">
       <UniqueIdentifier>{7719698c-cc66-4b6b-a579-92d66b6c5f6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Item\MeleeWeapon">
+      <UniqueIdentifier>{87f468db-cd3e-49eb-9cc5-1b5f5404d9bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -138,6 +141,15 @@
     <ClCompile Include="EnemySystem.cpp">
       <Filter>Entities\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeWeapon.cpp">
+      <Filter>Item\MeleeWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Item\MeleeWeapon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h">
@@ -232,6 +244,18 @@
     </ClInclude>
     <ClInclude Include="EnemySystem.h">
       <Filter>Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeWeapon.h">
+      <Filter>Item\MeleeWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Item\MeleeWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Items.h">
+      <Filter>Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
