@@ -37,6 +37,7 @@ public:
 	void createAnimationComponent(sf::Texture& texture_sheet);
 	void createAttributeComponent(const unsigned level);
 	void createSkillComponent();
+	void createAIComponent();
 
 	//Functions
 	virtual void move(const float dir_x, const float dir_y, const float& dt);

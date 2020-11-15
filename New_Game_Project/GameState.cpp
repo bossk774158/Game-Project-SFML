@@ -89,7 +89,7 @@ void GameState::initPlayerGui()
 
 void GameState::initEnemySystem()
 {
-	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures);
+	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures, *this->player);
 }
 
 void GameState::initTileMap()
@@ -198,7 +198,7 @@ void GameState::updatePlayer(const float& dt)
 
 void GameState::updateEnemies(const float& dt)
 {
-	this->activeEnemies.push_back(new Mummy(400.f, 400.f, this->textures["MUMMY_IDLE"]));
+	this->activeEnemies.push_back(new Mummy(400.f, 400.f, this->textures["MUMMY_IDLE"], *this->player));
 }
 
 void GameState::update(const float& dt)

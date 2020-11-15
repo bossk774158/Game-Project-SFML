@@ -18,7 +18,7 @@ void Mummy::initAI()
 
 }
 
-Mummy::Mummy(float x, float y, sf::Texture& texture_sheet)
+Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, Entity& player)
 	: Enemy()
 {
 	this->initVariables();
@@ -29,11 +29,13 @@ Mummy::Mummy(float x, float y, sf::Texture& texture_sheet)
 
 	this->setPosition(x, y);
 	this->initAnimation();
+
+	//this->follow = new AIFollow(*this, player);
 }
 
 Mummy::~Mummy()
 {
-
+	//delete this->follow;
 }
 
 void Mummy::updateAnimation(const float& dt)
@@ -75,6 +77,8 @@ void Mummy::update(const float& dt)
 	this->updateAnimation(dt);
 
 	this->hitboxComponent->update();
+
+	//this->follow->update(dt);
 }
 
 void Mummy::render(sf::RenderTarget& target)

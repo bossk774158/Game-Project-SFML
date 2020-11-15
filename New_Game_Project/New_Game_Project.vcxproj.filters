@@ -168,6 +168,9 @@
     <ClCompile Include="AIFollow.cpp">
       <Filter>AI\Options</Filter>
     </ClCompile>
+    <ClCompile Include="AIComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h">
@@ -283,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="AIFollow.h">
       <Filter>AI\Options</Filter>
+    </ClInclude>
+    <ClInclude Include="AIComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

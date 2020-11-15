@@ -9,6 +9,7 @@ class Player :
 private:
     //Varaibles
     Inventory* inventory;
+    sf::RectangleShape sword_shape;
 
     bool attacking;
     Bow* bow;

@@ -43,6 +43,13 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 0, 3, 0, 60, 36);
 	this->animationComponent->addAnimation("WALK", 1.1f, 0, 1, 5, 1, 40, 36);
 	this->animationComponent->addAnimation("ATTACK", 1.f, 0, 2, 6, 2, 34, 36);
+
+
+	//Sword //delete later
+	this->sword_shape.setSize(sf::Vector2f(40.f, 10.f));
+	this->sword_shape.setFillColor(sf::Color::Red);
+	this->sword_shape.setOutlineColor(sf::Color::Green);
+	//this->sword_shape.setPosition(this->sprite.getPosition().x + 50.f, this->sprite.getPosition().y + 30.f);
 }
 
 Player::~Player()
@@ -108,12 +115,14 @@ void Player::update(const float& dt)
 	{
 		this->sprite.setOrigin(0.f, 0.f);
 		this->sprite.setScale(2.f, 2.f);
+		this->sword_shape.setScale(1.f, 1.f);
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
 		this->sprite.setOrigin(23.f, 0.f);
 		this->sprite.setScale(-2.f, 2.f);
+		this->sword_shape.setScale(-1.f, 1.f);
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_UP))
@@ -126,13 +135,17 @@ void Player::update(const float& dt)
 	}
 
 	this->hitboxComponent->update();
-	this->bow->update();
+	this->sword_shape.setPosition(this->sprite.getPosition().x + 30.f, this->sprite.getPosition().y + 30.f);
+	//this->bow->update();
 }
 
 void Player::render(sf::RenderTarget& target)
 {
+	target.draw(this->sword_shape);
 	target.draw(this->sprite);
-	this->bow->render(target);
+	
+	//this->bow->render(target);
+	
 
 	this->hitboxComponent->render(target);
 }
