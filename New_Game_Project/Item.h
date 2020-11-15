@@ -25,10 +25,11 @@ private:
 protected:
 	//variables
 	short unsigned type;
+	unsigned level;
 	unsigned value;
 
 public:
-	Item(unsigned value);
+	Item(unsigned level, unsigned value);
 	virtual ~Item();
 
 	//functions

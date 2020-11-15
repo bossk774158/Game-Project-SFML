@@ -20,8 +20,10 @@ class RengedWeapon;
 class Bow :
     public RangedWeapon
 {
+private:
+
 public:
-    Bow(unsigned value);
+    Bow(unsigned level, unsigned value);
     virtual ~Bow();
 
     virtual Bow* clone();

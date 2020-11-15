@@ -4,9 +4,15 @@ class Sword :
     public MeleeWeapon
 {
 private:
-    Sword* sword;
+    
+
 public:
-    Sword(unsigned value);
+    Sword(unsigned level, unsigned value);
     virtual ~Sword();
+
+    virtual Sword* clone();
+
+    virtual void update();
+    virtual void render(sf::RenderTarget& target);
 };
 

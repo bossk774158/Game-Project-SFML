@@ -15,27 +15,23 @@
 #include<SFML/Network.hpp>
 #include<SFML/System.hpp>
 
-#include"Item.h"
-
-class Item;
+#include"Weapon.h"
 
 class RangedWeapon :
-	public Item
+	public Weapon
 {
 private:
 
-protected:
-	sf::Texture spriteRengedWeapon;
-	sf::Sprite rengedweapon_sprite;
 
-	int damageMin;
-	int damageMax;
+protected:
+	
 
 public:
-	RangedWeapon(unsigned value);
+	RangedWeapon(unsigned level, unsigned value);
 	virtual ~RangedWeapon();
 
 	virtual RangedWeapon* clone() = 0;
+	void generate(const unsigned levelMin, const unsigned levelMax);
 
 	virtual void update() = 0;
 	virtual void render(sf::RenderTarget& target) = 0;

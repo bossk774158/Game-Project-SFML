@@ -1,7 +1,7 @@
 #include "Bow.h"
 
-Bow::Bow(unsigned value)
-	:RangedWeapon(value)
+Bow::Bow(unsigned level, unsigned value)
+	:RangedWeapon(level,value)
 {
 	
 }

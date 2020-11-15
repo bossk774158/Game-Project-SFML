@@ -4,7 +4,8 @@ void Player::initVariables()
 {
 	this->sprite.setScale(2.f,2.f);
 	this->attacking = false;
-	this->bow = new Bow(20);
+	this->bow = new Bow(1, 20);
+	//this->sword->generate(1, 3);
 }
 
 void Player::initComponents()
