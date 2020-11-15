@@ -49,6 +49,12 @@
     <Filter Include="Item\Weapons">
       <UniqueIdentifier>{cfda2e5f-4821-4d41-84c5-613f50fa084d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{504b6e49-1557-459c-9287-65cdb7d9c8da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Options">
+      <UniqueIdentifier>{057c5a0b-33e5-469c-89c8-87ef71c08ba1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -155,6 +161,12 @@
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Item\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="AIOption.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AIFollow.cpp">
+      <Filter>AI\Options</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +277,12 @@
     </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>Item\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="AIOption.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AIFollow.h">
+      <Filter>AI\Options</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

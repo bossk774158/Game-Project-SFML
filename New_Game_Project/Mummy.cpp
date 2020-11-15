@@ -13,6 +13,11 @@ void Mummy::initAnimation()
 	this->animationComponent->addAnimation("WALK", 1.f, 0, 2, 6, 2, 60, 45);
 }
 
+void Mummy::initAI()
+{
+
+}
+
 Mummy::Mummy(float x, float y, sf::Texture& texture_sheet)
 	: Enemy()
 {

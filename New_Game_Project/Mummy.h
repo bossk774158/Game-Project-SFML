@@ -6,6 +6,7 @@ class Mummy :
 private:
     virtual void initVariables();
     virtual void initAnimation();
+    void initAI();
 public:
     Mummy(float x, float y, sf::Texture& texture_sheet);
     virtual ~Mummy();
