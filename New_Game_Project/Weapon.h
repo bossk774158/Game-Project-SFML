@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 
 #include "Item.h"
 
@@ -20,6 +20,9 @@ protected:
 public:
     Weapon(unsigned level, unsigned value);
     virtual ~Weapon();
+
+    //accessors
+    const unsigned& getRange() const;
 
     virtual Item* clone() = 0;
     virtual void generate(const unsigned levelMin, const unsigned levelMax) = 0;

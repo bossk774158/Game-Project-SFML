@@ -26,13 +26,13 @@ private:
     void initAnimation();
     void initInventory();
 
-
 public:
     Player(float x, float y, sf::Texture& texture_sheet);
     virtual ~Player();
 
     //Accessors
     AttributeComponent* getAttributeComponent();
+    const Weapon* getWeapon() const;
 
     //Functions
     void loseHP(const int hp);

@@ -60,6 +60,7 @@ public:
     void updatePlayer(const float& dt);
     void updateArrow(const float& dt);
     void updateEnemies(const float& dt);
+    void updateCombat(const float& dt);
     void update(const float& dt);
     void render(sf::RenderTarget* target = NULL);
 };

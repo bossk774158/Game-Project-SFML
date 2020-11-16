@@ -231,7 +231,21 @@ void GameState::updateArrow(const float& dt)
 
 void GameState::updateEnemies(const float& dt)
 {
-	this->activeEnemies.push_back(new Mummy(400.f, 400.f, this->textures["MUMMY_IDLE"], *this->player));
+	for (auto* i : this->activeEnemies)
+	{
+		i->update(dt);
+	}
+}
+
+void GameState::updateCombat(const float& dt)
+{
+	for (auto i : this->activeEnemies)
+	{
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			
+		}
+	}
 }
 
 void GameState::update(const float& dt)
@@ -258,6 +272,8 @@ void GameState::update(const float& dt)
 		{
 			i->update(dt);
 		}
+
+		this->updateCombat(dt);
 	}
 	else //Pause
 	{

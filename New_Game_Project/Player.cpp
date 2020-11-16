@@ -27,13 +27,13 @@ void Player::initInventory()
 	this->inventory = new Inventory(100);
 }
 
-
 //Constructors /Destructors 
 Player::Player(float x,float y,sf::Texture& texture_sheet)
 {
 	this->initVariables();
 
-	this->createHitboxComponent(this->sprite, 0.f, 0.f, 55.f, 50.f);
+	this->createHitboxComponent(this->sprite, 0.f, 0.f, 55.f, 70.f);
+
 	this->createMovementComponent(200.f, 1500.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
 	this->createAttributeComponent(1);
@@ -65,6 +65,11 @@ Player::~Player()
 AttributeComponent* Player::getAttributeComponent()
 {
 	return this->attributeComponent;
+}
+
+const Weapon* Player::getWeapon() const
+{
+	return this->sword;
 }
 
 void Player::loseHP(const int hp)

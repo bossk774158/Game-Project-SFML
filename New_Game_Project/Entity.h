@@ -50,9 +50,13 @@ public:
 
 	//Accessors
 	virtual const sf::Vector2f& getPosition() const;
+	virtual const sf::Vector2f getCenter() const;
 	virtual const sf::Vector2i getGridPosition(const int gridSizeI) const;
 	virtual const sf::FloatRect getGlobalBounds() const;
 	virtual const sf::FloatRect getNextPositionBounds(const float& dt) const;
+
+	//Calculations
+	virtual const float getDistance(const Entity& entity) const;
 	
 	virtual void update(const float& dt) = 0;
 	virtual void render(sf::RenderTarget& target) = 0;
