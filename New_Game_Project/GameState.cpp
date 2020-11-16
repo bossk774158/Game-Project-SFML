@@ -16,8 +16,8 @@ void GameState::initView()
 {
 	this->view.setSize(
 		sf::Vector2f(
-			static_cast<float>(this->stateData->gfxSettings->resolution.width),
-			static_cast<float>(this->stateData->gfxSettings->resolution.height)
+			static_cast<float>(this->stateData->gfxSettings->resolution.width / 2),
+			static_cast<float>(this->stateData->gfxSettings->resolution.height / 2)
 		)
 	);
 
