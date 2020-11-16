@@ -1,7 +1,7 @@
 #include "EditorState.h"
 void EditorState::initVariables()
 {
-	this->cameraSpeed = 150.f;
+	this->cameraSpeed = 300.f;
 }
 
 void EditorState::initEditorStateData()

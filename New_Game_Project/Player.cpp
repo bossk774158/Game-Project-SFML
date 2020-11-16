@@ -5,6 +5,7 @@ void Player::initVariables()
 	this->sprite.setScale(2.f,2.f);
 	this->attacking = false;
 	this->bow = new Bow(1, 20);
+	this->face = false;
 	//this->sword->generate(1, 3);
 }
 
@@ -49,7 +50,6 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 	this->sword_shape.setSize(sf::Vector2f(40.f, 10.f));
 	this->sword_shape.setFillColor(sf::Color::Red);
 	this->sword_shape.setOutlineColor(sf::Color::Green);
-	//this->sword_shape.setPosition(this->sprite.getPosition().x + 50.f, this->sprite.getPosition().y + 30.f);
 }
 
 Player::~Player()
@@ -92,6 +92,11 @@ void Player::gainEXP(const int exp)
 	this->attributeComponent->gainExp(exp);
 }
 
+const sf::Vector2f& Player::getPos() const
+{
+	return this->sprite.getPosition();
+}
+
 void Player::update(const float& dt)
 {
 	this->movementComponent->update(dt);
@@ -113,6 +118,7 @@ void Player::update(const float& dt)
 	}
 	else if (this->movementComponent->getState(MOVING_RIGHT))
 	{
+		this->face = false;
 		this->sprite.setOrigin(0.f, 0.f);
 		this->sprite.setScale(2.f, 2.f);
 		this->sword_shape.setScale(1.f, 1.f);
@@ -120,6 +126,7 @@ void Player::update(const float& dt)
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
+		this->face = true;
 		this->sprite.setOrigin(23.f, 0.f);
 		this->sprite.setScale(-2.f, 2.f);
 		this->sword_shape.setScale(-1.f, 1.f);
@@ -134,6 +141,8 @@ void Player::update(const float& dt)
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
 
+	
+
 	this->hitboxComponent->update();
 	this->sword_shape.setPosition(this->sprite.getPosition().x + 30.f, this->sprite.getPosition().y + 30.f);
 	//this->bow->update();
@@ -141,7 +150,7 @@ void Player::update(const float& dt)
 
 void Player::render(sf::RenderTarget& target)
 {
-	target.draw(this->sword_shape);
+	//target.draw(this->sword_shape);
 	target.draw(this->sprite);
 	
 	//this->bow->render(target);

@@ -155,6 +155,7 @@
     <ClCompile Include="AIFollow.cpp" />
     <ClCompile Include="AIOption.cpp" />
     <ClCompile Include="AnimationComponent.cpp" />
+    <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="AttributeComponent.cpp" />
     <ClCompile Include="Bow.cpp" />
     <ClCompile Include="DefaultEditorMode.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="AIFollow.h" />
     <ClInclude Include="AIOption.h" />
     <ClInclude Include="AnimationComponent.h" />
+    <ClInclude Include="Arrow.h" />
     <ClInclude Include="AttributeComponent.h" />
     <ClInclude Include="Bow.h" />
     <ClInclude Include="DefaultEditorMode.h" />

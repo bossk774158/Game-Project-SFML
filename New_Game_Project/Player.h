@@ -15,6 +15,8 @@ private:
     Bow* bow;
     Sword* sword;
 
+    bool face;
+
     //Initializer functions
     void initVariables();
     void initComponents();
@@ -34,6 +36,8 @@ public:
     void gainHP(const int hp);
     void loseEXP(const int exp);
     void gainEXP(const int exp);
+
+    const sf::Vector2f& getPos() const;
 
 
     void update(const float& dt);

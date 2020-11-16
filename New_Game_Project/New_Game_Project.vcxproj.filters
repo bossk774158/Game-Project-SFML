@@ -171,6 +171,9 @@
     <ClCompile Include="AIComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Arrow.cpp">
+      <Filter>Item\Weapons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h">
@@ -289,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="AIComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Arrow.h">
+      <Filter>Item\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

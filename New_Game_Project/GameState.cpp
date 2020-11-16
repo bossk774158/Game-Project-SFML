@@ -87,6 +87,13 @@ void GameState::initPlayerGui()
 	this->playerGui = new PlayerGui(this->player);
 }
 
+void GameState::initArrow()
+{
+	this->texture["ARROW"] = new sf::Texture();
+	if (!this->texture["ARROW"]->loadFromFile("Resources/Images/Sprites/Player/Bullet.png"))
+		std::cout << "ERROR" << "\n";
+}
+
 void GameState::initEnemySystem()
 {
 	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures, *this->player);
@@ -111,6 +118,7 @@ GameState::GameState(StateData* state_data)
 	this->initEnemySystem();
 	this->initPlayers(); 
 	this->initPlayerGui();
+	this->initArrow();
 	this->initTileMap();
 
 }
@@ -119,6 +127,17 @@ GameState::~GameState()
 	delete this->pmenu;
 	delete this->player;
 	delete this->playerGui;
+
+	for (auto& i : this->texture)
+	{
+		delete i.second;
+	}
+
+	for (auto *i : this->arrows)
+	{
+		delete i;
+	}
+
 	delete this->enemySystem;
 	delete this->tileMap;
 
@@ -164,7 +183,12 @@ void GameState::updatePlayerInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 		this->player->move(0.f, 1.f, dt);
 
-	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("SHOOT"))))
+	{
+		this->arrows.push_back(new Arrow(this->texture["ARROW"], this->player->getPos().x, this->player->getPos().y,0.f,0.f,0.f));
+		//std::cout << "shot!" << "\n";
+	}
+
 		
 }
 
@@ -196,6 +220,14 @@ void GameState::updatePlayer(const float& dt)
 {
 }
 
+void GameState::updateArrow(const float& dt)
+{
+	for (auto* arrow : this->arrows)
+	{
+		arrow->update(dt);
+	}
+}
+
 void GameState::updateEnemies(const float& dt)
 {
 	this->activeEnemies.push_back(new Mummy(400.f, 400.f, this->textures["MUMMY_IDLE"], *this->player));
@@ -218,6 +250,8 @@ void GameState::update(const float& dt)
 		this->player->update(dt);
 
 		this->playerGui->update(dt);
+
+		this->updateArrow(dt);
 
 		for (auto* i : this->activeEnemies)
 		{
@@ -247,6 +281,11 @@ void GameState::render(sf::RenderTarget* target)
 	for (auto* i : this->activeEnemies)
 	{
 		i->render(this->renderTexture);
+	}
+
+	for (auto* arrow : this->arrows)
+	{
+		arrow->render(this->renderTexture);
 	}
 
 	//Render Gui

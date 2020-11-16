@@ -4,6 +4,7 @@
 #include "TileMap.h"
 #include "PlayerGui.h"
 #include "Bow.h"
+#include "Arrow.h"
 
 class GameState :
     public State
@@ -24,6 +25,9 @@ private:
 
     TileMap* tileMap;
 
+    //Arrow
+    std::map<std::string, sf::Texture*> texture;
+    std::vector<Arrow*> arrows;
 
     //Functions
     void initDeferredRender();
@@ -34,6 +38,7 @@ private:
     void initPauseMenu();
     void initPlayers();
     void initPlayerGui();
+    void initArrow();
     void initEnemySystem();
     void initTileMap();
  
@@ -51,6 +56,7 @@ public:
     void updatePauseMenuButtons();
     void updateTileMap(const float& dt);
     void updatePlayer(const float& dt);
+    void updateArrow(const float& dt);
     void updateEnemies(const float& dt);
     void update(const float& dt);
     void render(sf::RenderTarget* target = NULL);
