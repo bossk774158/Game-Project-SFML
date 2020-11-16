@@ -12,10 +12,13 @@ private:
     sf::RectangleShape sword_shape;
 
     bool attacking;
+    bool shoot;
     Bow* bow;
     Sword* sword;
 
     bool face;
+    float shootCooldown;
+    float shootCooldownMax;
 
     //Initializer functions
     void initVariables();
@@ -38,8 +41,9 @@ public:
     void gainEXP(const int exp);
 
     const sf::Vector2f& getPos() const;
+    const bool canShoot();
 
-
+    void updateShoot(const float& dt);
     void update(const float& dt);
     void render(sf::RenderTarget& target);
 

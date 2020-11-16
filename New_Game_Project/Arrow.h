@@ -24,7 +24,7 @@ private:
 
 public:
 	Arrow();
-	Arrow(sf::Texture* bullet_arrow,float pos_x, float pos_y, float dir_x, float dir_y, float movement_speed);
+	Arrow(sf::Texture* bullet_arrow,float pos_x, float pos_y, float dir_shoot_x, float dir_shoot_y, float movement_speed);
 	~Arrow();
 
 	//accessors

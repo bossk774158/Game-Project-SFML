@@ -175,20 +175,19 @@ void GameState::updatePlayerInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
 		this->player->move(1.f, 0.f, dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
-	{
 		this->player->move(0.f, -1.f, dt);
-		/*if (this->getKeytime())
-			this->player->gainEXP(10);*/
-	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 		this->player->move(0.f, 1.f, dt);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("SHOOT"))))
 	{
-		this->arrows.push_back(new Arrow(this->texture["ARROW"], this->player->getPos().x, this->player->getPos().y,0.f,0.f,0.f));
-		//std::cout << "shot!" << "\n";
+		if (this->shootTimer.getElapsedTime().asSeconds() > 0.5f)
+		{
+			this->arrows.push_back(new Arrow(this->texture["ARROW"], this->player->getPos().x, this->player->getPos().y, 1.f, 0.f, 1500.f));
+			this->shootTimer.restart();
+			std::cout << "shot!" << "\n";
+		}
 	}
-
 		
 }
 
@@ -218,10 +217,12 @@ void GameState::updateTileMap(const float& dt)
 
 void GameState::updatePlayer(const float& dt)
 {
+
 }
 
 void GameState::updateArrow(const float& dt)
 {
+	unsigned counter = 0;
 	for (auto* arrow : this->arrows)
 	{
 		arrow->update(dt);

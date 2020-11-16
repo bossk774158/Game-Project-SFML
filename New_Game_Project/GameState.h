@@ -29,6 +29,8 @@ private:
     std::map<std::string, sf::Texture*> texture;
     std::vector<Arrow*> arrows;
 
+    sf::Clock shootTimer;
+
     //Functions
     void initDeferredRender();
     void initView();

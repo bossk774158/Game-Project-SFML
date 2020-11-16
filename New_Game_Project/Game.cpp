@@ -4,7 +4,7 @@
 
 //Initializer functions
 
-//Constructors/Destructors
+//Constructors//Destructors
 
 void Game::initVariables()
 {

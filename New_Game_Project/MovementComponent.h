@@ -15,7 +15,7 @@
 #include<SFML/Network.hpp>
 #include<SFML/System.hpp>
 
-enum movement_states {IDLE = 0, MOVING, MOVING_LEFT, MOVING_RIGHT, MOVING_UP, MOVING_DOWN};
+enum movement_states {IDLE = 0, MOVING, MOVING_LEFT, MOVING_RIGHT, MOVING_UP, MOVING_DOWN, SHOOT};
 
 class MovementComponent
 {

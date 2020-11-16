@@ -60,6 +60,11 @@ const bool MovementComponent::getState(const short unsigned state) const
 			return true;
 		break;
 
+	case SHOOT:
+		if (this->velocity.x == 0.f && this->velocity.y == 0.f)
+			return true;
+		break;
+
 
 	}
 	return false;

@@ -4,9 +4,12 @@ void Player::initVariables()
 {
 	this->sprite.setScale(2.f,2.f);
 	this->attacking = false;
+	this->shoot = false;
 	this->bow = new Bow(1, 20);
 	this->face = false;
 	//this->sword->generate(1, 3);
+	this->shootCooldownMax = 100.f;
+	this->shootCooldown = this->shootCooldownMax;
 }
 
 void Player::initComponents()
@@ -44,6 +47,7 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 0, 3, 0, 60, 36);
 	this->animationComponent->addAnimation("WALK", 1.1f, 0, 1, 5, 1, 40, 36);
 	this->animationComponent->addAnimation("ATTACK", 1.f, 0, 2, 6, 2, 34, 36);
+	this->animationComponent->addAnimation("SHOOT", 1.f, 0, 3, 6, 3, 34, 36);
 
 
 	//Sword //delete later
@@ -97,8 +101,25 @@ const sf::Vector2f& Player::getPos() const
 	return this->sprite.getPosition();
 }
 
+const bool Player::canShoot()
+{
+	if (this->shootCooldown >= this->shootCooldownMax)
+	{
+		this->shootCooldown = 0.f;
+		return true;
+	}
+	return false;
+}
+
+void Player::updateShoot(const float& dt)
+{
+	if (this->shootCooldown < this->shootCooldownMax)
+		this->shootCooldown += 0.5f;
+}
+
 void Player::update(const float& dt)
 {
+	this->updateShoot(dt);
 	this->movementComponent->update(dt);
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -110,6 +131,16 @@ void Player::update(const float& dt)
 	{
 		if (this->animationComponent->play("ATTACK", dt, true))
 			this->attacking = false;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+	{
+		this->shoot = true;
+	}
+	if (this->shoot)
+	{
+		if (this->animationComponent->play("SHOOT", dt, true))
+			this->shoot = false;
 	}
 
 	if (this->movementComponent->getState(IDLE))
@@ -136,11 +167,11 @@ void Player::update(const float& dt)
 	{
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
-	else
+	else if(this->movementComponent->getState(MOVING_DOWN))
 	{
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
-
+	
 	
 
 	this->hitboxComponent->update();
