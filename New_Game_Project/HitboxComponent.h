@@ -13,10 +13,12 @@ class HitboxComponent
 {
 private:
 	sf::Sprite& sprite;
+	sf::RectangleShape* sword;
 	sf::RectangleShape hitbox;
 	sf::FloatRect nextPosition;
 	float offsetX;
 	float offsetY;
+	float range;
 
 public:
 	HitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width, float height);
@@ -26,6 +28,7 @@ public:
 	const sf::Vector2f& getPosition() const;
 	const sf::FloatRect getGlobalBounds() const;
 	const sf::FloatRect& getNextPosition(const sf::Vector2f& velocity);
+	const unsigned& getRange() const;
 
 	//Modifier
 	void setPosition(const sf::Vector2f& position);

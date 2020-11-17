@@ -12,8 +12,8 @@ protected:
     sf::Texture spriteRengedWeapon;
     sf::Sprite rengedweapon_sprite;
 
-    int damageMin;
-    int damageMax;
+    unsigned damageMin;
+    unsigned damageMax;
     unsigned range;
 
 
@@ -22,6 +22,8 @@ public:
     virtual ~Weapon();
 
     //accessors
+    const unsigned& getDamageMin() const;
+    const unsigned& getDamageMax() const;
     const unsigned& getRange() const;
 
     virtual Item* clone() = 0;

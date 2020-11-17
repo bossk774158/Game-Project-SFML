@@ -11,8 +11,7 @@ Arrow::Arrow(sf::Texture* bullet_arrow, float pos_x, float pos_y, float dir_shoo
 
 	this->shape.setTexture(*bullet_arrow);
 
-	this->shape.setOrigin(34.f, 30.f);
-	this->shape.setPosition(pos_x, pos_y);
+	this->shape.setPosition(pos_x, pos_y + 25.f);
 	this->direction.x = dir_shoot_x;
 	this->direction.y = dir_shoot_y;
 	this->movementSpeed = movement_speed;
@@ -26,6 +25,13 @@ Arrow::~Arrow()
 sf::FloatRect Arrow::getbounds() const
 {
 	return this->shape.getGlobalBounds();
+}
+
+bool Arrow::isIntersects(sf::FloatRect other)
+{
+	if (this->shape.getGlobalBounds().intersects(other))
+		return true;
+	return false;
 }
 
 void Arrow::update(const float& dt)

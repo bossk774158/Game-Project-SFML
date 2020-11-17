@@ -46,7 +46,12 @@ public:
 	//Functions
 	std::string debugPrint() const;
 
+	void loseExp(const int exp);
 	void gainExp(const int exp);
+	void loseHP(const int hp);
+	void gainHP(const int hp);
+
+	const bool isDead() const;
 
 	void updateState(const bool reset);
 	void updateLevel();

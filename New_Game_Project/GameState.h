@@ -5,6 +5,7 @@
 #include "PlayerGui.h"
 #include "Bow.h"
 #include "Arrow.h"
+#include "TextTagSystem.h"
 
 class GameState :
     public State
@@ -25,6 +26,8 @@ private:
 
     TileMap* tileMap;
 
+    TextTagSystem* tts;
+
     //Arrow
     std::map<std::string, sf::Texture*> texture;
     std::vector<Arrow*> arrows;
@@ -43,6 +46,7 @@ private:
     void initArrow();
     void initEnemySystem();
     void initTileMap();
+    void initSystem();
  
 
 public:
@@ -59,8 +63,8 @@ public:
     void updateTileMap(const float& dt);
     void updatePlayer(const float& dt);
     void updateArrow(const float& dt);
-    void updateEnemies(const float& dt);
-    void updateCombat(const float& dt);
+    void updateCombatAndEnemies(const float& dt);
+    void updateCombat(Enemy* enemy, const int index, const float& dt);
     void update(const float& dt);
     void render(sf::RenderTarget* target = NULL);
 };

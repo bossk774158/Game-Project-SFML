@@ -26,6 +26,7 @@ Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, Entity& player)
 	this->createHitboxComponent(this->sprite, 0.f, 0.f, 55.f, 70.f);
 	this->createMovementComponent(200.f, 1500.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
+	this->createAttributeComponent(1);
 
 	this->setPosition(x, y);
 	this->initAnimation();

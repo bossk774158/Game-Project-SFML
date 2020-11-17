@@ -105,6 +105,11 @@ void GameState::initTileMap()
 	this->tileMap->loadFromFile("text.slmp");
 }
 
+void GameState::initSystem()
+{
+	this->tts = new TextTagSystem("Fonts/Fun Games.ttf");
+}
+
 GameState::GameState(StateData* state_data)
 	:State(state_data)
 {
@@ -120,6 +125,7 @@ GameState::GameState(StateData* state_data)
 	this->initPlayerGui();
 	this->initArrow();
 	this->initTileMap();
+	this->initSystem();
 
 }
 GameState::~GameState()
@@ -140,6 +146,7 @@ GameState::~GameState()
 
 	delete this->enemySystem;
 	delete this->tileMap;
+	delete this->tts;
 
 	for (size_t i = 0; i < this->activeEnemies.size(); i++)
 	{
@@ -177,7 +184,10 @@ void GameState::updatePlayerInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
 		this->player->move(0.f, -1.f, dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
+	{
 		this->player->move(0.f, 1.f, dt);
+		this->tts->addTextTag(DEFAULT_TAG);
+	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("SHOOT"))))
 	{
@@ -207,12 +217,6 @@ void GameState::updateTileMap(const float& dt)
 	this->tileMap->updateWorldBoundCollision(this->player, dt);
 	this->tileMap->updateTilecollision(this->player, dt);
 	this->tileMap->updateTiles(this->player, dt, *this->enemySystem);
-
-	for (auto* i : this->activeEnemies)
-	{
-		this->tileMap->updateWorldBoundCollision(i, dt);
-		this->tileMap->updateTilecollision(i, dt);
-	}
 }
 
 void GameState::updatePlayer(const float& dt)
@@ -229,23 +233,42 @@ void GameState::updateArrow(const float& dt)
 	}
 }
 
-void GameState::updateEnemies(const float& dt)
+void GameState::updateCombatAndEnemies(const float& dt)
 {
-	for (auto* i : this->activeEnemies)
+	unsigned index = 0;
+	for (auto* enemy : this->activeEnemies)
 	{
-		i->update(dt);
+		enemy->update(dt);
+
+		this->tileMap->updateWorldBoundCollision(enemy, dt);
+		this->tileMap->updateTilecollision(enemy, dt);
+
+		this->updateCombat(enemy, index, dt);
+
+		//DANGEROUS
+		if (enemy->isDead())
+		{
+			this->player->gainEXP(enemy->getGainExp());
+
+			this->activeEnemies.erase(this->activeEnemies.begin() + index);
+			--index;
+		}
+
+		++index;
 	}
 }
 
-void GameState::updateCombat(const float& dt)
+void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 {
-	for (auto i : this->activeEnemies)
-	{
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			
+			if (enemy->getGlobalBounds().contains(this->mousePosView)
+				&& enemy ->getDistance(*this->player) < 40.f)
+			{
+				enemy->loseHP(this->player->getDamageMin());
+				std::cout << enemy->getAttributeComp()->hp << "\n";
+			}
 		}
-	}
 }
 
 void GameState::update(const float& dt)
@@ -268,12 +291,9 @@ void GameState::update(const float& dt)
 
 		this->updateArrow(dt);
 
-		for (auto* i : this->activeEnemies)
-		{
-			i->update(dt);
-		}
+		this->updateCombatAndEnemies(dt);
 
-		this->updateCombat(dt);
+		this->tts->update(dt);
 	}
 	else //Pause
 	{
@@ -295,15 +315,17 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->player->render(this->renderTexture);
 
-	for (auto* i : this->activeEnemies)
+	for (auto* enemy : this->activeEnemies)
 	{
-		i->render(this->renderTexture);
+		enemy->render(this->renderTexture);
 	}
 
 	for (auto* arrow : this->arrows)
 	{
 		arrow->render(this->renderTexture);
 	}
+
+	this->tts->render(this->renderTexture);
 
 	//Render Gui
 	this->renderTexture.setView(this->renderTexture.getDefaultView());

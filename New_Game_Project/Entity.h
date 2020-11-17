@@ -19,6 +19,7 @@ private:
 protected:
 
 	sf::Sprite sprite;
+	sf::RectangleShape sword;
 
 	HitboxComponent* hitboxComponent;
 	MovementComponent* movementComponent;

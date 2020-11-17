@@ -14,11 +14,16 @@ private:
     bool attacking;
     bool shoot;
     Bow* bow;
-    Sword* sword;
+
+    unsigned damageMin;
+    unsigned damageMax;
 
     bool face;
     float shootCooldown;
     float shootCooldownMax;
+
+    sf::Clock attackTimer;
+    sf::Int32 attackTimerMax;
 
     //Initializer functions
     void initVariables();
@@ -33,6 +38,10 @@ public:
     //Accessors
     AttributeComponent* getAttributeComponent();
     const Weapon* getWeapon() const;
+    const HitboxComponent* gethitbox() const;
+    const unsigned& getDamageMin() const;
+    const unsigned& getDamageMax() const;
+    //const bool getAttackTimer() const;
 
     //Functions
     void loseHP(const int hp);
@@ -42,6 +51,7 @@ public:
 
     const sf::Vector2f& getPos() const;
     const bool canShoot();
+    
 
     void updateShoot(const float& dt);
     void update(const float& dt);

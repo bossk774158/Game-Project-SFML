@@ -11,6 +11,8 @@ HitboxComponent::HitboxComponent(sf::Sprite& sprite, float offset_x, float offse
 	this->nextPosition.left = 0.f;
 	this->nextPosition.top = 0.f;
 
+	this->range = 46.f;
+
 	this->hitbox.setPosition(this->sprite.getPosition().x + offset_x, this->sprite.getPosition().y + offset_y);
 	this->hitbox.setSize(sf::Vector2f(width, height));
 	this->hitbox.setFillColor(sf::Color::Transparent);
@@ -39,6 +41,11 @@ const sf::FloatRect& HitboxComponent::getNextPosition(const sf::Vector2f& veloci
 	this->nextPosition.top = this->hitbox.getPosition().y + velocity.y;
 
 	return this->nextPosition;
+}
+
+const unsigned& HitboxComponent::getRange() const
+{
+	return this->range;
 }
 
 void HitboxComponent::setPosition(const sf::Vector2f& position)
