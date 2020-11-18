@@ -48,13 +48,26 @@ private:
 			this->lifetime = lifetime;
 			this->speed = speed;
 		}
+
+		TextTag(TextTag* tag, float pos_x, float pos_y, std::string str)
+		{
+			this->text = tag->text;
+			this->text.setString(str);
+			this->text.setPosition(pos_x, pos_y);
+
+			this->dirX = tag->dirX;
+			this->dirY = tag->dirY;
+			this->lifetime = tag->lifetime;
+			this->speed = tag->speed;
+		}
+
 		~TextTag()
 		{
 
 		}
 
 		//accessors
-		inline const bool canBeRemove() const { return this->lifetime <= 0.f; }
+		inline const bool isExpired() const { return this->lifetime <= 0.f; }
 
 		void update(const float& dt)
 		{
@@ -85,8 +98,9 @@ public:
 	TextTagSystem(std::string font_file);
 	virtual ~TextTagSystem();
 
-	void addTextTag(unsigned tag_type);
-	void removeTextTag();
+	void addTextTag(const unsigned tag_type, const float pos_x,const float pos_y, const std::string str);
+	void addTextTag(const unsigned tag_type, const float pos_x, const float pos_y, const int i);
+	void addTextTag(const unsigned tag_type, const float pos_x, const float pos_y, const float f);
 
 	void update(const float& dt);
 	void render(sf::RenderTarget& target);

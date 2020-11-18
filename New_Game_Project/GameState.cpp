@@ -107,7 +107,7 @@ void GameState::initTileMap()
 
 void GameState::initSystem()
 {
-	this->tts = new TextTagSystem("Fonts/Fun Games.ttf");
+	this->tts = new TextTagSystem("Fonts/8-BIT WONDER.TTF");
 }
 
 GameState::GameState(StateData* state_data)
@@ -186,7 +186,6 @@ void GameState::updatePlayerInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 	{
 		this->player->move(0.f, 1.f, dt);
-		this->tts->addTextTag(DEFAULT_TAG);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("SHOOT"))))
@@ -249,6 +248,7 @@ void GameState::updateCombatAndEnemies(const float& dt)
 		if (enemy->isDead())
 		{
 			this->player->gainEXP(enemy->getGainExp());
+			this->tts->addTextTag(DEFAULT_TAG, this->player->getCenter().x, this->player->getCenter().y, static_cast<int>(enemy->getGainExp()));
 
 			this->activeEnemies.erase(this->activeEnemies.begin() + index);
 			--index;
@@ -265,8 +265,9 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 			if (enemy->getGlobalBounds().contains(this->mousePosView)
 				&& enemy ->getDistance(*this->player) < 40.f)
 			{
-				enemy->loseHP(this->player->getDamageMin());
-				std::cout << enemy->getAttributeComp()->hp << "\n";
+				int dmg = static_cast<int>(this->player->getDamageMin());
+				enemy->loseHP(dmg);
+				this->tts->addTextTag(DEFAULT_TAG, this->player->getCenter().x, this->player->getCenter().y, dmg);
 			}
 		}
 }
