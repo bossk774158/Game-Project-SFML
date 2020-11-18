@@ -41,6 +41,7 @@ public:
     const HitboxComponent* gethitbox() const;
     const unsigned& getDamageMin() const;
     const unsigned& getDamageMax() const;
+    const unsigned getDamage() const;
     //const bool getAttackTimer() const;
 
     //Functions

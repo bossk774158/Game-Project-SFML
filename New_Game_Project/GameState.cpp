@@ -107,7 +107,7 @@ void GameState::initTileMap()
 
 void GameState::initSystem()
 {
-	this->tts = new TextTagSystem("Fonts/8-BIT WONDER.TTF");
+	this->tts = new TextTagSystem("Fonts/Fun Games.ttf");
 }
 
 GameState::GameState(StateData* state_data)
@@ -248,7 +248,7 @@ void GameState::updateCombatAndEnemies(const float& dt)
 		if (enemy->isDead())
 		{
 			this->player->gainEXP(enemy->getGainExp());
-			this->tts->addTextTag(DEFAULT_TAG, this->player->getCenter().x, this->player->getCenter().y, static_cast<int>(enemy->getGainExp()));
+			this->tts->addTextTag(EXP_TAG, this->player->getCenter().x, this->player->getCenter().y, static_cast<int>(enemy->getGainExp()), "" , "+EXP");
 
 			this->activeEnemies.erase(this->activeEnemies.begin() + index);
 			--index;
@@ -262,12 +262,16 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			if (enemy->getGlobalBounds().contains(this->mousePosView)
-				&& enemy ->getDistance(*this->player) < 40.f)
+			if (this->punchTimer.getElapsedTime().asSeconds() > 0.5f)
 			{
-				int dmg = static_cast<int>(this->player->getDamageMin());
-				enemy->loseHP(dmg);
-				this->tts->addTextTag(DEFAULT_TAG, this->player->getCenter().x, this->player->getCenter().y, dmg);
+				if (enemy->getGlobalBounds().contains(this->mousePosView)
+					&& enemy->getDistance(*this->player) < 40.f)
+				{
+					int dmg = static_cast<int>(this->player->getDamage());
+					enemy->loseHP(dmg);
+					this->tts->addTextTag(NEGATIVE_TAG, enemy->getCenter().x, enemy->getCenter().y, dmg, "" , "-HP");
+					this->punchTimer.restart();
+				}
 			}
 		}
 }

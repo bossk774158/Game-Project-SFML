@@ -13,6 +13,13 @@ void Mummy::initAnimation()
 	this->animationComponent->addAnimation("WALK", 1.f, 0, 2, 6, 2, 60, 45);
 }
 
+void Mummy::initGui()
+{
+	this->hpBar.setFillColor(sf::Color::Red);
+	this->hpBar.setSize(sf::Vector2f(55.f, 7.f));
+	this->hpBar.setPosition(this->sprite.getPosition());
+}
+
 void Mummy::initAI()
 {
 
@@ -22,11 +29,14 @@ Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, Entity& player)
 	: Enemy()
 {
 	this->initVariables();
+	this->initGui();
 
 	this->createHitboxComponent(this->sprite, 0.f, 0.f, 55.f, 70.f);
 	this->createMovementComponent(200.f, 1500.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
 	this->createAttributeComponent(1);
+
+	this->generateAttributes(this->attributeComponent->level);
 
 	this->setPosition(x, y);
 	this->initAnimation();
@@ -73,6 +83,9 @@ void Mummy::update(const float& dt)
 {
 	this->movementComponent->update(dt);
 
+	this->hpBar.setSize(sf::Vector2f(55.f * (static_cast<float>(this->attributeComponent->hp) / this->attributeComponent->hpMax), 7.f));
+	this->hpBar.setPosition(this->sprite.getPosition());
+
 	//this->updateAttack();
 
 	this->updateAnimation(dt);
@@ -85,5 +98,8 @@ void Mummy::update(const float& dt)
 void Mummy::render(sf::RenderTarget& target)
 {
 	target.draw(this->sprite);
+
+	target.draw(this->hpBar);
+
 	this->hitboxComponent->render(target);
 }

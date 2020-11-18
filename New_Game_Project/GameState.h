@@ -33,6 +33,7 @@ private:
     std::vector<Arrow*> arrows;
 
     sf::Clock shootTimer;
+    sf::Clock punchTimer;
 
     //Functions
     void initDeferredRender();

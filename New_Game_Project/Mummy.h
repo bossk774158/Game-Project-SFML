@@ -7,7 +7,10 @@ class Mummy :
 private:
     virtual void initVariables();
     virtual void initAnimation();
+    void initGui();
     void initAI();
+
+    sf::RectangleShape hpBar;
 
     AIFollow* follow;
 

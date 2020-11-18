@@ -88,6 +88,11 @@ const unsigned& Player::getDamageMax() const
 	return this->damageMax;
 }
 
+const unsigned Player::getDamage() const
+{
+	return rand() % (this->damageMax - this->damageMin + 1) + (this->damageMin);
+}
+
 //const bool Player::getAttackTimer()
 //{
 //	std::cout << this->attackTimer.getElapsedTime().asMilliseconds() << "\n";
