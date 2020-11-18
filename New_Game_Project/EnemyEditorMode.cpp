@@ -122,12 +122,11 @@ void EnemyEditorMode::updateGui(const float& dt)
 	this->cursorText.setPosition(this->editorStateData->mousePosView->x + 100.f, this->editorStateData->mousePosView->y - 50.f);
 
 	std::stringstream ss;
-	ss << 
-		"\n" << "Enemy Type:" << this->type <<
-		"\n" << "Enemy amount:" << this->amount <<
-		"\n" << "Time to spawn:" << this->timeToSpawn <<
-		"\n" << "Max Distance:" << this->maxDistance;
-
+	ss <<
+		"\n" << "Enemy type: " << this->type <<
+		"\n" << "Enemy amount: " << this->amount <<
+		"\n" << "Time to spawn: " << this->timeToSpawn <<
+		"\n" << "Max distance: " << this->maxDistance;
 
 	this->cursorText.setString(ss.str());
 }
