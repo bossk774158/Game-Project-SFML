@@ -415,11 +415,9 @@ void TileMap::updateTiles(Entity* entity, const float& dt, EnemySystem& enemySys
 					if (es)
 					{
 						//std::cout << es->getSpawned() << "\n";
-						if (!es->getSpawned() && es->getEnemyCounter() < es->getEnemyAmount())
+						if (es->getSpawnTimer() && es->getEnemyCounter() < es->getEnemyAmount())
 						{
 							enemySystem.createEnemy(MUMMY, x * this->gridSizeF, y * this->gridSizeF, *es);
-							es->setSpawned(true);
-							std::cout << "Spawned" << "\n";
 						}
 					}	
 				}
@@ -451,11 +449,11 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 							this->collisionBox.setPosition(this->map[x][y][this->layer][k]->getPosition());
 							target.draw(this->collisionBox);
 						}
-					}
-					if (this->map[x][y][this->layer][k]->getType() == TileType::ENEMYSPAWNER)
-					{
-						this->collisionBox.setPosition(this->map[x][y][this->layer][k]->getPosition());
-						target.draw(this->collisionBox);
+						if (this->map[x][y][this->layer][k]->getType() == TileType::ENEMYSPAWNER)
+						{
+							this->collisionBox.setPosition(this->map[x][y][this->layer][k]->getPosition());
+							target.draw(this->collisionBox);
+						}
 					}
 				}
 			}

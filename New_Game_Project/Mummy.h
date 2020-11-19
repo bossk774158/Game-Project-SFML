@@ -21,7 +21,7 @@ public:
 
     virtual void updateAnimation(const float& dt);
 
-    virtual void update(const float& dt);
+    virtual void update(const float& dt, const sf::View& view);
     virtual void render(sf::RenderTarget& target);
 };
 

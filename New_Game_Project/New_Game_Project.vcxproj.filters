@@ -177,6 +177,9 @@
     <ClCompile Include="TextTagSystem.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="VectorMath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h">
@@ -301,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="TextTagSystem.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorMath.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

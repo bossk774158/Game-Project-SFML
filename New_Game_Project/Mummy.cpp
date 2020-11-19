@@ -87,8 +87,10 @@ void Mummy::updateAnimation(const float& dt)
 
 
 
-void Mummy::update(const float& dt)
+void Mummy::update(const float& dt, const sf::View& view)
 {
+	Enemy::update(dt, view);
+
 	this->movementComponent->update(dt);
 
 	this->hpBar.setSize(sf::Vector2f(55.f * (static_cast<float>(this->attributeComponent->hp) / this->attributeComponent->hpMax), 7.f));

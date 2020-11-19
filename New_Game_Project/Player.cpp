@@ -16,7 +16,7 @@ void Player::initVariables()
 	this->attackTimer.restart();
 	this->attackTimerMax = 500;
 
-	this->damageTimerMax = 500;
+	this->damageTimerMax = 2000;
 
 	this->bow = new Bow(1, 20);
 }
@@ -169,7 +169,7 @@ void Player::updateShoot(const float& dt)
 		this->shootCooldown += 0.5f;
 }
 
-void Player::update(const float& dt)
+void Player::update(const float& dt, const sf::View& view)
 {
 	this->updateShoot(dt);
 	this->movementComponent->update(dt);

@@ -59,7 +59,7 @@ public:
     
 
     void updateShoot(const float& dt);
-    void update(const float& dt);
+    void update(const float& dt, const sf::View& view);
     void render(sf::RenderTarget& target);
 
 };
