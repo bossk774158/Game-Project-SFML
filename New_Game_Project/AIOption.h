@@ -14,6 +14,6 @@ public:
 
 	}
 
-	virtual void update() = 0;
+	virtual void update(const float& dt) = 0;
 };
 

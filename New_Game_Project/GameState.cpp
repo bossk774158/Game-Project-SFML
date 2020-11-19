@@ -263,7 +263,7 @@ void GameState::updateCombatAndEnemies(const float& dt)
 		if (enemy->isDead())
 		{
 			this->player->gainEXP(enemy->getGainExp());
-			this->tts->addTextTag(EXP_TAG, this->player->getCenter().x, this->player->getCenter().y, static_cast<int>(enemy->getGainExp()), "" , "+EXP");
+			this->tts->addTextTag(EXP_TAG, this->player->getPosition().x - 50.f, this->player->getPosition().y, static_cast<int>(enemy->getGainExp()), "+" , "EXP");
 
 			this->enemySystem->removeEnemy(index);
 			--index;
@@ -279,13 +279,20 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 			&& enemy->getGlobalBounds().contains(this->mousePosView)
 			&& enemy->getDistance(*this->player) < 40.f)
 		{
-			if (this->punchTimer.getElapsedTime().asSeconds() > 0.5f)
+			if (this->punchTimer.getElapsedTime().asSeconds() > 0.3f && enemy->getDamageTimerDone())
 			{
 					int dmg = static_cast<int>(this->player->getDamage());
 					enemy->loseHP(dmg);
-					this->tts->addTextTag(NEGATIVE_TAG, enemy->getCenter().x, enemy->getCenter().y, dmg, "" , "-HP");
+					enemy->resetDamageTimer();
+					this->tts->addTextTag(NEGATIVE_TAG, enemy->getCenter().x, enemy->getCenter().y, dmg, "" , "");
 					this->punchTimer.restart(); 
 			}
+		}
+		if (enemy->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getDamageTimer())
+		{
+			int dmg = enemy->getAttributeComp()->damageMax;
+			this->player->loseHP(dmg);
+			this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg, "-", "HP");
 		}
 }
 

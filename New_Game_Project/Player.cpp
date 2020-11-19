@@ -16,6 +16,8 @@ void Player::initVariables()
 	this->attackTimer.restart();
 	this->attackTimerMax = 500;
 
+	this->damageTimerMax = 500;
+
 	this->bow = new Bow(1, 20);
 }
 
@@ -41,7 +43,7 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 
 	this->createHitboxComponent(this->sprite, 0.f, 0.f, 55.f, 70.f);
 	
-	this->createMovementComponent(200.f, 1500.f, 500.f);
+	this->createMovementComponent(200.f, 1000.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
 	this->createAttributeComponent(1);
 	this->createSkillComponent();
@@ -90,7 +92,20 @@ const unsigned& Player::getDamageMax() const
 
 const unsigned Player::getDamage() const
 {
-	return rand() % (this->damageMax - this->damageMin + 1) + (this->damageMin);
+	return rand() % (
+		(this->attributeComponent->damageMax + this->getDamageMax())
+		- (this->attributeComponent->damageMin + this->getDamageMin()) + 1)
+		+ (this->attributeComponent->damageMin + this->getDamageMin());
+}
+
+const bool Player::getDamageTimer()
+{
+	if (this->damageTimer.getElapsedTime().asMilliseconds() >= this->damageTimerMax)
+	{
+		this->damageTimer.restart();
+		return true;
+	}
+	return false;
 }
 
 //const bool Player::getAttackTimer()

@@ -37,11 +37,14 @@ private:
 	void initEXPBar();
 	void initHPBar();
 
+
 public:
 	PlayerGui(Player* player);
 	virtual ~PlayerGui();
 
 	//Functions
+
+
 	void updateLevelBar();
 	void updateEXPBar();
 	void updateHPBar();

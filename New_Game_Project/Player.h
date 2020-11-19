@@ -25,6 +25,9 @@ private:
     sf::Clock attackTimer;
     sf::Int32 attackTimerMax;
 
+    sf::Clock damageTimer;
+    sf::Int32 damageTimerMax;
+
     //Initializer functions
     void initVariables();
     void initComponents();
@@ -43,6 +46,7 @@ public:
     const unsigned& getDamageMax() const;
     const unsigned getDamage() const;
     //const bool getAttackTimer() const;
+    const bool getDamageTimer();
 
     //Functions
     void loseHP(const int hp);

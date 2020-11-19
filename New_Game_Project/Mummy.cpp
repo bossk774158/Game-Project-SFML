@@ -22,10 +22,10 @@ void Mummy::initGui()
 
 void Mummy::initAI()
 {
-
+	
 }
 
-Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile)
+Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile, Entity& player)
 	: Enemy(enemy_spawner_tile)
 {
 	this->initVariables();
@@ -41,8 +41,9 @@ Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& ene
 	this->setPosition(x, y);
 	this->initAnimation();
 
-	//this->follow = new AIFollow(*this, player);
+	this->follow = new AIFollow(*this, player);
 }
+	
 
 Mummy::~Mummy()
 {
@@ -75,6 +76,13 @@ void Mummy::updateAnimation(const float& dt)
 	{
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
+
+	if (this->damageTimer.getElapsedTime().asMilliseconds() <= this->damageTimerMax)
+	{
+		this->sprite.setColor(sf::Color::Red);
+	}
+	else
+		this->sprite.setColor(sf::Color::White);
 }
 
 
@@ -85,8 +93,6 @@ void Mummy::update(const float& dt)
 
 	this->hpBar.setSize(sf::Vector2f(55.f * (static_cast<float>(this->attributeComponent->hp) / this->attributeComponent->hpMax), 7.f));
 	this->hpBar.setPosition(this->sprite.getPosition());
-
-	//this->updateAttack();
 
 	this->updateAnimation(dt);
 

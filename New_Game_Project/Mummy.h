@@ -1,6 +1,7 @@
 #pragma once
 #include "Enemy.h"
 #include "AIFollow.h"
+
 class Mummy :
     public Enemy
 {
@@ -15,7 +16,7 @@ private:
     AIFollow* follow;
 
 public:
-    Mummy(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile);
+    Mummy(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile, Entity& player);
     virtual ~Mummy();
 
     virtual void updateAnimation(const float& dt);

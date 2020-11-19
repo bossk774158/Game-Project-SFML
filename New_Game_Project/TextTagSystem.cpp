@@ -13,10 +13,10 @@ void TextTagSystem::initFonts(std::string font_file)
 
 void TextTagSystem::initTagTemplates()
 {
-	this->tagTemplates[DEFAULT_TAG] = new TextTag(this->font, "", 100.f, 100.f,0.f,-1.f, sf::Color::White, 10, 50.f, 200.f);
-	this->tagTemplates[NEGATIVE_TAG] = new TextTag(this->font, "", 100.f, 100.f, 0.f, 1.f, sf::Color::Red, 15, 50.f, 250.f);
-	this->tagTemplates[POSITIVE_TAG] = new TextTag(this->font, "", 100.f, 100.f, 0.f, -1.f, sf::Color::Green, 15, 50.f, 200.f);
-	this->tagTemplates[EXP_TAG] = new TextTag(this->font, "", 100.f, 100.f,0.f,-1.f, sf::Color::Cyan, 15, 50.f, 250.f);
+	this->tagTemplates[DEFAULT_TAG] = new TextTag(this->font, "", 100.f, 100.f,0.f,-1.f, sf::Color::White, 10, 50.f, 200.f, 500.f,3);
+	this->tagTemplates[NEGATIVE_TAG] = new TextTag(this->font, "", 100.f, 100.f, 0.f, 1.f, sf::Color::Red, 15, 50.f, 200.f, 500.f, 3);
+	this->tagTemplates[POSITIVE_TAG] = new TextTag(this->font, "", 100.f, 100.f, 0.f, -1.f, sf::Color::Green, 15, 50.f, 200.f, 500.f, 3);
+	this->tagTemplates[EXP_TAG] = new TextTag(this->font, "", 100.f, 100.f,0.f,-1.f, sf::Color::Cyan, 15, 50.f, 150.f, 500.f, 3);
 }
 
 TextTagSystem::TextTagSystem(std::string font_file)

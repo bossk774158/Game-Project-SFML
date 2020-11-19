@@ -19,7 +19,7 @@ void EnemySystem::createEnemy(const short type,const float xPos, const float yPo
 	switch (type)
 	{
 	case EnemyTypes::MUMMY:
-		this->activeEnemies.push_back(new Mummy(xPos, yPos, this->textures["MUMMY_IDLE"], enemy_spawner_tile));
+		this->activeEnemies.push_back(new Mummy(xPos, yPos, this->textures["MUMMY_IDLE"], enemy_spawner_tile, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
 		break;
 	default:

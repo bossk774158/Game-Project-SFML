@@ -1,9 +1,11 @@
 #pragma once
 #include "AIOption.h"
+
 class AIFollow :
     public AIOption
 {
-private:
+protected:
+    
 
 public:
     AIFollow(Entity& self, Entity& entity);

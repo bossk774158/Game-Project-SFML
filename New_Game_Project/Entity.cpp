@@ -55,6 +55,7 @@ void Entity::createSkillComponent()
 
 void Entity::createAIComponent()
 {
+
 }
 
 const sf::Vector2f& Entity::getPosition() const
