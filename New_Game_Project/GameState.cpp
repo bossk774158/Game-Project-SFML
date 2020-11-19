@@ -75,6 +75,7 @@ void GameState::initPauseMenu()
 	this->pmenu = new PauseMenu(*this->window, this->font);
 
 	this->pmenu->addButton("QUIT", 600.f, "Quit");
+
 }
 
 void GameState::initPlayers()
@@ -98,6 +99,11 @@ void GameState::initEnemySystem()
 {
 	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures, *this->player);
 }
+
+//void GameState::initEnemy()
+//{
+//	this->enemySystem->createEnemy(MUMMY, 400.f, 400.f);
+//}
 
 void GameState::initTileMap()
 {
@@ -123,6 +129,7 @@ GameState::GameState(StateData* state_data)
 	this->initEnemySystem();
 	this->initPlayers(); 
 	this->initPlayerGui();
+	//this->initEnemy();
 	this->initArrow();
 	this->initTileMap();
 	this->initSystem();
@@ -232,6 +239,14 @@ void GameState::updateArrow(const float& dt)
 	}
 }
 
+//void GameState::updateSpawnEnemy(const float& dt)
+//{
+//	if (this->spawnTimer.getElapsedTime().asSeconds() > 30.f)
+//	{
+//		this->enemySystem->createEnemy(MUMMY, 400.f, 400.f);
+//	}
+//}
+
 void GameState::updateCombatAndEnemies(const float& dt)
 {
 	unsigned index = 0;
@@ -250,7 +265,7 @@ void GameState::updateCombatAndEnemies(const float& dt)
 			this->player->gainEXP(enemy->getGainExp());
 			this->tts->addTextTag(EXP_TAG, this->player->getCenter().x, this->player->getCenter().y, static_cast<int>(enemy->getGainExp()), "" , "+EXP");
 
-			this->activeEnemies.erase(this->activeEnemies.begin() + index);
+			this->enemySystem->removeEnemy(index);
 			--index;
 		}
 
@@ -260,18 +275,16 @@ void GameState::updateCombatAndEnemies(const float& dt)
 
 void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 {
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) 
+			&& enemy->getGlobalBounds().contains(this->mousePosView)
+			&& enemy->getDistance(*this->player) < 40.f)
 		{
 			if (this->punchTimer.getElapsedTime().asSeconds() > 0.5f)
 			{
-				if (enemy->getGlobalBounds().contains(this->mousePosView)
-					&& enemy->getDistance(*this->player) < 40.f)
-				{
 					int dmg = static_cast<int>(this->player->getDamage());
 					enemy->loseHP(dmg);
 					this->tts->addTextTag(NEGATIVE_TAG, enemy->getCenter().x, enemy->getCenter().y, dmg, "" , "-HP");
-					this->punchTimer.restart();
-				}
+					this->punchTimer.restart(); 
 			}
 		}
 }
@@ -297,6 +310,8 @@ void GameState::update(const float& dt)
 		this->updateArrow(dt);
 
 		this->updateCombatAndEnemies(dt);
+
+		//this->updateSpawnEnemy(dt);
 
 		this->tts->update(dt);
 	}

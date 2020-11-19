@@ -35,6 +35,8 @@ private:
     sf::Clock shootTimer;
     sf::Clock punchTimer;
 
+    sf::Clock spawnTimer;
+
     //Functions
     void initDeferredRender();
     void initView();
@@ -46,6 +48,7 @@ private:
     void initPlayerGui();
     void initArrow();
     void initEnemySystem();
+    void initEnemy();
     void initTileMap();
     void initSystem();
  
@@ -64,6 +67,7 @@ public:
     void updateTileMap(const float& dt);
     void updatePlayer(const float& dt);
     void updateArrow(const float& dt);
+    //void updateSpawnEnemy(const float& dt);
     void updateCombatAndEnemies(const float& dt);
     void updateCombat(Enemy* enemy, const int index, const float& dt);
     void update(const float& dt);

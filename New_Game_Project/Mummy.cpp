@@ -25,8 +25,8 @@ void Mummy::initAI()
 
 }
 
-Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, Entity& player)
-	: Enemy()
+Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile)
+	: Enemy(enemy_spawner_tile)
 {
 	this->initVariables();
 	this->initGui();

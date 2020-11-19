@@ -30,6 +30,7 @@ private:
     sf::View view;
     sf::Font font;
     sf::Font font_number;
+    sf::Font font2;
     PauseMenu* pmenu;
 
     std::map<std::string, gui::Button*> buttons;

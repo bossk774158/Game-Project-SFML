@@ -19,6 +19,7 @@ public:
 
     sf::Font* font;
     sf::Font* font_number;
+    sf::Font* font2;
 
     float* keytime;
     float* keytimeMax;
@@ -41,7 +42,6 @@ protected:
 	StateData* stateData;
     EditorStateData* editorStateData;
     TileMap* tileMap;
-    sf::Font* font_number;
 
 public:
 	EditorMode(StateData* state_data, TileMap* tile_map,EditorStateData* editor_state_data);

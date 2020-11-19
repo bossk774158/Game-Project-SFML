@@ -15,7 +15,7 @@ private:
     AIFollow* follow;
 
 public:
-    Mummy(float x, float y, sf::Texture& texture_sheet, Entity& player);
+    Mummy(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile);
     virtual ~Mummy();
 
     virtual void updateAnimation(const float& dt);

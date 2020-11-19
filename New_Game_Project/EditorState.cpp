@@ -33,12 +33,17 @@ void EditorState::initView()
 
 void EditorState::initFonts()
 {
-	if (!this->font.loadFromFile("Fonts/Rodwick.otf"))
+	if (!this->font.loadFromFile("Fonts/Honeybae.otf"))
 	{
 		throw("Error to download font::From editorstate");
 	}
 
 	if (!this->font_number.loadFromFile("Fonts/Fun Games.ttf"))
+	{
+		throw("Error to download font");
+	}
+
+	if (!this->font2.loadFromFile("Fonts/Honeybae.otf"))
 	{
 		throw("Error to download font");
 	}

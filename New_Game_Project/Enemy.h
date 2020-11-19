@@ -2,15 +2,13 @@
 #include "Entity.h"
 #include "EnemySpawnerTile.h"
 
-class Entity;
-class EnemySpawnerTile;
 
 class Enemy :
     public Entity
 {
 private:
     //Variables
-    //EnemySpawnerTile& enemySpawner;
+    EnemySpawnerTile& enemySpawnerTile;
     unsigned gainExp;
 
     //Initializer functions
@@ -18,10 +16,11 @@ private:
     virtual void initAnimation() = 0;
 
 public:
-    Enemy();
+    Enemy(EnemySpawnerTile& enemy_spawner_tile);
     virtual ~Enemy();
 
     const unsigned& getGainExp() const;
+    EnemySpawnerTile& getEnemySpawnerTile();
 
     virtual void generateAttributes(const unsigned level);
 

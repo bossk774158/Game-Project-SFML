@@ -11,10 +11,10 @@ void EnemyEditorMode::initVariables()
 void EnemyEditorMode::initGui()
 {
 	//Text
-	this->cursorText.setFont(*this->font_number);
+	this->cursorText.setFont(*this->editorStateData->font);
 	this->cursorText.setFillColor(sf::Color::White);
-	this->cursorText.setCharacterSize(15);
-	this->cursorText.setPosition(this->editorStateData->mousePosView->x, this->editorStateData->mousePosView->y);
+	this->cursorText.setCharacterSize(25);
+	this->cursorText.setPosition(this->editorStateData->mousePosView->x, this->editorStateData->mousePosView->y - 100.f);
 
 	//General Gui
 	this->sidebar.setSize(sf::Vector2f(60.f, static_cast<float>(this->stateData->gfxSettings->resolution.height)));
@@ -141,10 +141,11 @@ void EnemyEditorMode::renderGui(sf::RenderTarget& target)
 {
 	target.setView(*this->editorStateData->view);
 	target.draw(this->selectorRect);
-	target.draw(this->cursorText);
+	
 
 	target.setView(target.getDefaultView());
 	target.draw(this->sidebar);
+	target.draw(this->cursorText);
 }
 
 void EnemyEditorMode::render(sf::RenderTarget& target)

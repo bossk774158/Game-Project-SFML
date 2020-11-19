@@ -12,9 +12,9 @@ void DefaultEditorMode::initVariables()
 void DefaultEditorMode::initGui()
 {
 	//Text
-	this->cursorText.setFont(*this->font_number);
+	this->cursorText.setFont(*this->editorStateData->font);
 	this->cursorText.setFillColor(sf::Color::White);
-	this->cursorText.setCharacterSize(15);
+	this->cursorText.setCharacterSize(20);
 	this->cursorText.setPosition(this->editorStateData->mousePosView->x, this->editorStateData->mousePosView->y);
 
 	//General Gui
@@ -158,6 +158,7 @@ void DefaultEditorMode::renderGui(sf::RenderTarget& target)
 		target.setView(*this->editorStateData->view);
 		target.draw(this->selectorRect);
 	}
+
 
 	target.setView(this->stateData->window->getDefaultView());
 	this->textureSelector->render(target);

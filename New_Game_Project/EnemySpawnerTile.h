@@ -24,6 +24,7 @@ class EnemySpawnerTile
 private:
 	int enemyType;
 	int enemyAmount;
+	int enemyCounter;
 	sf::Clock enemySpawnTimer;
 	sf::Int32 enemyTimeToSpawn;
 	float enemyMaxDistance;
@@ -39,11 +40,16 @@ public:
 	//Accessors
 	virtual const std::string getAsSting() const;
 	const bool& getSpawned() const;
+	const int& getEnemyAmount()const;
+	const int& getEnemyCounter() const;
 
 	//Modifiers
 	void setSpawned(const bool spawned);
 
+	//functions
 	const bool canSpawn() const;
+	void increaseEnemyCounter();
+	void decreaseEnemyCounter();
 
 	void update();
 	void render(sf::RenderTarget& target);
