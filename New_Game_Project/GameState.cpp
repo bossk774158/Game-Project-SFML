@@ -164,6 +164,11 @@ GameState::~GameState()
 		delete i;
 	}
 
+	for (auto* item : this->items)
+	{
+		delete item;
+	}
+
 	delete this->enemySystem;
 	delete this->tileMap;
 	delete this->tts;
@@ -204,9 +209,7 @@ void GameState::updatePlayerInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
 		this->player->move(0.f, -1.f, dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
-	{
 		this->player->move(0.f, 1.f, dt);
-	}
 
 	
 		
@@ -269,6 +272,9 @@ void GameState::updateCombatAndEnemies(const float& dt)
 		//DANGEROUS
 		if (enemy->isDead())
 		{
+			if(enemy->getIsDrop())
+				this->items.push_back(new Item(&this->textures["HEALTH_POTION"], "HEAL", enemy->getPosition().x, enemy->getPosition().y));
+
 			this->player->gainEXP(enemy->getGainExp());
 			this->tts->addTextTag(EXP_TAG, this->player->getPosition().x - 50.f, this->player->getPosition().y + 30.f, static_cast<int>(enemy->getGainExp()), "+" , "EXP");
 
@@ -291,7 +297,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 			&& enemy->getGlobalBounds().contains(this->mousePosView)
 			&& enemy->getDistance(*this->player) < 50.f)
 		{
-			if (this->punchTimer.getElapsedTime().asSeconds() > 0.3f && enemy->getDamageTimerDone())
+			if (this->punchTimer.getElapsedTime().asSeconds() > 0.1f && enemy->getDamageTimerDone())
 			{
 					int dmg = static_cast<int>(this->player->getDamage());
 					enemy->loseHP(dmg);
@@ -362,11 +368,16 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
 
-	this->player->render(this->renderTexture);
-
 	for (auto* enemy : this->activeEnemies)
 	{
 		enemy->render(this->renderTexture);
+	}
+
+	this->player->render(this->renderTexture);
+
+	for (auto* Item : this->items)
+	{
+		Item->render(this->renderTexture);
 	}
 
 	for (auto* arrow : this->arrows)

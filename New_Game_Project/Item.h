@@ -30,7 +30,7 @@ private:
 	
 
 public:
-	Item(sf::Texture* texture, std::string type, float x, float y);
+	Item(sf::Texture* texture, std::string type, const float x, const float y);
 	~Item();
 
 	//Accessors

@@ -47,6 +47,11 @@ const bool Enemy::getDespawnTimerDone() const
 	return this->despawnTimer.getElapsedTime().asMilliseconds() >= this->despawnTimerMax;
 }
 
+bool Enemy::getIsDrop()
+{
+	return this->isDrop;
+}
+
 void Enemy::resetDamageTimer()
 {
 	this->damageTimer.restart();

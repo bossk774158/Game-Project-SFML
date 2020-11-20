@@ -50,8 +50,7 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 	this->animationComponent->addAnimation("WALK", 1.1f, 0, 1, 5, 1, 40, 36);
 	this->animationComponent->addAnimation("ATTACK", 0.7f, 0, 2, 6, 2, 34, 36);
 	this->animationComponent->addAnimation("SHOOT", 0.3f, 0, 3, 6, 3, 34, 36);
-	//this->animationComponent->addAnimation("ATTACK_COMBO1", 0.7f, 0, 4, 6, 4, 34, 36);
-	//this->animationComponent->addAnimation("ATTACK_COMBO2", 0.7f, 0, 5, 6, 5, 34, 36);
+	
 }
 
 Player::~Player()
@@ -232,7 +231,7 @@ void Player::update(const float& dt, const sf::View& view)
 	{
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
-	else if(this->movementComponent->getState(MOVING_DOWN))
+	else
 	{
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}

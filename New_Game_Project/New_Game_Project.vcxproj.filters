@@ -251,9 +251,6 @@
     <ClInclude Include="EnemySystem.h">
       <Filter>Entities\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Items.h">
-      <Filter>Item</Filter>
-    </ClInclude>
     <ClInclude Include="AIOption.h">
       <Filter>AI</Filter>
     </ClInclude>

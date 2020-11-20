@@ -15,6 +15,8 @@ protected:
     sf::Clock despawnTimer;
     sf::Int32 despawnTimerMax;
 
+    bool isDrop;
+
     //Initializer functions
     virtual void initVariables() = 0;
     virtual void initAnimation() = 0;
@@ -28,6 +30,7 @@ public:
     EnemySpawnerTile& getEnemySpawnerTile();
     const bool getDamageTimerDone() const;
     const bool getDespawnTimerDone() const;
+    bool getIsDrop();
 
     //Modifier
     void resetDamageTimer();
