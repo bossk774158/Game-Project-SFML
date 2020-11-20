@@ -55,6 +55,10 @@ void GameState::initFonts()
 	{
 		throw("Error to download font");
 	}
+	if (!this->font_number.loadFromFile("Fonts/Honeybae.otf"))
+	{
+		throw("Error to download font");
+	}
 }
 
 void GameState::initTextures()
@@ -68,6 +72,12 @@ void GameState::initTextures()
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MUMMY_IDLE_TEXTURE";
 	}
+
+	if (!this->textures["HEALTH_POTION"].loadFromFile("Resources/Images/Potions/health_potion.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_HEALTH_POTION_TEXTURE";
+	}
+	
 }
 
 void GameState::initPauseMenu()
@@ -76,6 +86,14 @@ void GameState::initPauseMenu()
 
 	this->pmenu->addButton("QUIT", 600.f, "Quit");
 
+}
+
+void GameState::initDebugText()
+{
+	this->debugText.setFont(this->font_number);
+	this->debugText.setFillColor(sf::Color::White);
+	this->debugText.setCharacterSize(16);
+	this->debugText.setPosition(15.f, this->window->getSize().y / 2.f);
 }
 
 void GameState::initPlayers()
@@ -92,18 +110,13 @@ void GameState::initArrow()
 {
 	this->texture["ARROW"] = new sf::Texture();
 	if (!this->texture["ARROW"]->loadFromFile("Resources/Images/Sprites/Player/Bullet.png"))
-		std::cout << "ERROR" << "\n";
+		std::cout << "ERROR_BULLET" << "\n";
 }
 
 void GameState::initEnemySystem()
 {
 	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures, *this->player);
 }
-
-//void GameState::initEnemy()
-//{
-//	this->enemySystem->createEnemy(MUMMY, 400.f, 400.f);
-//}
 
 void GameState::initTileMap()
 {
@@ -125,11 +138,11 @@ GameState::GameState(StateData* state_data)
 	this->initFonts();
 	this->initTextures();
 	this->initPauseMenu();
+	this->initDebugText();
 
 	this->initEnemySystem();
 	this->initPlayers(); 
 	this->initPlayerGui();
-	//this->initEnemy();
 	this->initArrow();
 	this->initTileMap();
 	this->initSystem();
@@ -195,15 +208,7 @@ void GameState::updatePlayerInput(const float& dt)
 		this->player->move(0.f, 1.f, dt);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("SHOOT"))))
-	{
-		if (this->shootTimer.getElapsedTime().asSeconds() > 0.5f)
-		{
-			this->arrows.push_back(new Arrow(this->texture["ARROW"], this->player->getPos().x, this->player->getPos().y, 1.f, 0.f, 1500.f));
-			this->shootTimer.restart();
-			std::cout << "shot!" << "\n";
-		}
-	}
+	
 		
 }
 
@@ -216,6 +221,16 @@ void GameState::updatePauseMenuButtons()
 {
 	if (this->pmenu->isButtonPressed("QUIT"))
 		this->endState();
+}
+
+void GameState::updateDebugText(const float& dt)
+{
+	std::stringstream ss;
+
+	ss << "Mouse Pos View: " << this->mousePosView.x << " " << this->mousePosView.y << "\n"
+		<< "Active Enemies: " << this->activeEnemies.size() << "\n";
+
+	this->debugText.setString(ss.str());
 }
 
 void GameState::updateTileMap(const float& dt)
@@ -238,14 +253,6 @@ void GameState::updateArrow(const float& dt)
 		arrow->update(dt);
 	}
 }
-
-//void GameState::updateSpawnEnemy(const float& dt)
-//{
-//	if (this->spawnTimer.getElapsedTime().asSeconds() > 30.f)
-//	{
-//		this->enemySystem->createEnemy(MUMMY, 400.f, 400.f);
-//	}
-//}
 
 void GameState::updateCombatAndEnemies(const float& dt)
 {
@@ -282,7 +289,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) 
 			&& enemy->getGlobalBounds().contains(this->mousePosView)
-			&& enemy->getDistance(*this->player) < 40.f)
+			&& enemy->getDistance(*this->player) < 50.f)
 		{
 			if (this->punchTimer.getElapsedTime().asSeconds() > 0.3f && enemy->getDamageTimerDone())
 			{
@@ -293,6 +300,17 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 					this->punchTimer.restart(); 
 			}
 		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("SHOOT"))))
+		{
+			if (this->shootTimer.getElapsedTime().asSeconds() > 0.6f)
+			{
+				this->arrows.push_back(new Arrow(this->texture["ARROW"], this->player->getPos().x, this->player->getPos().y, 1.f, 0.f, 1500.f));
+				this->shootTimer.restart();
+				std::cout << "shot!" << "\n";
+			}
+		}
+
 		if (enemy->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getDamageTimer())
 		{
 			int dmg = enemy->getAttributeComp()->damageMax;
@@ -306,6 +324,7 @@ void GameState::update(const float& dt)
 	this->updateMousePositions(&this->view);
 	this->updateKeytime(dt);
 	this->updateInput(dt);
+	this->updateDebugText(dt);
 
 	if (!this->paused) //Unpause
 	{
@@ -322,8 +341,6 @@ void GameState::update(const float& dt)
 		this->updateArrow(dt);
 
 		this->updateCombatAndEnemies(dt);
-
-		//this->updateSpawnEnemy(dt);
 
 		this->tts->update(dt);
 	}
@@ -368,6 +385,9 @@ void GameState::render(sf::RenderTarget* target)
 		this->renderTexture.setView(this->renderTexture.getDefaultView());
 		this->pmenu->render(this->renderTexture);
 	}
+
+	//DEBUG TEXT
+	this->renderTexture.draw(this->debugText);
 
 	//FINAL RENDER
 	this->renderTexture.display();

@@ -23,6 +23,7 @@ public:
     Enemy(EnemySpawnerTile& enemy_spawner_tile);
     virtual ~Enemy();
 
+    //Accessors
     const unsigned& getGainExp() const;
     EnemySpawnerTile& getEnemySpawnerTile();
     const bool getDamageTimerDone() const;

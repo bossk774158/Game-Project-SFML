@@ -22,24 +22,25 @@ enum ItemTypes {IT_DEFAULT = 0, IT_RANGEDWEAPON, IT_MELEEWEAPON};
 class Item
 {
 private:
+	sf::Texture texture;
+	sf::RectangleShape shape;
+	std::string type;
+
 	void initVarialbles();
 	
-protected:
-	//variables
-	short unsigned type;
-	unsigned level;
-	unsigned value;
 
 public:
-	Item(unsigned level, unsigned value);
-	virtual ~Item();
+	Item(sf::Texture* texture, std::string type, float x, float y);
+	~Item();
 
 	//Accessors
-	const short unsigned& getType() const { return this->type; };
-	const unsigned& getLevel() const { return this->level; };
-	const unsigned& getValue() const { return this->value; };
+	sf::FloatRect getGlobalBounds();
+	const std::string& getType() const;
 
-	//functions
-	virtual Item* clone() = 0;
+	//Functions
+	void update();
+
+	//Render
+	void render(sf::RenderTarget& target);
 };
 

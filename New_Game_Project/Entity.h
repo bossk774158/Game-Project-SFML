@@ -19,7 +19,6 @@ private:
 protected:
 
 	sf::Sprite sprite;
-	sf::RectangleShape sword;
 
 	HitboxComponent* hitboxComponent;
 	MovementComponent* movementComponent;
@@ -50,8 +49,15 @@ public:
 	virtual void setPosition(const float x, const float y);
 
 	//Accessors
+	virtual MovementComponent* getMovementcomponent();
+	virtual AnimationComponent* getAnimationComponent();
+	virtual AttributeComponent* getAttributeComponent();
+	virtual SkillComponent* getSkillComponent();
+
 	virtual const sf::Vector2f& getPosition() const;
+	virtual const sf::Vector2f& getSpritePosition() const;
 	virtual const sf::Vector2f getCenter() const;
+	virtual const sf::Vector2f getSpriteCenter() const;
 	virtual const sf::Vector2i getGridPosition(const int gridSizeI) const;
 	virtual const sf::FloatRect getGlobalBounds() const;
 	virtual const sf::FloatRect getNextPositionBounds(const float& dt) const;

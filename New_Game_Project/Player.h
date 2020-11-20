@@ -1,19 +1,20 @@
 #pragma once
 #include "Entity.h"
 #include "Items.h"
-#include "Inventory.h"
+
 
 class Player :
     public Entity
 {
 private:
     //Varaibles
-    Inventory* inventory;
     sf::RectangleShape sword_shape;
 
     bool attacking;
     bool shoot;
-    Bow* bow;
+    bool attacking_combo1;
+    bool attacking_combo2;
+
 
     unsigned damageMin;
     unsigned damageMax;
@@ -25,6 +26,8 @@ private:
     sf::Clock attackTimer;
     sf::Int32 attackTimerMax;
 
+    sf::Clock shootTimer;
+
     sf::Clock damageTimer;
     sf::Int32 damageTimerMax;
 
@@ -32,7 +35,7 @@ private:
     void initVariables();
     void initComponents();
     void initAnimation();
-    void initInventory();
+
 
 public:
     Player(float x, float y, sf::Texture& texture_sheet);
@@ -40,7 +43,6 @@ public:
 
     //Accessors
     AttributeComponent* getAttributeComponent();
-    const Weapon* getWeapon() const;
     const HitboxComponent* gethitbox() const;
     const unsigned& getDamageMin() const;
     const unsigned& getDamageMax() const;

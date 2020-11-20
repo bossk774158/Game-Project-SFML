@@ -4,6 +4,7 @@ void Player::initVariables()
 {
 	this->sprite.setScale(2.f,2.f);
 	this->attacking = false;
+	this->attacking_combo1 = false;
 	this->shoot = false;
 	this->face = false;
 
@@ -18,7 +19,6 @@ void Player::initVariables()
 
 	this->damageTimerMax = 2000;
 
-	this->bow = new Bow(1, 20);
 }
 
 void Player::initComponents()
@@ -31,17 +31,12 @@ void Player::initAnimation()
 
 }
 
-void Player::initInventory()
-{
-	this->inventory = new Inventory(100);
-}
-
 //Constructors /Destructors 
 Player::Player(float x,float y,sf::Texture& texture_sheet)
 {
 	this->initVariables();
 
-	this->createHitboxComponent(this->sprite, 0.f, 0.f, 55.f, 70.f);
+	this->createHitboxComponent(this->sprite, -7.f, 0.f, 55.f, 70.f);
 	
 	this->createMovementComponent(200.f, 1000.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
@@ -51,28 +46,22 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 	this->setPosition(x, y);
 	this->initAnimation();
 
-	this->initInventory();
-
 	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 0, 3, 0, 60, 36);
 	this->animationComponent->addAnimation("WALK", 1.1f, 0, 1, 5, 1, 40, 36);
-	this->animationComponent->addAnimation("ATTACK", 1.f, 0, 2, 6, 2, 34, 36);
-	this->animationComponent->addAnimation("SHOOT", 1.f, 0, 3, 6, 3, 34, 36);
+	this->animationComponent->addAnimation("ATTACK", 0.7f, 0, 2, 6, 2, 34, 36);
+	this->animationComponent->addAnimation("SHOOT", 0.3f, 0, 3, 6, 3, 34, 36);
+	//this->animationComponent->addAnimation("ATTACK_COMBO1", 0.7f, 0, 4, 6, 4, 34, 36);
+	//this->animationComponent->addAnimation("ATTACK_COMBO2", 0.7f, 0, 5, 6, 5, 34, 36);
 }
 
 Player::~Player()
 {
-	delete this->inventory;
-	delete this->bow;
+	
 }
 
 AttributeComponent* Player::getAttributeComponent()
 {
 	return this->attributeComponent;
-}
-
-const Weapon* Player::getWeapon() const
-{
-	return this->bow;
 }
 
 const HitboxComponent* Player::gethitbox() const
@@ -184,6 +173,30 @@ void Player::update(const float& dt, const sf::View& view)
 		if (this->animationComponent->play("ATTACK", dt, true))
 			this->attacking = false;
 	}
+	
+	////Combo1
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+	//{
+	//	this->attacking_combo1 = true;
+	//}
+
+	//if (this->attacking_combo1)
+	//{
+	//	if (this->animationComponent->play("ATTACK_COMBO1", dt, true))
+	//		this->attacking_combo1 = false;
+	//}
+
+	////Combo2
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	//{
+	//	this->attacking_combo2 = true;
+	//}
+
+	//if (this->attacking_combo2)
+	//{
+	//	if (this->animationComponent->play("ATTACK_COMBO2", dt, true))
+	//		this->attacking_combo2 = false;
+	//}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
 	{
@@ -191,8 +204,8 @@ void Player::update(const float& dt, const sf::View& view)
 	}
 	if (this->shoot)
 	{
-		if (this->animationComponent->play("SHOOT", dt, true))
-			this->shoot = false;
+			if (this->animationComponent->play("SHOOT", dt, true))
+				this->shoot = false;
 	}
 
 	if (this->movementComponent->getState(IDLE))

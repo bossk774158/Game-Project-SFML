@@ -66,6 +66,11 @@ const sf::Vector2f& Entity::getPosition() const
 	return this->sprite.getPosition();
 }
 
+const sf::Vector2f& Entity::getSpritePosition() const
+{
+	return this->sprite.getPosition();
+}
+
 const sf::Vector2f Entity::getCenter() const
 {
 	if (this->hitboxComponent)
@@ -79,6 +84,16 @@ const sf::Vector2f Entity::getCenter() const
 
 	return
 		this->sprite.getPosition() +
+		sf::Vector2f
+		(
+			this->sprite.getGlobalBounds().width / 2.f,
+			this->sprite.getGlobalBounds().height / 2.f
+		);
+}
+
+const sf::Vector2f Entity::getSpriteCenter() const
+{
+	return this->sprite.getPosition() +
 		sf::Vector2f
 		(
 			this->sprite.getGlobalBounds().width / 2.f,
@@ -124,6 +139,26 @@ void Entity::setPosition(const float x, const float y)
 		this->hitboxComponent->setPosition(x, y);
 	else 
 		this->sprite.setPosition(x, y);
+}
+
+MovementComponent* Entity::getMovementcomponent()
+{
+	return this->movementComponent;
+}
+
+AnimationComponent* Entity::getAnimationComponent()
+{
+	return this->animationComponent;
+}
+
+AttributeComponent* Entity::getAttributeComponent()
+{
+	return this->attributeComponent;
+}
+
+SkillComponent* Entity::getSkillComponent()
+{
+	return this->skillcomponent;
 }
 
 void Entity::move(const float dir_x, const float dir_y, const float& dt)

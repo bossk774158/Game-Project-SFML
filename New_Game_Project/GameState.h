@@ -3,9 +3,9 @@
 #include "PauseMenu.h"
 #include "TileMap.h"
 #include "PlayerGui.h"
-#include "Bow.h"
 #include "Arrow.h"
 #include "TextTagSystem.h"
+#include "Item.h"
 
 class GameState :
     public State
@@ -15,17 +15,33 @@ private:
     sf::RenderTexture renderTexture;
     sf::Sprite renderSprite;
 
+    //Gui
     sf::Font font;
+    sf::Font font_number;
     PauseMenu* pmenu;
 
+    //Debug
+    sf::Text debugText;
+
+    //Player
     Player* player;
     PlayerGui* playerGui;
 
+    //Item
+    std::vector<Item*> items;
+    std::map<std::string, sf::SoundBuffer*> soundEffects;
+
+    sf::Sound pickUpItemSound;
+    sf::Sound pickUpBonusItemSound;
+
+    //Enemy
     std::vector<Enemy*> activeEnemies;
     EnemySystem* enemySystem;
 
+    //Tilemap
     TileMap* tileMap;
 
+    //Texttag
     TextTagSystem* tts;
 
     //Arrow
@@ -44,6 +60,7 @@ private:
     void initFonts();
     void initTextures();
     void initPauseMenu();
+    void initDebugText();
     void initPlayers();
     void initPlayerGui();
     void initArrow();
@@ -64,12 +81,13 @@ public:
     void updatePlayerInput(const float& dt);
     void updatePlayerGui(const float& dt);
     void updatePauseMenuButtons();
+    void updateDebugText(const float& dt);
     void updateTileMap(const float& dt);
     void updatePlayer(const float& dt);
     void updateArrow(const float& dt);
     //void updateSpawnEnemy(const float& dt);
     void updateCombatAndEnemies(const float& dt);
-    void updateCombat(Enemy* enemy, const int index, const float& dt);
+    void updateCombat(Enemy* enemy ,const int index, const float& dt);
     void update(const float& dt);
     void render(sf::RenderTarget* target = NULL);
 };
