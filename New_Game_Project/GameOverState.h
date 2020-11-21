@@ -4,7 +4,7 @@
 #include "GameState.h"
 
 class GameOverState :
-    public State
+	public State
 {
 private:
 	//Resources
@@ -27,7 +27,7 @@ private:
 	void initFonts();
 	void initButtons();
 	void initKeybinds();
-	
+
 public:
 	GameOverState(StateData* state_data);
 	virtual ~GameOverState();
@@ -47,4 +47,3 @@ public:
 	void renderButtons(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target);
 };
-

@@ -6,7 +6,7 @@ void GameOverState::initVariables()
 
 void GameOverState::initMusic()
 {
-	
+
 }
 
 void GameOverState::initBackground()
@@ -118,7 +118,7 @@ void GameOverState::addButton(const std::string key, float y, const std::string 
 
 	this->buttons[key] = new gui::Button(
 		x, y, width, height,
-		&this->font, "New Game", 50,
+		&this->font, text, 50,
 		sf::Color(80, 80, 80, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }

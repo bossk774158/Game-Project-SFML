@@ -77,6 +77,36 @@ void GameState::initTextures()
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_HEALTH_POTION_TEXTURE";
 	}
+
+	if (!this->textures["POISON_POTION"].loadFromFile("Resources/Images/Potions/poison_potion.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_HEALTH_POTION_TEXTURE";
+	}
+
+	if (!this->textures["SPEED_POTION"].loadFromFile("Resources/Images/Potions/speed_potion.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_HEALTH_POTION_TEXTURE";
+	}
+
+	if (!this->textures["EXP_POTION"].loadFromFile("Resources/Images/Potions/exp_potion.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_HEALTH_POTION_TEXTURE";
+	}
+
+	if (!this->textures["RANDOM_POTION"].loadFromFile("Resources/Images/Potions/random_potion.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_HEALTH_POTION_TEXTURE";
+	}
+
+	if (!this->textures["STRENGTH_POTION"].loadFromFile("Resources/Images/Potions/strength_potion.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_HEALTH_POTION_TEXTURE";
+	}
+
+	if (!this->textures["RANDOM_BOX"].loadFromFile("Resources/Images/Potions/random_box.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_HEALTH_POTION_TEXTURE";
+	}
 	
 }
 
