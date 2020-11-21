@@ -85,7 +85,6 @@ void GameState::initPauseMenu()
 	this->pmenu = new PauseMenu(*this->window, this->font);
 
 	this->pmenu->addButton("QUIT", 600.f, "Quit");
-
 }
 
 void GameState::initDebugText()
@@ -248,6 +247,15 @@ void GameState::updatePlayer(const float& dt)
 
 }
 
+void GameState::updatePlayerIsDead(const float& dt)
+{
+	if (this->player->getAttributeComponent()->hp_player <= 0)
+	{
+		this->states->pop();
+		this->states->push(new GameOverState(this->stateData));
+	}
+}
+
 void GameState::updateArrow(const float& dt)
 {
 	unsigned counter = 0;
@@ -295,12 +303,18 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) 
 			&& enemy->getGlobalBounds().contains(this->mousePosView)
-			&& enemy->getDistance(*this->player) < 50.f)
+			&& enemy->getDistance(*this->player) < 55.f)
 		{
 			if (this->punchTimer.getElapsedTime().asSeconds() > 0.1f && enemy->getDamageTimerDone())
 			{
 					int dmg = static_cast<int>(this->player->getDamage());
 					enemy->loseHP(dmg);
+					if (enemy->isDead())
+					{
+						if(enemy->getIsDrop())
+						this->items.push_back(new Item(&this->textures["HEALTH_POTION"], "HEAL", enemy->getPosition().x, enemy->getPosition().y + enemy->getGlobalBounds().height - 40.f));
+						std::cout << "Item::heal drop!" << "\n";
+					}
 					enemy->resetDamageTimer();
 					this->tts->addTextTag(NEGATIVE_TAG, enemy->getCenter().x, enemy->getCenter().y, dmg, "" , "");
 					this->punchTimer.restart(); 
@@ -319,10 +333,25 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 
 		if (enemy->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getDamageTimer())
 		{
-			int dmg = enemy->getAttributeComp()->damageMax;
+			int dmg = enemy->getAttributeComp()->damageMax_enemy;
 			this->player->loseHP(dmg);
 			this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg, "-", "HP");
 		}
+}
+
+void GameState::updateItemCollision(const float& dt)
+{
+	unsigned itemCounter = 0;
+	for (auto* item : items)
+	{
+		if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getAttributeComponent()->hp_player <= 50 && item->getType() == "HEAL")
+		{
+			this->player->gainHP(10);
+			this->items.erase(this->items.begin() + itemCounter);
+			--itemCounter;
+		}
+		++itemCounter;
+	}
 }
 
 void GameState::update(const float& dt)
@@ -348,7 +377,11 @@ void GameState::update(const float& dt)
 
 		this->updateCombatAndEnemies(dt);
 
+		this->updateItemCollision(dt);
+
 		this->tts->update(dt);
+
+		this->updatePlayerIsDead(dt);
 	}
 	else //Pause
 	{

@@ -6,6 +6,7 @@
 #include "Arrow.h"
 #include "TextTagSystem.h"
 #include "Item.h"
+#include "GameOverState.h"
 
 class GameState :
     public State
@@ -84,10 +85,12 @@ public:
     void updateDebugText(const float& dt);
     void updateTileMap(const float& dt);
     void updatePlayer(const float& dt);
+    void updatePlayerIsDead(const float& dt);
     void updateArrow(const float& dt);
     //void updateSpawnEnemy(const float& dt);
     void updateCombatAndEnemies(const float& dt);
     void updateCombat(Enemy* enemy ,const int index, const float& dt);
+    void updateItemCollision(const float& dt);
     void update(const float& dt);
     void render(sf::RenderTarget* target = NULL);
 };

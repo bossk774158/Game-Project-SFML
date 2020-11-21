@@ -109,18 +109,18 @@ const bool Player::getDamageTimer()
 
 void Player::loseHP(const int hp)
 {
-	this->attributeComponent->hp -= hp;
+	this->attributeComponent->hp_player -= hp;
 
-	if (this->attributeComponent->hp < 0)
-		this->attributeComponent->hp = 0;
+	if (this->attributeComponent->hp_player < 0)
+		this->attributeComponent->hp_player = 0;
 }
 
 void Player::gainHP(const int hp)
 {
-	this->attributeComponent->hp += hp;
+	this->attributeComponent->hp_player += hp;
 
-	if (this->attributeComponent->hp > this->attributeComponent->hpMax)
-		this->attributeComponent->hp = this->attributeComponent->hpMax;
+	if (this->attributeComponent->hp_player > this->attributeComponent->hpMax_player)
+		this->attributeComponent->hp_player = this->attributeComponent->hpMax_player;
 }
 
 void Player::loseEXP(const int exp)

@@ -30,9 +30,24 @@ public:
 	int agility;
 	int intelligence;
 
+	//All about enemies
+	int hp_enemy;
+	int hpMax_enemy;
+	int damageMin_enemy;
+	int damageMax_enemy;
+	int vitality_enemy;
+	int strength_enemy;
+	int dexterity_enemy;
+	int agility_enemy;
+	int intelligence_enemy;
+	int accuracy_enemy;
+	int defence_enemy;
+	int luck_enemy;
+
+
 	//Stats
-	int hp;
-	int hpMax;
+	int hp_player;
+	int hpMax_player;
 	int damageMin;
 	int damageMax;
 	int accuracy;
@@ -51,7 +66,11 @@ public:
 	void loseHP(const int hp);
 	void gainHP(const int hp);
 
-	const bool isDead() const;
+	void enemyLoseHP(const int hp_enemy);
+
+	const bool playerIsDead() const;
+	const bool enemyIsDead() const;
+	
 
 	void updateState(const bool reset);
 	void updateLevel();

@@ -6,6 +6,8 @@ void Enemy::initVariables()
 	this->gainExp = 15;
 	this->damageTimerMax = 1000;
 	this->despawnTimerMax = 1000;
+
+	this->isDrop = true;
 }
 
 void Enemy::initAnimation()
@@ -52,6 +54,11 @@ bool Enemy::getIsDrop()
 	return this->isDrop;
 }
 
+bool Enemy::getIsDeath()
+{
+	return this->isDeath;
+}
+
 void Enemy::resetDamageTimer()
 {
 	this->damageTimer.restart();
@@ -62,11 +69,11 @@ void Enemy::generateAttributes(const unsigned level)
 	this->gainExp = level * (rand() % 20 + 10);
 }
 
-void Enemy::loseHP(const int hp)
+void Enemy::loseHP(const int hp_enemy)
 {
 	if (this->attributeComponent)
 	{
-		this->attributeComponent->loseHP(hp);
+		this->attributeComponent->enemyLoseHP(hp_enemy);
 	}
 }
 
@@ -74,7 +81,7 @@ const bool Enemy::isDead() const
 {
 	if (this->attributeComponent)
 	{
-		return this->attributeComponent->isDead();
+		return this->attributeComponent->enemyIsDead();
 	}
 	return false;
 }

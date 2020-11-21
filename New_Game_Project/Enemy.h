@@ -6,6 +6,10 @@
 class Enemy :
     public Entity
 {
+private:
+    bool isDrop;
+    bool isDeath;
+
 protected:
     //Variables
     EnemySpawnerTile& enemySpawnerTile;
@@ -14,8 +18,6 @@ protected:
     sf::Int32 damageTimerMax;
     sf::Clock despawnTimer;
     sf::Int32 despawnTimerMax;
-
-    bool isDrop;
 
     //Initializer functions
     virtual void initVariables() = 0;
@@ -31,13 +33,14 @@ public:
     const bool getDamageTimerDone() const;
     const bool getDespawnTimerDone() const;
     bool getIsDrop();
+    bool getIsDeath();
 
     //Modifier
     void resetDamageTimer();
 
     virtual void generateAttributes(const unsigned level);
 
-    virtual void loseHP(const int hp);
+    virtual void loseHP(const int hp_enemy);
     virtual const bool isDead() const;
 
     virtual const AttributeComponent* getAttributeComp() const;

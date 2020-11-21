@@ -104,7 +104,7 @@ void PlayerGui::updateEXPBar()
 //Functions
 void PlayerGui::updateHPBar()
 {
-	float percent = static_cast<float>(std::floor(this->player->getAttributeComponent()->hp)) / static_cast<float>(std::floor(this->player->getAttributeComponent()->hpMax));
+	float percent = static_cast<float>(std::floor(this->player->getAttributeComponent()->hp_player)) / static_cast<float>(std::floor(this->player->getAttributeComponent()->hpMax_player));
 
 	this->hpBarInner.setSize(
 		sf::Vector2f(
@@ -113,7 +113,7 @@ void PlayerGui::updateHPBar()
 		)
 	);
 
-	this->hpBarString = std::to_string(this->player->getAttributeComponent()->hp) + " / " + std::to_string(this->player->getAttributeComponent()->hpMax);
+	this->hpBarString = std::to_string(this->player->getAttributeComponent()->hp_player) + " / " + std::to_string(this->player->getAttributeComponent()->hpMax_player);
 	this->hpBarText.setString(this->hpBarString);
 }
 
