@@ -162,6 +162,9 @@
     <ClCompile Include="Dragon.cpp">
       <Filter>Entities\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Bird.cpp">
+      <Filter>Entities\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h">
@@ -273,7 +276,10 @@
       <Filter>State</Filter>
     </ClInclude>
     <ClInclude Include="Dragon.h">
-      <Filter>Entities</Filter>
+      <Filter>Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Bird.h">
+      <Filter>Entities\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

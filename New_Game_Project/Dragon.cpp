@@ -7,10 +7,10 @@ void Dragon::initVariables()
 
 void Dragon::initAnimation()
 {
-	this->animationComponent->addAnimation("ATTACK", 1.f, 0, 0, 4, 1, 180, 130);
+	this->animationComponent->addAnimation("ATTACK", 1.f, 0, 0, 4, 0, 180, 130);
 	this->animationComponent->addAnimation("WALK", 1.f, 0, 1, 4, 1, 120, 130);
-	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 2, 2, 0, 240, 130);
-	this->animationComponent->addAnimation("DEATH", 1.f, 0, 3, 4, 1, 120, 130);
+	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 2, 2, 2, 240, 130);
+	this->animationComponent->addAnimation("DEATH", 1.f, 0, 3, 4, 3, 120, 130);
 }
 
 void Dragon::initGui()
@@ -31,7 +31,7 @@ Dragon::Dragon(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& e
 	this->initVariables();
 	this->initGui();
 
-	this->createHitboxComponent(this->sprite, 0.f, 0.f, 45.f, 60.f);
+	this->createHitboxComponent(this->sprite, 0.f, 0.f, 220.f, 300.f);
 	this->createMovementComponent(200.f, 1500.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
 	this->createAttributeComponent(1);
@@ -41,12 +41,12 @@ Dragon::Dragon(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& e
 	this->setPosition(x, y);
 	this->initAnimation();
 
-	this->follow = new AIFollow(*this, player);
+	//this->follow = new AIFollow(*this, player);
 }
 
 Dragon::~Dragon()
 {
-	delete this->follow;
+	//delete this->follow;
 }
 
 void Dragon::updateAnimation(const float& dt)
@@ -86,7 +86,7 @@ void Dragon::updateAnimation(const float& dt)
 
 void Dragon::update(const float& dt, const sf::View& view)
 {
-	Dragon::update(dt, view);
+	Enemy::update(dt, view);
 
 	this->movementComponent->update(dt);
 
@@ -97,7 +97,7 @@ void Dragon::update(const float& dt, const sf::View& view)
 
 	this->hitboxComponent->update();
 
-	this->follow->update(dt);
+	//this->follow->update(dt);
 }
 
 void Dragon::render(sf::RenderTarget& target)

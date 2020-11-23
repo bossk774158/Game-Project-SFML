@@ -1,33 +1,30 @@
-#include "Mummy.h"
-
-void Mummy::initVariables()
+#include "Bird.h"
+void Bird::initVariables()
 {
 	this->sprite.setScale(1.5f, 1.5f);
 }
 
-void Mummy::initAnimation()
+void Bird::initAnimation()
 {
 
-	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 0, 3, 0, 60, 45);
-	this->animationComponent->addAnimation("ATTACK_LEFT", 1.1f, 0, 1, 5, 1, 60, 45);
-	this->animationComponent->addAnimation("WALK_LEFT", 1.f, 0, 2, 5, 2, 60, 45);
-	this->animationComponent->addAnimation("WALK_RIGHT", 1.f, 0, 3, 5, 3, 60, 45);
-	this->animationComponent->addAnimation("ATTACK_RIGHT", 1.1f, 0, 4, 5, 4, 60, 45);
+	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 1, 3, 1, 37, 30);
+	this->animationComponent->addAnimation("WALK_LEFT", 1.f, 0, 0, 3, 0, 37, 30);
+	this->animationComponent->addAnimation("WALK_RIGHT", 1.f, 0, 2, 3, 2, 37, 30);
 }
 
-void Mummy::initGui()
+void Bird::initGui()
 {
 	this->hpBar.setFillColor(sf::Color::Red);
 	this->hpBar.setSize(sf::Vector2f(55.f, 7.f));
 	this->hpBar.setPosition(this->sprite.getPosition());
 }
 
-void Mummy::initAI()
+void Bird::initAI()
 {
-	
+
 }
 
-Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile, Entity& player)
+Bird::Bird(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile, Entity& player)
 	: Enemy(enemy_spawner_tile)
 {
 	this->initVariables();
@@ -45,14 +42,14 @@ Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& ene
 
 	this->follow = new AIFollow(*this, player);
 }
-	
 
-Mummy::~Mummy()
+
+Bird::~Bird()
 {
-	//delete this->follow;
+	delete this->follow;
 }
 
-void Mummy::updateAnimation(const float& dt)
+void Bird::updateAnimation(const float& dt)
 {
 	if (this->movementComponent->getState(IDLE))
 	{
@@ -60,19 +57,17 @@ void Mummy::updateAnimation(const float& dt)
 	}
 	else if (this->movementComponent->getState(MOVING_RIGHT))
 	{
-		this->sprite.setScale(1.5f, 1.5f);
-		this->animationComponent->play("ATTACK_RIGHT", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
+		this->animationComponent->play("WALK_RIGHT", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
-		this->sprite.setScale(-1.5f, 1.5f);
 		this->animationComponent->play("WALK_LEFT", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_UP))
 	{
 		this->animationComponent->play("WALK_LEFT", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
-	else if(this->movementComponent->getState(MOVING_DOWN))
+	else if (this->movementComponent->getState(MOVING_DOWN))
 	{
 		this->animationComponent->play("WALK_LEFT", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
@@ -87,7 +82,7 @@ void Mummy::updateAnimation(const float& dt)
 
 
 
-void Mummy::update(const float& dt, const sf::View& view)
+void Bird::update(const float& dt, const sf::View& view)
 {
 	Enemy::update(dt, view);
 
@@ -100,10 +95,10 @@ void Mummy::update(const float& dt, const sf::View& view)
 
 	this->hitboxComponent->update();
 
-	//this->follow->update(dt);
+	this->follow->update(dt);
 }
 
-void Mummy::render(sf::RenderTarget& target)
+void Bird::render(sf::RenderTarget& target)
 {
 	target.draw(this->sprite);
 

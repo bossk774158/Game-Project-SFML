@@ -15,9 +15,11 @@
 #include<SFML/System.hpp>
 
 #include "Mummy.h"
+#include "Dragon.h"
+#include "Bird.h"
 #include "EnemySpawnerTile.h"
 
-enum EnemyTypes {MUMMY = 0, DRAGON = 0};
+enum EnemyTypes {MUMMY = 0, DRAGON, BIRD};
 
 class EnemySystem
 {

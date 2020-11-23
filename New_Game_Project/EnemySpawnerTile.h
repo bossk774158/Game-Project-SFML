@@ -42,6 +42,8 @@ public:
 	const int& getEnemyAmount()const;
 	const int& getEnemyCounter() const;
 	const bool getSpawnTimer();
+	const int& getEnemyType() const;
+	const float& getEnemyMaxDistance() const;
 	//Modifiers
 
 	//functions

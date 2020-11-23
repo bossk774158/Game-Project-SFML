@@ -73,6 +73,16 @@ void GameState::initTextures()
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MUMMY_IDLE_TEXTURE";
 	}
 
+	if (!this->textures["DRAGON_IDLE"].loadFromFile("Resources/Images/Sprites/Enemies/boss_demon.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_DRAGON_IDLE_TEXTURE";
+	}
+
+	if (!this->textures["BIRD_IDLE"].loadFromFile("Resources/Images/Sprites/Enemies/enemy_bird.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_DRAGON_IDLE_TEXTURE";
+	}
+
 	if (!this->textures["HEALTH_POTION"].loadFromFile("Resources/Images/Potions/health_potion.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_HEALTH_POTION_TEXTURE";
