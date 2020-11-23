@@ -91,8 +91,8 @@ GameOverState::GameOverState(StateData* state_data)
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
-	this->initButtons();
 	this->initKeybinds();
+	this->initButtons();
 	//this->initMusic();
 }
 
@@ -140,6 +140,7 @@ void GameOverState::updateButtons()
 	//New Game
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
+		this->states->pop();
 		this->states->push(new GameState(this->stateData));
 		this->bg_music.stop();
 	}
@@ -152,7 +153,7 @@ void GameOverState::updateInput(const float& dt)
 
 void GameOverState::update(const float& dt)
 {
-	//this->updateMousePosition();
+	this->updateMousePositions();
 	this->updateInput(dt);
 	this->updateButtons();
 }

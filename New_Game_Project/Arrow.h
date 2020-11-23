@@ -29,7 +29,8 @@ public:
 
 	//accessors
 	sf::FloatRect getbounds() const;
-
+	
+	void flipArrow();
 	bool isIntersects(sf::FloatRect other);
 
 	void update(const float& dt);

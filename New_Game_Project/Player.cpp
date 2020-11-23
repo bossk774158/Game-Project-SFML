@@ -36,7 +36,7 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 {
 	this->initVariables();
 
-	this->createHitboxComponent(this->sprite, -7.f, 0.f, 55.f, 70.f);
+	this->createHitboxComponent(this->sprite, -7.f, 0.f, 50.f, 70.f);
 	
 	this->createMovementComponent(200.f, 1000.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
@@ -49,7 +49,7 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 0, 3, 0, 60, 36);
 	this->animationComponent->addAnimation("WALK", 1.1f, 0, 1, 5, 1, 40, 36);
 	this->animationComponent->addAnimation("ATTACK", 0.7f, 0, 2, 6, 2, 34, 36);
-	this->animationComponent->addAnimation("SHOOT", 0.3f, 0, 3, 6, 3, 34, 36);
+	this->animationComponent->addAnimation("SHOOT", 0.5f, 0, 3, 6, 3, 34, 36);
 	
 }
 
@@ -94,6 +94,16 @@ const bool Player::getDamageTimer()
 		return true;
 	}
 	return false;
+}
+
+const bool& Player::getIsFaceRight()
+{
+	return this->face;
+}
+
+const bool& Player::getIsShoot()
+{
+	return this->shoot;
 }
 
 //const bool Player::getAttackTimer()

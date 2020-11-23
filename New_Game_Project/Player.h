@@ -49,6 +49,8 @@ public:
     const unsigned getDamage() const;
     //const bool getAttackTimer() const;
     const bool getDamageTimer();
+    const bool& getIsFaceRight();
+    const bool& getIsShoot();
 
     //Functions
     void loseHP(const int hp);

@@ -27,6 +27,11 @@ sf::FloatRect Arrow::getbounds() const
 	return this->shape.getGlobalBounds();
 }
 
+void Arrow::flipArrow()
+{
+	this->shape.setScale(-0.3f, 0.3f);
+}
+
 bool Arrow::isIntersects(sf::FloatRect other)
 {
 	if (this->shape.getGlobalBounds().intersects(other))

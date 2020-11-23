@@ -305,7 +305,51 @@ void GameState::updateArrow(const float& dt)
 	for (auto* arrow : this->arrows)
 	{
 		arrow->update(dt);
+
+		for (auto* enemy : this->activeEnemies)
+		{
+			if (arrow->getbounds().intersects(enemy->getGlobalBounds()))
+			{
+				enemy->loseHP(10);
+				if (enemy->isDead())
+				{
+					if (enemy->getIsDrop())
+					{
+						random();
+						if (this->i == 1)
+						{
+							this->items.push_back(new Item(&this->textures["HEALTH_POTION"], "HEAL", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+							std::cout << "Item::heal drop!" << "\n";
+						}
+						else if (this->i == 2)
+						{
+							this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+							std::cout << "Item::heal drop!" << "\n";
+						}
+						else if (this->i == 3)
+						{
+							this->items.push_back(new Item(&this->textures["EXP_POTION"], "EXP", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+							std::cout << "Item::heal drop!" << "\n";
+						}
+						else if (this->i == 4)
+						{
+							this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+							std::cout << "Item::heal drop!" << "\n";
+						}
+						else
+						{
+							this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+							std::cout << "Item::heal drop!" << "\n";
+						}
+					}
+				}
+				delete this->arrows.at(counter);
+				this->arrows.erase(this->arrows.begin() + counter);
+				--counter;
+			}
+		}
 	}
+	++counter;
 }
 
 void GameState::updateCombatAndEnemies(const float& dt)
@@ -374,7 +418,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 								this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else if (this->i == 5)
+							else
 							{
 								this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
@@ -390,9 +434,12 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("SHOOT"))))
 		{
-			if (this->shootTimer.getElapsedTime().asSeconds() > 0.6f)
+			if (this->shootTimer.getElapsedTime().asSeconds() > 0.5f && this->player->getIsShoot() == false)
 			{
-				this->arrows.push_back(new Arrow(this->texture["ARROW"], this->player->getPos().x, this->player->getPos().y, 1.f, 0.f, 1500.f));
+				if(this->player->getIsFaceRight())
+						this->arrows.push_back(new Arrow(this->texture["ARROW"], this->player->getPos().x, this->player->getPos().y, -1.f, 0.f, 1500.f));
+				else
+						this->arrows.push_back(new Arrow(this->texture["ARROW"], this->player->getPos().x, this->player->getPos().y, 1.f, 0.f, 1500.f));
 				this->shootTimer.restart();
 				std::cout << "shot!" << "\n";
 			}
