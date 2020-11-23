@@ -72,6 +72,17 @@ void AttributeComponent::gainHP(const int hp)
 		this->hp_player = this->hpMax_player;
 }
 
+void AttributeComponent::getStrength(const int str)
+{
+	this->strength += str;
+	std::cout << "Got stronger!" << "\n";
+
+	updateState(true);
+
+	
+	std::cout << this->strength << "\n";
+}
+
 void AttributeComponent::enemyLoseHP(const int hp_enemy)
 {
 	this->hp_enemy -= hp_enemy;

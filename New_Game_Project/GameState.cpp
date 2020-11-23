@@ -209,6 +209,19 @@ GameState::~GameState()
 
 }
 
+void GameState::random()
+{
+	this->i = rand() % 5;
+}
+
+void GameState::itemsRandom()
+{
+	for (int a = 0; a <= 5; a++)
+	{
+		random();
+	}
+}
+
 void GameState::updateView(const float& dt)
 {
 	this->view.setCenter(
@@ -310,9 +323,6 @@ void GameState::updateCombatAndEnemies(const float& dt)
 		//DANGEROUS
 		if (enemy->isDead())
 		{
-			if(enemy->getIsDrop())
-				this->items.push_back(new Item(&this->textures["HEALTH_POTION"], "HEAL", enemy->getPosition().x, enemy->getPosition().y));
-
 			this->player->gainEXP(enemy->getGainExp());
 			this->tts->addTextTag(EXP_TAG, this->player->getPosition().x - 50.f, this->player->getPosition().y + 30.f, static_cast<int>(enemy->getGainExp()), "+" , "EXP");
 
@@ -341,9 +351,36 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 					enemy->loseHP(dmg);
 					if (enemy->isDead())
 					{
-						if(enemy->getIsDrop())
-						this->items.push_back(new Item(&this->textures["HEALTH_POTION"], "HEAL", enemy->getPosition().x, enemy->getPosition().y + enemy->getGlobalBounds().height - 40.f));
-						std::cout << "Item::heal drop!" << "\n";
+						if (enemy->getIsDrop())
+						{
+							random();
+							if (this->i == 1)
+							{
+								this->items.push_back(new Item(&this->textures["HEALTH_POTION"], "HEAL", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+								std::cout << "Item::heal drop!" << "\n";
+							}
+							else if (this->i == 2)
+							{
+								this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f , enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+								std::cout << "Item::heal drop!" << "\n";
+							}
+							else if (this->i == 3)
+							{
+								this->items.push_back(new Item(&this->textures["EXP_POTION"], "EXP", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+								std::cout << "Item::heal drop!" << "\n";
+							}
+							else if(this->i == 4)
+							{
+								this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+								std::cout << "Item::heal drop!" << "\n";
+							}
+							else if (this->i == 5)
+							{
+								this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+								std::cout << "Item::heal drop!" << "\n";
+							}
+							
+						}
 					}
 					enemy->resetDamageTimer();
 					this->tts->addTextTag(NEGATIVE_TAG, enemy->getCenter().x, enemy->getCenter().y, dmg, "" , "");
@@ -377,6 +414,24 @@ void GameState::updateItemCollision(const float& dt)
 		if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getAttributeComponent()->hp_player <= 50 && item->getType() == "HEAL")
 		{
 			this->player->gainHP(10);
+			this->items.erase(this->items.begin() + itemCounter);
+			--itemCounter;
+		}
+		else if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && item->getType() == "POISON")
+		{
+			this->player->loseHP(5);
+			this->items.erase(this->items.begin() + itemCounter);
+			--itemCounter;
+		}
+		else if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && item->getType() == "EXP")
+		{
+			this->player->gainEXP(30);
+			this->items.erase(this->items.begin() + itemCounter);
+			--itemCounter;
+		}
+		else if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && item->getType() == "STRENGTH")
+		{
+			this->player->getAttributeComponent()->getStrength(10);
 			this->items.erase(this->items.begin() + itemCounter);
 			--itemCounter;
 		}

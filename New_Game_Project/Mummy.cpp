@@ -41,7 +41,7 @@ Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& ene
 	this->setPosition(x, y);
 	this->initAnimation();
 
-	this->follow = new AIFollow(*this, player);
+	//this->follow = new AIFollow(*this, player);
 }
 	
 

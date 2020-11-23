@@ -16,6 +16,8 @@ private:
     sf::RenderTexture renderTexture;
     sf::Sprite renderSprite;
 
+    int i;
+
     //Gui
     sf::Font font;
     sf::Font font_number;
@@ -74,6 +76,10 @@ private:
 public:
     GameState(StateData* state_data);
     virtual ~GameState();
+
+    //Modifiers
+    void random();
+    void itemsRandom();
 
 
     //Functions

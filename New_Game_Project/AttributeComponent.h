@@ -54,6 +54,8 @@ public:
 	int defence;
 	int luck;
 
+	sf::Clock stats;
+
 	//Con /De
 	AttributeComponent(int level);
 	virtual ~AttributeComponent();
@@ -65,6 +67,7 @@ public:
 	void gainExp(const int exp);
 	void loseHP(const int hp);
 	void gainHP(const int hp);
+	void getStrength(const int str);
 
 	void enemyLoseHP(const int hp_enemy);
 
