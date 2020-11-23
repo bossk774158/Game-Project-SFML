@@ -1,32 +1,32 @@
-#include "Mummy.h"
+#include "Dragon.h"
 
-void Mummy::initVariables()
+void Dragon::initVariables()
 {
-	this->sprite.setScale(1.5f, 1.5f);
+	this->sprite.setScale(3.f, 3.f);
 }
 
-void Mummy::initAnimation()
+void Dragon::initAnimation()
 {
-
-	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 0, 3, 0, 60, 45);
-	this->animationComponent->addAnimation("ATTACK", 1.1f, 0, 1, 6, 1, 60, 45);
-	this->animationComponent->addAnimation("WALK", 1.f, 0, 2, 6, 2, 60, 45);
+	this->animationComponent->addAnimation("ATTACK", 1.f, 0, 0, 4, 1, 180, 130);
+	this->animationComponent->addAnimation("WALK", 1.f, 0, 1, 4, 1, 120, 130);
+	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 2, 2, 0, 240, 130);
+	this->animationComponent->addAnimation("DEATH", 1.f, 0, 3, 4, 1, 120, 130);
 }
 
-void Mummy::initGui()
+void Dragon::initGui()
 {
 	this->hpBar.setFillColor(sf::Color::Red);
 	this->hpBar.setSize(sf::Vector2f(55.f, 7.f));
 	this->hpBar.setPosition(this->sprite.getPosition());
 }
 
-void Mummy::initAI()
+void Dragon::initAI()
 {
-	
+
 }
 
-Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile, Entity& player)
-	: Enemy(enemy_spawner_tile)
+Dragon::Dragon(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile, Entity& player)
+	:Enemy(enemy_spawner_tile)
 {
 	this->initVariables();
 	this->initGui();
@@ -43,14 +43,13 @@ Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& ene
 
 	this->follow = new AIFollow(*this, player);
 }
-	
 
-Mummy::~Mummy()
+Dragon::~Dragon()
 {
 	delete this->follow;
 }
 
-void Mummy::updateAnimation(const float& dt)
+void Dragon::updateAnimation(const float& dt)
 {
 	if (this->movementComponent->getState(IDLE))
 	{
@@ -85,11 +84,9 @@ void Mummy::updateAnimation(const float& dt)
 		this->sprite.setColor(sf::Color::White);
 }
 
-
-
-void Mummy::update(const float& dt, const sf::View& view)
+void Dragon::update(const float& dt, const sf::View& view)
 {
-	Enemy::update(dt, view);
+	Dragon::update(dt, view);
 
 	this->movementComponent->update(dt);
 
@@ -103,7 +100,7 @@ void Mummy::update(const float& dt, const sf::View& view)
 	this->follow->update(dt);
 }
 
-void Mummy::render(sf::RenderTarget& target)
+void Dragon::render(sf::RenderTarget& target)
 {
 	target.draw(this->sprite);
 

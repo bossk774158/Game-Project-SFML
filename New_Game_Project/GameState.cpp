@@ -168,9 +168,9 @@ GameState::GameState(StateData* state_data)
 	this->initTextures();
 	this->initPauseMenu();
 	this->initDebugText();
+	this->initPlayers(); 
 
 	this->initEnemySystem();
-	this->initPlayers(); 
 	this->initPlayerGui();
 	this->initArrow();
 	this->initTileMap();

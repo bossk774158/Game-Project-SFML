@@ -22,6 +22,8 @@ void EnemySystem::createEnemy(const short type,const float xPos, const float yPo
 		this->activeEnemies.push_back(new Mummy(xPos, yPos, this->textures["MUMMY_IDLE"], enemy_spawner_tile, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
 		break;
+	//case EnemyTypes::DRAGON:
+
 	default:
 		std::cout << "ERROR::ENEMYSYSTEM::CREATENEMY::TYPE DOES NOT EXIST" << "\n";
 		break;
