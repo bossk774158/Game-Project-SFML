@@ -8,6 +8,7 @@
 #include "Item.h"
 #include "GameOverState.h"
 #include "Dragon.h"
+#include "EnemySpawnerTile.h"
 
 class GameState :
     public State

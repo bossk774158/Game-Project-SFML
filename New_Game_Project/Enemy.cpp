@@ -49,6 +49,11 @@ const bool Enemy::getDespawnTimerDone() const
 	return this->despawnTimer.getElapsedTime().asMilliseconds() >= this->despawnTimerMax;
 }
 
+const bool Enemy::getEnemyType() const
+{
+	return enemySpawnerTile.getEnemyType();
+}
+
 bool Enemy::getIsDrop()
 {
 	return this->isDrop;
@@ -69,19 +74,53 @@ void Enemy::generateAttributes(const unsigned level)
 	this->gainExp = level * (rand() % 20 + 10);
 }
 
-void Enemy::loseHP(const int hp_enemy)
+void Enemy::loseHP_mummy(const int hp_mummy)
 {
 	if (this->attributeComponent)
 	{
-		this->attributeComponent->enemyLoseHP(hp_enemy);
+		this->attributeComponent->mummyLoseHP(hp_mummy);
 	}
 }
 
-const bool Enemy::isDead() const
+const bool Enemy::mummyIsDead() const
 {
 	if (this->attributeComponent)
 	{
-		return this->attributeComponent->enemyIsDead();
+		return this->attributeComponent->mummyIsDead();
+	}
+	return false;
+}
+
+void Enemy::loseHP_bird(const int hp_bird)
+{
+	if (this->attributeComponent)
+	{
+		this->attributeComponent->birdLoseHP(hp_bird);
+	}
+}
+
+const bool Enemy::birdIsDead() const
+{
+	if (this->attributeComponent)
+	{
+		return this->attributeComponent->birdIsDead();
+	}
+	return false;
+}
+
+void Enemy::loseHP_boss(const int hp_boss)
+{
+	if (this->attributeComponent)
+	{
+		this->attributeComponent->birdLoseHP(hp_boss);
+	}
+}
+
+const bool Enemy::bossIsDead() const
+{
+	if (this->attributeComponent)
+	{
+		return this->attributeComponent->bossIsDead();
 	}
 	return false;
 }

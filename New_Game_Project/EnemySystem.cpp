@@ -22,12 +22,12 @@ void EnemySystem::createEnemy(const short type,const float xPos, const float yPo
 		this->activeEnemies.push_back(new Mummy(xPos, yPos, this->textures["MUMMY_IDLE"], enemy_spawner_tile, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
 		break;
-	case EnemyTypes::DRAGON:
-		this->activeEnemies.push_back(new Dragon(xPos, yPos, this->textures["DRAGON_IDLE"], enemy_spawner_tile, this->player));
-		enemy_spawner_tile.increaseEnemyCounter();
-		break;
 	case EnemyTypes::BIRD:
 		this->activeEnemies.push_back(new Bird(xPos, yPos, this->textures["BIRD_IDLE"], enemy_spawner_tile, this->player));
+		enemy_spawner_tile.increaseEnemyCounter();
+		break;
+	case EnemyTypes::DRAGON:
+		this->activeEnemies.push_back(new Dragon(xPos, yPos, this->textures["DRAGON_IDLE"], enemy_spawner_tile, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
 		break;
 

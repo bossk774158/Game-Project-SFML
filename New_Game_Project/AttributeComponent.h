@@ -30,26 +30,49 @@ public:
 	int agility;
 	int intelligence;
 
-	//All about enemies
-	int hp_enemy;
-	int hpMax_enemy;
-	int damageMin_enemy;
-	int damageMax_enemy;
-	int vitality_enemy;
-	int strength_enemy;
-	int dexterity_enemy;
-	int agility_enemy;
-	int intelligence_enemy;
-	int accuracy_enemy;
-	int defence_enemy;
-	int luck_enemy;
+	//All about mummy
+	int hp_mummy;
+	int hpMax_mummy;
+	int damageMin_mummy;
+	int damageMax_mummy;
+	int vitality_mummy;
+	int strength_mummy;
+	int dexterity_mummy;
+	int agility_mummy;
+	int intelligence_mummy;
+	int accuracy_mummy;
+	int defence_mummy;
+	int luck_mummy;
 
-	//Boss
+	//All about bird
+	int hp_bird;
+	int hpMax_bird;
+	int damageMin_bird;
+	int damageMax_bird;
+	int vitality_bird;
+	int strength_bird;
+	int dexterity_bird;
+	int agility_bird;
+	int intelligence_bird;
+	int accuracy_bird;
+	int defence_bird;
+	int luck_bird;
+
+	//All about boss
 	int hp_boss;
 	int hpMax_boss;
+	int damageMin_boss;
+	int damageMax_boss;
+	int vitality_boss;
+	int strength_boss;
+	int dexterity_boss;
+	int agility_boss;
+	int intelligence_boss;
+	int accuracy_boss;
+	int defence_boss;
+	int luck_boss;
 
-
-	//Stats
+	//Player Stats
 	int hp_player;
 	int hpMax_player;
 	int damageMin;
@@ -73,11 +96,13 @@ public:
 	void gainHP(const int hp);
 	void getStrength(const int str);
 
-	void enemyLoseHP(const int hp_enemy);
+	void mummyLoseHP(const int hp_enemy_mummy);
+	void birdLoseHP(const int hp_enemy_bird);
 	void bossLoseHP(const int hp_boss);
 
 	const bool playerIsDead() const;
-	const bool enemyIsDead() const;
+	const bool mummyIsDead() const;
+	const bool birdIsDead() const;
 	const bool bossIsDead() const;
 	
 

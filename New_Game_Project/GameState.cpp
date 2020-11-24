@@ -323,10 +323,56 @@ void GameState::updateArrow(const float& dt)
 
 		for (auto* enemy : this->activeEnemies)
 		{
+			int dmg = static_cast<int>(this->player->getDamage());
 			if (arrow->getbounds().intersects(enemy->getGlobalBounds()))
 			{
-				enemy->loseHP(10);
-				if (enemy->isDead())
+				if (enemy->getEnemyType() == 0)
+				{
+					enemy->loseHP_mummy(dmg);
+				}
+				else if(enemy->getEnemyType() == 2)
+				{
+					enemy->loseHP_bird(dmg);
+				}
+				else
+				{
+					enemy->loseHP_boss(dmg);
+				}
+					
+				if (enemy->mummyIsDead())
+				{
+					if (enemy->getIsDrop())
+					{
+						random();
+						if (this->i == 1)
+						{
+							this->items.push_back(new Item(&this->textures["HEALTH_POTION"], "HEAL", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+							std::cout << "Item::heal drop!" << "\n";
+						}
+						else if (this->i == 2)
+						{
+							this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+							std::cout << "Item::heal drop!" << "\n";
+						}
+						else if (this->i == 3)
+						{
+							this->items.push_back(new Item(&this->textures["EXP_POTION"], "EXP", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+							std::cout << "Item::heal drop!" << "\n";
+						}
+						else if (this->i == 4)
+						{
+							this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+							std::cout << "Item::heal drop!" << "\n";
+						}
+						else
+						{
+							this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+							std::cout << "Item::heal drop!" << "\n";
+						}
+					}
+				}
+
+				if (enemy->birdIsDead())
 				{
 					if (enemy->getIsDrop())
 					{
@@ -380,10 +426,18 @@ void GameState::updateCombatAndEnemies(const float& dt)
 		this->updateCombat(enemy, index, dt);
 
 		//DANGEROUS
-		if (enemy->isDead())
+		if (enemy->mummyIsDead())
 		{
 			this->player->gainEXP(enemy->getGainExp());
 			this->tts->addTextTag(EXP_TAG, this->player->getPosition().x - 50.f, this->player->getPosition().y + 30.f, static_cast<int>(enemy->getGainExp()), "+" , "EXP");
+
+			this->enemySystem->removeEnemy(index);
+			continue;
+		}
+		else if (enemy->birdIsDead())
+		{
+			this->player->gainEXP(enemy->getGainExp());
+			this->tts->addTextTag(EXP_TAG, this->player->getPosition().x - 50.f, this->player->getPosition().y + 30.f, static_cast<int>(enemy->getGainExp()), "+", "EXP");
 
 			this->enemySystem->removeEnemy(index);
 			continue;
@@ -406,9 +460,11 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 		{
 			if (this->punchTimer.getElapsedTime().asSeconds() > 0.1f && enemy->getDamageTimerDone())
 			{
-					int dmg = static_cast<int>(this->player->getDamage());
-					enemy->loseHP(dmg);
-					if (enemy->isDead())
+				int dmg = static_cast<int>(this->player->getDamage());
+				if (enemy->getEnemyType() == 0)
+				{
+					enemy->loseHP_mummy(dmg);
+					if (enemy->mummyIsDead())
 					{
 						if (enemy->getIsDrop())
 						{
@@ -420,7 +476,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 							}
 							else if (this->i == 2)
 							{
-								this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f , enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+								this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
 							else if (this->i == 3)
@@ -428,7 +484,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 								this->items.push_back(new Item(&this->textures["EXP_POTION"], "EXP", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else if(this->i == 4)
+							else if (this->i == 4)
 							{
 								this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
@@ -438,9 +494,48 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 								this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							
+
 						}
 					}
+				}
+				else
+				{
+					enemy->loseHP_bird(dmg);
+					if (enemy->birdIsDead())
+					{
+						if (enemy->getIsDrop())
+						{
+							random();
+							if (this->i == 1)
+							{
+								this->items.push_back(new Item(&this->textures["HEALTH_POTION"], "HEAL", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+								std::cout << "Item::heal drop!" << "\n";
+							}
+							else if (this->i == 2)
+							{
+								this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+								std::cout << "Item::heal drop!" << "\n";
+							}
+							else if (this->i == 3)
+							{
+								this->items.push_back(new Item(&this->textures["EXP_POTION"], "EXP", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+								std::cout << "Item::heal drop!" << "\n";
+							}
+							else if (this->i == 4)
+							{
+								this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+								std::cout << "Item::heal drop!" << "\n";
+							}
+							else
+							{
+								this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
+								std::cout << "Item::heal drop!" << "\n";
+							}
+
+						}
+					}
+				}
+					
 					enemy->resetDamageTimer();
 					this->tts->addTextTag(NEGATIVE_TAG, enemy->getCenter().x, enemy->getCenter().y, dmg, "" , "");
 					this->punchTimer.restart(); 
@@ -462,9 +557,26 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 
 		if (enemy->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getDamageTimer())
 		{
-			int dmg = enemy->getAttributeComp()->damageMax_enemy;
-			this->player->loseHP(dmg);
-			this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg, "-", "HP");
+			if (enemy->getEnemyType() == MUMMY)
+			{
+				int dmg1 = enemy->getAttributeComp()->damageMax_mummy;
+				this->player->loseHP(dmg1);
+				this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg1, "-", "HP");
+			}
+
+		/*	if (enemy->getEnemyType() == BIRD)
+			{
+				int dmg2 = enemy->getAttributeComp()->damageMax_bird;
+				this->player->loseHP(dmg2);
+				this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg2, "-", "HP");
+			}*/
+			if (enemy->getEnemyType() == DRAGON)
+			{
+				int dmg3 = enemy->getAttributeComp()->damageMax_boss;
+				this->player->loseHP(dmg3);
+				this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg3, "-", "HP");
+			}
+		
 		}
 }
 
