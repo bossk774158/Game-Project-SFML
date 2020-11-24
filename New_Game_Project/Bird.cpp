@@ -67,7 +67,7 @@ void Bird::updateAnimation(const float& dt)
 	{
 		this->animationComponent->play("WALK_LEFT", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
-	else if (this->movementComponent->getState(MOVING_DOWN))
+	else
 	{
 		this->animationComponent->play("WALK_LEFT", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}

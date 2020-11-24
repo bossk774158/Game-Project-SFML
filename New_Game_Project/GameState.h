@@ -7,6 +7,7 @@
 #include "TextTagSystem.h"
 #include "Item.h"
 #include "GameOverState.h"
+#include "Dragon.h"
 
 class GameState :
     public State
@@ -29,6 +30,9 @@ private:
     //Player
     Player* player;
     PlayerGui* playerGui;
+
+    //Boss
+    Dragon* dragon;
 
     //Item
     std::vector<Item*> items;
@@ -65,6 +69,7 @@ private:
     void initPauseMenu();
     void initDebugText();
     void initPlayers();
+    void initDragon();
     void initPlayerGui();
     void initArrow();
     void initEnemySystem();

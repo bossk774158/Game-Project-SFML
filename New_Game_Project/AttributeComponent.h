@@ -44,6 +44,10 @@ public:
 	int defence_enemy;
 	int luck_enemy;
 
+	//Boss
+	int hp_boss;
+	int hpMax_boss;
+
 
 	//Stats
 	int hp_player;
@@ -70,9 +74,11 @@ public:
 	void getStrength(const int str);
 
 	void enemyLoseHP(const int hp_enemy);
+	void bossLoseHP(const int hp_boss);
 
 	const bool playerIsDead() const;
 	const bool enemyIsDead() const;
+	const bool bossIsDead() const;
 	
 
 	void updateState(const bool reset);

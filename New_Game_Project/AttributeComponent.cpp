@@ -91,6 +91,14 @@ void AttributeComponent::enemyLoseHP(const int hp_enemy)
 		this->hp_enemy = 0;
 }
 
+void AttributeComponent::bossLoseHP(const int hp_boss)
+{
+	this->hp_boss -= hp_boss;
+
+	if (this->hp_boss < 0)
+		this->hp_boss = 0;
+}
+
 const bool AttributeComponent::playerIsDead() const
 {
 	return this->hp_player == 0;
@@ -99,6 +107,11 @@ const bool AttributeComponent::playerIsDead() const
 const bool AttributeComponent::enemyIsDead() const
 {
 	return this->hp_enemy == 0;
+}
+
+const bool AttributeComponent::bossIsDead() const
+{
+	return this->hp_boss == 0;
 }
 
 //Functions

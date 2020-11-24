@@ -140,6 +140,11 @@ void GameState::initPlayers()
 	this->player = new Player(273.f, 390.f, this->textures["PLAYER_IDLE"]);
 }
 
+void GameState::initDragon()
+{
+	//this->dragon = new Dragon(850.f, 1320.f, this->textures["DRAGON_IDLE"]);
+}
+
 void GameState::initPlayerGui()
 {
 	this->playerGui = new PlayerGui(this->player);
