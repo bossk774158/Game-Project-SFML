@@ -326,15 +326,15 @@ void GameState::updateArrow(const float& dt)
 			int dmg = static_cast<int>(this->player->getDamage());
 			if (arrow->getbounds().intersects(enemy->getGlobalBounds()))
 			{
-				if (enemy->getEnemyType() == 0)
+				if (enemy->enemyGetType() == 0)
 				{
 					enemy->loseHP_mummy(dmg);
 				}
-				else if(enemy->getEnemyType() == 2)
+				else if(enemy->enemyGetType() == 1)
 				{
 					enemy->loseHP_bird(dmg);
 				}
-				else
+				else if(enemy->enemyGetType() == 2)
 				{
 					enemy->loseHP_boss(dmg);
 				}
@@ -461,7 +461,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 			if (this->punchTimer.getElapsedTime().asSeconds() > 0.1f && enemy->getDamageTimerDone())
 			{
 				int dmg = static_cast<int>(this->player->getDamage());
-				if (enemy->getEnemyType() == 0)
+				if (enemy->enemyGetType() == 0)
 				{
 					enemy->loseHP_mummy(dmg);
 					if (enemy->mummyIsDead())
@@ -557,24 +557,28 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 
 		if (enemy->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getDamageTimer())
 		{
-			if (enemy->getEnemyType() == MUMMY)
+			if (enemy->enemyGetType() == MUMMY)
 			{
 				int dmg1 = enemy->getAttributeComp()->damageMax_mummy;
 				this->player->loseHP(dmg1);
 				this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg1, "-", "HP");
+				std::cout << "mummy attack!" << "\n";
 			}
 
-		/*	if (enemy->getEnemyType() == BIRD)
+			else if (enemy->enemyGetType() == BIRD)
 			{
 				int dmg2 = enemy->getAttributeComp()->damageMax_bird;
 				this->player->loseHP(dmg2);
 				this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg2, "-", "HP");
-			}*/
-			if (enemy->getEnemyType() == DRAGON)
+				std::cout << "bird attack!" << "\n";
+			}
+
+			else if (enemy->enemyGetType() == DRAGON)
 			{
 				int dmg3 = enemy->getAttributeComp()->damageMax_boss;
 				this->player->loseHP(dmg3);
 				this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg3, "-", "HP");
+				std::cout << "dragon attack!" << "\n";
 			}
 		
 		}

@@ -49,7 +49,7 @@ const bool Enemy::getDespawnTimerDone() const
 	return this->despawnTimer.getElapsedTime().asMilliseconds() >= this->despawnTimerMax;
 }
 
-const bool Enemy::getEnemyType() const
+const bool Enemy::enemyGetType() const
 {
 	return enemySpawnerTile.getEnemyType();
 }

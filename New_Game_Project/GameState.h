@@ -32,9 +32,6 @@ private:
     Player* player;
     PlayerGui* playerGui;
 
-    //Boss
-    Dragon* dragon;
-
     //Item
     std::vector<Item*> items;
     std::map<std::string, sf::SoundBuffer*> soundEffects;

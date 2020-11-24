@@ -2,7 +2,6 @@
 #include "Entity.h"
 #include "EnemySpawnerTile.h"
 
-
 class Enemy :
     public Entity
 {
@@ -13,6 +12,7 @@ private:
 protected:
     //Variables
     EnemySpawnerTile& enemySpawnerTile;
+    
     unsigned gainExp;
     sf::Clock damageTimer;
     sf::Int32 damageTimerMax;
@@ -32,7 +32,7 @@ public:
     EnemySpawnerTile& getEnemySpawnerTile();
     const bool getDamageTimerDone() const;
     const bool getDespawnTimerDone() const;
-    const bool getEnemyType() const;
+    const bool enemyGetType() const;
     bool getIsDrop();
     bool getIsDeath();
 
