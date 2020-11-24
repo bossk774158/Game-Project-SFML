@@ -9,10 +9,10 @@ void Mummy::initAnimation()
 {
 
 	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 0, 3, 0, 60, 45);
-	this->animationComponent->addAnimation("ATTACK_LEFT", 1.1f, 0, 1, 5, 1, 60, 45);
-	this->animationComponent->addAnimation("WALK_LEFT", 1.f, 0, 2, 5, 2, 60, 45);
-	this->animationComponent->addAnimation("WALK_RIGHT", 1.f, 0, 3, 5, 3, 60, 45);
-	this->animationComponent->addAnimation("ATTACK_RIGHT", 1.1f, 0, 4, 5, 4, 60, 45);
+	//this->animationComponent->addAnimation("ATTACK_LEFT", 1.1f, 0, 1, 5, 1, 40, 45);
+	this->animationComponent->addAnimation("WALK_LEFT", 1.f, 0, 2, 5, 2, 40, 45);
+	this->animationComponent->addAnimation("WALK_RIGHT", 1.f, 0, 3, 5, 3, 40, 45);
+	//this->animationComponent->addAnimation("ATTACK_RIGHT", 1.1f, 0, 4, 5, 4, 40, 45);
 }
 
 void Mummy::initGui()
@@ -49,7 +49,7 @@ Mummy::Mummy(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& ene
 
 Mummy::~Mummy()
 {
-	//delete this->follow;
+	delete this->follow;
 }
 
 void Mummy::updateAnimation(const float& dt)
@@ -60,13 +60,15 @@ void Mummy::updateAnimation(const float& dt)
 	}
 	else if (this->movementComponent->getState(MOVING_RIGHT))
 	{
+		this->sprite.setOrigin(0.f, 0.f);
 		this->sprite.setScale(1.5f, 1.5f);
-		this->animationComponent->play("ATTACK_RIGHT", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
+		this->animationComponent->play("WALK_RIGHT", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
+		this->sprite.setOrigin(20.f, 0.f);
 		this->sprite.setScale(-1.5f, 1.5f);
-		this->animationComponent->play("WALK_LEFT", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
+		this->animationComponent->play("WALK_RIGHT", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_UP))
 	{
@@ -100,7 +102,7 @@ void Mummy::update(const float& dt, const sf::View& view)
 
 	this->hitboxComponent->update();
 
-	//this->follow->update(dt);
+	this->follow->update(dt);
 }
 
 void Mummy::render(sf::RenderTarget& target)

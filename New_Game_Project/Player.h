@@ -8,8 +8,6 @@ class Player :
 {
 private:
     //Varaibles
-    sf::RectangleShape sword_shape;
-
     bool attacking;
     bool shoot;
     bool attacking_combo1;

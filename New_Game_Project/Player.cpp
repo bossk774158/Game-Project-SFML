@@ -37,6 +37,7 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 	this->initVariables();
 
 	this->createHitboxComponent(this->sprite, -7.f, 0.f, 50.f, 70.f);
+	this->hitboxComponent->setPosition(this->sprite.getOrigin().x, this->sprite.getOrigin().y);
 	
 	this->createMovementComponent(200.f, 1000.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
@@ -226,7 +227,6 @@ void Player::update(const float& dt, const sf::View& view)
 		this->face = false;
 		this->sprite.setOrigin(0.f, 0.f);
 		this->sprite.setScale(2.f, 2.f);
-		this->sword_shape.setScale(1.f, 1.f);
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
@@ -234,7 +234,6 @@ void Player::update(const float& dt, const sf::View& view)
 		this->face = true;
 		this->sprite.setOrigin(23.f, 0.f);
 		this->sprite.setScale(-2.f, 2.f);
-		this->sword_shape.setScale(-1.f, 1.f);
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_UP))
@@ -247,7 +246,6 @@ void Player::update(const float& dt, const sf::View& view)
 	}
 
 	this->hitboxComponent->update();
-	this->sword_shape.setPosition(this->sprite.getPosition().x + 30.f, this->sprite.getPosition().y + 30.f);
 }
 
 void Player::render(sf::RenderTarget& target)

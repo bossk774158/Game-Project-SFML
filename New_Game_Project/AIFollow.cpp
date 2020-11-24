@@ -21,6 +21,6 @@ void AIFollow::update(const float& dt)
 
 	moveVec /= vecLength;
 
-	if ((self.getPosition().x != entity.getPosition().x) && std::abs(vecLength) < 500.f)
-		self.move(moveVec.x, moveVec.y, dt);
+	if ((self.getPosition().x != entity.getPosition().x) && std::abs(vecLength) < 400.f)
+		self.move(moveVec.x * 0.4f, moveVec.y * 0.4f, dt);
 }
