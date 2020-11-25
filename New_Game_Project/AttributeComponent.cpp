@@ -192,12 +192,12 @@ void AttributeComponent::updateLevel()
 		this->exp -= this->expNext;
 		this->expNext = (50 * pow(this->level, 3) - 150 * pow(this->level, 2) + (UINT64)400 * this->level) / 3;
 		++this->attributePoints;
-		++this->strength;
-		++this->vitality;
-		++this->strength;
-		++this->intelligence;
+		this->strength += 2;
+		this->vitality += 2;
+		this->strength += 2;
+		this->intelligence += 2;
 		this->hpMax_player += static_cast<int>((this->vitality * 5 + this->vitality + this->strength / 2 + this->intelligence / 5) / 3);
-		this->hp_player += 10;
+		this->hp_player = this->hpMax_player;
 	}
 }
 

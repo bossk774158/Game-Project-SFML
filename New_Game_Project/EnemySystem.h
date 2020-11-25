@@ -19,7 +19,7 @@
 #include "Bird.h"
 #include "EnemySpawnerTile.h"
 
-enum EnemyTypes {MUMMY = 0, BIRD, DRAGON};
+enum EnemyTypes {MUMMY = 0, BIRD, DEMON};
 
 class EnemySystem
 {

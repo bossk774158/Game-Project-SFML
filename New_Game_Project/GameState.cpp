@@ -173,6 +173,39 @@ void GameState::initSystem()
 	this->tts = new TextTagSystem("Fonts/Fun Games.ttf");
 }
 
+void GameState::initMusic()
+{
+	if (!this->bg_music.openFromFile("Sound and Music/bg_music.ogg"))
+	{
+		std::cout << "ERROR TO DOWNLOAD BG_MUSIC" << "\n";
+	}
+	this->bg_music.setLoop(true);
+	this->bg_music.setVolume(5.f);
+	this->bg_music.play();
+}
+
+void GameState::initSoundEffect()
+{
+	this->soundEffects["PICKUP_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["PICKUP_SOUND"]->loadFromFile("Sound and Music/sound/");
+	this->soundEffects["SWORD_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["SWORD_SOUND"]->loadFromFile("Sound and Music/sound/sword.wav");
+	this->soundEffects["BOW_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["BOW_SOUND"]->loadFromFile("Sound and Music/sound/bow.wav");
+	this->soundEffects["PLAYER_FOOT_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["PLAYER_FOOT_SOUND"]->loadFromFile("Sound and Music/sound/footstep01.ogg");
+
+	this->pickupitemSound.setBuffer(*this->soundEffects["PICKUP_SOUND"]);
+	this->pickupitemSound.setVolume(10.f);
+	this->swordSound.setBuffer(*this->soundEffects["SWORD_SOUND"]);
+	this->swordSound.setVolume(10.f);
+	this->bowSound.setBuffer(*this->soundEffects["BOW_SOUND"]);
+	this->bowSound.setVolume(10.f);
+	this->playerFootStep.setBuffer(*this->soundEffects["PLAYER_FOOT_SOUND"]);
+	this->playerFootStep.setVolume(5.f);
+
+}
+
 GameState::GameState(StateData* state_data)
 	:State(state_data)
 {
@@ -190,7 +223,8 @@ GameState::GameState(StateData* state_data)
 	this->initArrow();
 	this->initTileMap();
 	this->initSystem();
-
+	this->initMusic();
+	this->initSoundEffect();
 }
 GameState::~GameState()
 {
@@ -250,9 +284,16 @@ void GameState::updateInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeytime())
 	{
 		if (!this->paused)
+		{
+			this->bg_music.pause();
 			this->pauseState();
+		}
 		else
-			this->unpauseState(); 
+		{
+			this->bg_music.play();
+			this->unpauseState();
+		}
+
 	}
 }
 
@@ -260,16 +301,33 @@ void GameState::updatePlayerInput(const float& dt)
 {
 	//Update player Input
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
+	{
 		this->player->move(-1.f, 0.f, dt);
+
+		//if (this->soundClock.getElapsedTime().asSeconds() > 1.5f)
+			//this->playerFootStep.play();
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
+	{
 		this->player->move(1.f, 0.f, dt);
+
+		//if (this->soundClock.getElapsedTime().asSeconds() > 1.5f)
+			//this->playerFootStep.play();
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
+	{
 		this->player->move(0.f, -1.f, dt);
+
+		//if (this->soundClock.getElapsedTime().asSeconds() > 1.5f)
+			//this->playerFootStep.play();
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
+	{
 		this->player->move(0.f, 1.f, dt);
 
-	
-		
+		//if (this->soundClock.getElapsedTime().asSeconds() > 1.5f)
+			//this->playerFootStep.play();
+	}
 }
 
 void GameState::updatePlayerGui(const float& dt)
@@ -436,7 +494,7 @@ void GameState::updateCombatAndEnemies(const float& dt)
 		}
 		else if (enemy->birdIsDead())
 		{
-			this->player->gainEXP(enemy->getGainExp());
+			this->player->gainEXP(40);
 			this->tts->addTextTag(EXP_TAG, this->player->getPosition().x - 50.f, this->player->getPosition().y + 30.f, static_cast<int>(enemy->getGainExp()), "+", "EXP");
 
 			this->enemySystem->removeEnemy(index);
@@ -458,7 +516,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 			&& enemy->getGlobalBounds().contains(this->mousePosView)
 			&& enemy->getDistance(*this->player) < 55.f)
 		{
-			if (this->punchTimer.getElapsedTime().asSeconds() > 0.1f && enemy->getDamageTimerDone())
+			if (this->punchTimer.getElapsedTime().asSeconds() > 0.5f && enemy->getDamageTimerDone())
 			{
 				int dmg = static_cast<int>(this->player->getDamage());
 				if (enemy->enemyGetType() == 0)
@@ -498,7 +556,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 						}
 					}
 				}
-				else
+				else if(enemy->enemyGetType() == 1)
 				{
 					enemy->loseHP_bird(dmg);
 					if (enemy->birdIsDead())
@@ -533,6 +591,14 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 							}
 
 						}
+					}
+				}
+				else if(enemy->enemyGetType() == 2)
+				{
+					enemy->loseHP_boss(dmg);
+					if (enemy->bossIsDead())
+					{
+						std::cout << "Boss is dead!" << "\n";
 					}
 				}
 					
@@ -573,7 +639,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 				std::cout << "bird attack!" << "\n";
 			}
 
-			else if (enemy->enemyGetType() == DRAGON)
+			else if (enemy->enemyGetType() == DEMON)
 			{
 				int dmg3 = enemy->getAttributeComp()->damageMax_boss;
 				this->player->loseHP(dmg3);
@@ -584,12 +650,24 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 		}
 }
 
+void GameState::updatePlayerInputAndSound(const float& dt)
+{
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->soundClock.getElapsedTime().asSeconds() > 0.5f)
+	{
+		this->swordSound.play();
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+	{
+		this->bowSound.play();
+	}
+}
+
 void GameState::updateItemCollision(const float& dt)
 {
 	unsigned itemCounter = 0;
 	for (auto* item : items)
 	{
-		if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getAttributeComponent()->hp_player <= 50 && item->getType() == "HEAL")
+		if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getAttributeComponent()->hp_player <= this->player->getAttributeComponent()->hpMax_player / 2 && item->getType() == "HEAL")
 		{
 			this->player->gainHP(10);
 			this->items.erase(this->items.begin() + itemCounter);
@@ -639,6 +717,8 @@ void GameState::update(const float& dt)
 		this->updateArrow(dt);
 
 		this->updateCombatAndEnemies(dt);
+
+		this->updatePlayerInputAndSound(dt);
 
 		this->updateItemCollision(dt);
 

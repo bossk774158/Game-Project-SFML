@@ -2,7 +2,7 @@
 
 void Dragon::initVariables()
 {
-	this->sprite.setScale(2.5f, 2.5f);
+	this->sprite.setScale(1.5f, 1.5f);
 }
 
 void Dragon::initAnimation()
@@ -58,13 +58,13 @@ void Dragon::updateAnimation(const float& dt)
 	else if (this->movementComponent->getState(MOVING_RIGHT))
 	{
 		this->sprite.setOrigin(0.f, 0.f);
-		this->sprite.setScale(2.f, 2.f);
+		this->sprite.setScale(1.5f, 1.5f);
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
 		this->sprite.setOrigin(60.f, 0.f);
-		this->sprite.setScale(-2.f, 2.f);
+		this->sprite.setScale(-1.5f, 1.5f);
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_UP))

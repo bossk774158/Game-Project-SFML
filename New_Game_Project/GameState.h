@@ -20,6 +20,22 @@ private:
 
     int i;
 
+    //Music
+    sf::Music bg_music;
+
+    //Sounds Effect
+    std::map<std::string, sf::SoundBuffer*> soundEffects;
+    sf::Sound swordSound;
+    sf::Sound bowSound;
+    sf::Sound pickupitemSound;
+    sf::Sound dead;
+    sf::Sound playerGetAttack;
+    sf::Sound playerFootStep;
+
+    //Sound Clock
+    sf::Clock soundClock;
+    
+
     //Gui
     sf::Font font;
     sf::Font font_number;
@@ -34,10 +50,6 @@ private:
 
     //Item
     std::vector<Item*> items;
-    std::map<std::string, sf::SoundBuffer*> soundEffects;
-
-    sf::Sound pickUpItemSound;
-    sf::Sound pickUpBonusItemSound;
 
     //Enemy
     std::vector<Enemy*> activeEnemies;
@@ -74,6 +86,8 @@ private:
     void initEnemy();
     void initTileMap();
     void initSystem();
+    void initMusic();
+    void initSoundEffect();
  
 
 public:
@@ -99,6 +113,7 @@ public:
     //void updateSpawnEnemy(const float& dt);
     void updateCombatAndEnemies(const float& dt);
     void updateCombat(Enemy* enemy ,const int index, const float& dt);
+    void updatePlayerInputAndSound(const float& dt);
     void updateItemCollision(const float& dt);
     void update(const float& dt);
     void render(sf::RenderTarget* target = NULL);
