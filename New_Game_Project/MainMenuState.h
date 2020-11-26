@@ -13,10 +13,13 @@ private:
     sf::RectangleShape background;
     sf::Font font;
 
+    sf::Music main_music;
+
     std::map<std::string, gui::Button*> buttons;
 
     //Functions
     void initVariables();
+    void initMusic();
     void initBackground();
     void initFonts();
     void initKeybinds();

@@ -165,6 +165,9 @@
     <ClCompile Include="Bird.cpp">
       <Filter>Entities\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="VictoryState.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h">
@@ -280,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="Bird.h">
       <Filter>Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="VictoryState.h">
+      <Filter>State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

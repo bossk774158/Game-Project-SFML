@@ -25,13 +25,13 @@ void Dragon::initAI()
 
 }
 
-Dragon::Dragon(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile, Entity& player)
-	:Enemy(enemy_spawner_tile)
+Dragon::Dragon(float x, float y, sf::Texture& texture_sheet, Entity& player)
+	:Enemy(enemySpawnerTile)
 {
 	this->initVariables();
 	this->initGui();
 
-	this->createHitboxComponent(this->sprite, 0.f, 0.f, 170.f, 200.f);
+	this->createHitboxComponent(this->sprite, 0.f, 0.f, 130.f, 140.f);
 	this->createMovementComponent(200.f, 1500.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
 	this->createAttributeComponent(1);

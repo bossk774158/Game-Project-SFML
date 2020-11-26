@@ -14,11 +14,6 @@ void GameOverState::initBackground()
 	this->background.setSize(sf::Vector2f(static_cast<float>(this->window->getSize().x),
 		static_cast<float>(this->window->getSize().y)));
 
-	if (!this->backgroundTexture.loadFromFile("Resources/Images/Backgrounds/gameover.jpg"))
-	{
-		std::cout << "ERROR::GAME_OVER_STATE::COULD NOT LOAD FROM FILE GAMEOVER" << std::endl;
-	}
-
 	this->background.setTexture(&this->backgroundTexture);
 	this->background.setPosition(this->window->getSize().x, this->window->getSize().y);
 }

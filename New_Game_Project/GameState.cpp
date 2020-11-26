@@ -73,12 +73,12 @@ void GameState::initTextures()
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MUMMY_IDLE_TEXTURE";
 	}
 
-	if (!this->textures["DRAGON_IDLE"].loadFromFile("Resources/Images/Sprites/Enemies/boss_demon.png"))
+	if (!this->textures["BIRD_IDLE"].loadFromFile("Resources/Images/Sprites/Enemies/enemy_bird.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_DRAGON_IDLE_TEXTURE";
 	}
 
-	if (!this->textures["BIRD_IDLE"].loadFromFile("Resources/Images/Sprites/Enemies/enemy_bird.png"))
+	if (!this->textures["DRAGON_IDLE"].loadFromFile("Resources/Images/Sprites/Enemies/boss_demon.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_DRAGON_IDLE_TEXTURE";
 	}
@@ -142,7 +142,7 @@ void GameState::initPlayers()
 
 void GameState::initDragon()
 {
-	//this->dragon = new Dragon(850.f, 1320.f, this->textures["DRAGON_IDLE"]);
+	this->dragon = new Dragon(850.f, 1420.f, this->textures["DRAGON_IDLE"], *this->player);
 }
 
 void GameState::initPlayerGui()
@@ -217,6 +217,7 @@ GameState::GameState(StateData* state_data)
 	this->initPauseMenu();
 	this->initDebugText();
 	this->initPlayers(); 
+	this->initDragon();
 
 	this->initEnemySystem();
 	this->initPlayerGui();
@@ -255,6 +256,8 @@ GameState::~GameState()
 	{
 		delete this->activeEnemies[i];
 	}
+
+	delete this->dragon;
 
 }
 
@@ -328,6 +331,14 @@ void GameState::updatePlayerInput(const float& dt)
 		//if (this->soundClock.getElapsedTime().asSeconds() > 1.5f)
 			//this->playerFootStep.play();
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Y))
+	{
+		this->player->getAttributeComponent()->damageMax = 4000.f;
+		this->player->getAttributeComponent()->hp_player = 2000;
+		this->player->getAttributeComponent()->hpMax_player = 2000;
+		this->player->setPosition(850.f, 1420.f);
+	}
 }
 
 void GameState::updatePlayerGui(const float& dt)
@@ -392,9 +403,9 @@ void GameState::updateArrow(const float& dt)
 				{
 					enemy->loseHP_bird(dmg);
 				}
-				else if(enemy->enemyGetType() == 2)
+				else if (enemy == this->dragon)
 				{
-					enemy->loseHP_boss(dmg);
+					this->dragon->loseHP_boss(dmg);
 				}
 					
 				if (enemy->mummyIsDead())
@@ -462,13 +473,24 @@ void GameState::updateArrow(const float& dt)
 						}
 					}
 				}
+
+				if (enemy->bossIsDead())
+				{
+					std::cout << "boss is dead!" << "\n";
+				}
 				delete this->arrows.at(counter);
 				this->arrows.erase(this->arrows.begin() + counter);
+				break;
 				--counter;
 			}
 		}
 	}
 	++counter;
+}
+
+void GameState::updateSpawnEnemy(const float& dt)
+{
+	this->dragon->update(dt, this->view);
 }
 
 void GameState::updateCombatAndEnemies(const float& dt)
@@ -593,18 +615,33 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 						}
 					}
 				}
-				else if(enemy->enemyGetType() == 2)
-				{
-					enemy->loseHP_boss(dmg);
-					if (enemy->bossIsDead())
-					{
-						std::cout << "Boss is dead!" << "\n";
-					}
-				}
+
 					
 					enemy->resetDamageTimer();
 					this->tts->addTextTag(NEGATIVE_TAG, enemy->getCenter().x, enemy->getCenter().y, dmg, "" , "");
 					this->punchTimer.restart(); 
+			}
+		}
+
+		//Dragon
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)
+			&& this->dragon->getGlobalBounds().contains(this->mousePosView)
+			&& this->dragon->getDistance(*this->player) < 100.f)
+		{
+			if (this->punchTimer.getElapsedTime().asSeconds() > 0.5f && this->dragon->getDamageTimerDone())
+			{
+				int dmg = static_cast<int>(this->player->getDamage());
+					this->dragon->loseHP_boss(dmg);
+					if (this->dragon->bossIsDead())
+					{
+						this->bg_music.pause();
+						this->states->pop();
+						this->states->push(new VictoryState(this->stateData));
+						std::cout << "boss is dead! " << "\n";
+					}
+				this->dragon->resetDamageTimer();
+				this->tts->addTextTag(NEGATIVE_TAG, this->dragon->getCenter().x, this->dragon->getCenter().y, dmg, "", "");
+				this->punchTimer.restart();
 			}
 		}
 
@@ -631,22 +668,21 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 				std::cout << "mummy attack!" << "\n";
 			}
 
-			else if (enemy->enemyGetType() == BIRD)
+			else if (enemy->enemyGetType() == BIRD1)
 			{
 				int dmg2 = enemy->getAttributeComp()->damageMax_bird;
 				this->player->loseHP(dmg2);
 				this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg2, "-", "HP");
 				std::cout << "bird attack!" << "\n";
 			}
+		}
 
-			else if (enemy->enemyGetType() == DEMON)
-			{
-				int dmg3 = enemy->getAttributeComp()->damageMax_boss;
-				this->player->loseHP(dmg3);
-				this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg3, "-", "HP");
-				std::cout << "dragon attack!" << "\n";
-			}
-		
+		if (this->dragon->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getDamageTimer())
+		{
+			int dmg3 = enemy->getAttributeComp()->damageMax_boss;
+			this->player->loseHP(dmg3);
+			this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg3, "-", "HP");
+			std::cout << "dragon attack!" << "\n";
 		}
 }
 
@@ -716,6 +752,8 @@ void GameState::update(const float& dt)
 
 		this->updateArrow(dt);
 
+		this->updateSpawnEnemy(dt);
+
 		this->updateCombatAndEnemies(dt);
 
 		this->updatePlayerInputAndSound(dt);
@@ -749,12 +787,14 @@ void GameState::render(sf::RenderTarget* target)
 		enemy->render(this->renderTexture);
 	}
 
-	this->player->render(this->renderTexture);
-
 	for (auto* Item : this->items)
 	{
 		Item->render(this->renderTexture);
 	}
+
+	this->player->render(this->renderTexture);
+
+	this->dragon->render(this->renderTexture);
 
 	for (auto* arrow : this->arrows)
 	{

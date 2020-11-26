@@ -6,6 +6,14 @@ void MainMenuState::initVariables()
 
 }
 
+void MainMenuState::initMusic()
+{
+	if (!this->main_music.openFromFile("Sound and Music/mainmenu.wav"))
+	{
+		std::cout << "Error to open main munu music" << "\n";
+	}
+}
+
 void MainMenuState::initBackground()
 {
 	this->background.setSize(
@@ -87,10 +95,15 @@ MainMenuState::MainMenuState(StateData* state_data)
 	:State(state_data)
 {
 	this->initVariables();
+	this->initMusic();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
 	this->initButtons();
+
+	this->main_music.play();
+	this->main_music.setVolume(30.f);
+	this->main_music.setLoop(true);
 }
 
 MainMenuState::~MainMenuState()
@@ -118,6 +131,7 @@ void MainMenuState::updateButtons()
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
 		this->states->push(new GameState(this->stateData));
+		this->main_music.pause();
 	}
 
 	//Settings

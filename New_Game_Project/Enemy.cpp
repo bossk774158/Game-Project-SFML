@@ -112,7 +112,7 @@ void Enemy::loseHP_boss(const int hp_boss)
 {
 	if (this->attributeComponent)
 	{
-		this->attributeComponent->birdLoseHP(hp_boss);
+		this->attributeComponent->bossLoseHP(hp_boss);
 	}
 }
 

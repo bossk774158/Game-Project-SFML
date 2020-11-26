@@ -36,7 +36,7 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 {
 	this->initVariables();
 
-	this->createHitboxComponent(this->sprite, -7.f, 0.f, 50.f, 70.f);
+	this->createHitboxComponent(this->sprite, -7.f, 0.f, 50.f, 50.f);
 	this->hitboxComponent->setPosition(this->getSpriteCenter());
 	
 	this->createMovementComponent(200.f, 1000.f, 500.f);

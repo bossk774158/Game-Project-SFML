@@ -7,6 +7,7 @@
 #include "TextTagSystem.h"
 #include "Item.h"
 #include "GameOverState.h"
+#include "VictoryState.h"
 #include "Dragon.h"
 #include "EnemySpawnerTile.h"
 
@@ -54,6 +55,7 @@ private:
     //Enemy
     std::vector<Enemy*> activeEnemies;
     EnemySystem* enemySystem;
+    Dragon* dragon;
 
     //Tilemap
     TileMap* tileMap;
@@ -110,7 +112,7 @@ public:
     void updatePlayer(const float& dt);
     void updatePlayerIsDead(const float& dt);
     void updateArrow(const float& dt);
-    //void updateSpawnEnemy(const float& dt);
+    void updateSpawnEnemy(const float& dt);
     void updateCombatAndEnemies(const float& dt);
     void updateCombat(Enemy* enemy ,const int index, const float& dt);
     void updatePlayerInputAndSound(const float& dt);

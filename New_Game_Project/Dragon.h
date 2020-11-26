@@ -15,7 +15,7 @@ private:
     AIFollow* follow;
 
 public:
-    Dragon(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile, Entity& player);
+    Dragon(float x, float y, sf::Texture& texture_sheet, Entity& player);
     virtual ~Dragon();
 
     virtual void updateAnimation(const float& dt);
