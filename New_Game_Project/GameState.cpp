@@ -1,6 +1,11 @@
 #include "GameState.h"
 
 
+void GameState::initVariables()
+{
+	this->dropChance = 60.f;
+}
+
 void GameState::initDeferredRender()
 {
 	this->renderTexture.create(
@@ -188,22 +193,87 @@ void GameState::initSoundEffect()
 {
 	this->soundEffects["PICKUP_SOUND"] = new sf::SoundBuffer;
 	this->soundEffects["PICKUP_SOUND"]->loadFromFile("Sound and Music/sound/");
+
 	this->soundEffects["SWORD_SOUND"] = new sf::SoundBuffer;
 	this->soundEffects["SWORD_SOUND"]->loadFromFile("Sound and Music/sound/sword.wav");
+
 	this->soundEffects["BOW_SOUND"] = new sf::SoundBuffer;
 	this->soundEffects["BOW_SOUND"]->loadFromFile("Sound and Music/sound/bow.wav");
-	this->soundEffects["PLAYER_FOOT_SOUND"] = new sf::SoundBuffer;
-	this->soundEffects["PLAYER_FOOT_SOUND"]->loadFromFile("Sound and Music/sound/footstep01.ogg");
+
+	this->soundEffects["HEAL_POTION_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["HEAL_POTION_SOUND"]->loadFromFile("Sound and Music/sound/heal_potion.wav");
+
+	this->soundEffects["POISON_POTION_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["POISON_POTION_SOUND"]->loadFromFile("Sound and Music/sound/poison_potion.wav");
+
+	this->soundEffects["EXP_POTION_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["EXP_POTION_SOUND"]->loadFromFile("Sound and Music/sound/exp_potion.wav");
+
+	this->soundEffects["MUMMY_HIT_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["MUMMY_HIT_SOUND"]->loadFromFile("Sound and Music/sound/mummy_hti.wav");
+
+	this->soundEffects["MUMMY_GETHIT_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["MUMMY_GETHIT_SOUND"]->loadFromFile("Sound and Music/sound/mummy_getdamage.wav");
+
+	this->soundEffects["BOSS_HIT_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["BOSS_HIT_SOUND"]->loadFromFile("Sound and Music/sound/boss_hit.wav");
+
+	this->soundEffects["BOSS_GETHIT_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["BOSS_GETHIT_SOUND"]->loadFromFile("Sound and Music/sound/boss_getdamage.wav");
+
+	this->soundEffects["BIRD_HIT_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["BIRD_HIT_SOUND"]->loadFromFile("Sound and Music/sound/bird_hit.wav");
+
+	this->soundEffects["BIRD_GETHIT_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["BIRD_GETHIT_SOUND"]->loadFromFile("Sound and Music/sound/bird_gethit.wav");
+
+	this->soundEffects["STR_POTION_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["STR_POTION_SOUND"]->loadFromFile("Sound and Music/sound/str_potion.wav");
+
+	this->soundEffects["RANDOM_POTION_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["RANDOM_POTION_SOUND"]->loadFromFile("Sound and Music/sound/randompotion.wav");
 
 	this->pickupitemSound.setBuffer(*this->soundEffects["PICKUP_SOUND"]);
 	this->pickupitemSound.setVolume(10.f);
+
 	this->swordSound.setBuffer(*this->soundEffects["SWORD_SOUND"]);
 	this->swordSound.setVolume(10.f);
+
 	this->bowSound.setBuffer(*this->soundEffects["BOW_SOUND"]);
 	this->bowSound.setVolume(10.f);
-	this->playerFootStep.setBuffer(*this->soundEffects["PLAYER_FOOT_SOUND"]);
-	this->playerFootStep.setVolume(5.f);
 
+	this->healPotion.setBuffer(*this->soundEffects["HEAL_POTION_SOUND"]);
+	this->healPotion.setVolume(5.f);
+
+	this->poisonPotion.setBuffer(*this->soundEffects["POISON_POTION_SOUND"]);
+	this->poisonPotion.setVolume(5.f);
+
+	this->expPotion.setBuffer(*this->soundEffects["EXP_POTION_SOUND"]);
+	this->expPotion.setVolume(5.f);
+
+	this->mummyAttack.setBuffer(*this->soundEffects["MUMMY_HIT_SOUND"]);
+	this->mummyAttack.setVolume(10.f);
+
+	this->mummyGetAttack.setBuffer(*this->soundEffects["MUMMY_GETHIT_SOUND"]);
+	this->mummyGetAttack.setVolume(10.f);
+
+	this->bossAttack.setBuffer(*this->soundEffects["BOSS_HIT_SOUND"]);
+	this->bossAttack.setVolume(10.f);
+
+	this->bossgetAttack.setBuffer(*this->soundEffects["BOSS_GETHIT_SOUND"]);
+	this->bossgetAttack.setVolume(10.f);
+
+	this->birdAttack.setBuffer(*this->soundEffects["BIRD_HIT_SOUND"]);
+	this->birdAttack.setVolume(10.f);
+
+	this->birdGetAttack.setBuffer(*this->soundEffects["BIRD_GETHIT_SOUND"]);
+	this->birdGetAttack.setVolume(10.f);
+
+	this->strengthPotion.setBuffer(*this->soundEffects["STR_POTION_SOUND"]);
+	this->strengthPotion.setVolume(5.f);
+
+	this->randomPotion.setBuffer(*this->soundEffects["RANDOM_POTION_SOUND"]);
+	this->randomPotion.setVolume(20.f);
 }
 
 GameState::GameState(StateData* state_data)
@@ -263,14 +333,27 @@ GameState::~GameState()
 
 void GameState::random()
 {
-	this->i = rand() % 5;
+	this->i = rand() % 60;
 }
 
 void GameState::itemsRandom()
 {
-	for (int a = 0; a <= 5; a++)
+	for (int a = 0; a <= 60; a++)
 	{
 		random();
+	}
+}
+
+void GameState::random2()
+{
+	this->j = rand() & 5;
+}
+
+void GameState::itemsRandom2()
+{
+	for (int b = 0; b <= 5; b++)
+	{
+		random2();
 	}
 }
 
@@ -398,14 +481,17 @@ void GameState::updateArrow(const float& dt)
 				if (enemy->enemyGetType() == 0)
 				{
 					enemy->loseHP_mummy(dmg);
+					this->mummyGetAttack.play();
 				}
 				else if(enemy->enemyGetType() == 1)
 				{
 					enemy->loseHP_bird(dmg);
+					this->birdAttack.play();
 				}
 				else if (enemy == this->dragon)
 				{
 					this->dragon->loseHP_boss(dmg);
+					this->bossgetAttack.play();
 				}
 					
 				if (enemy->mummyIsDead())
@@ -413,27 +499,27 @@ void GameState::updateArrow(const float& dt)
 					if (enemy->getIsDrop())
 					{
 						random();
-						if (this->i == 1)
+						if (this->i == 1 || this->i == 10 || this->i == 11 || this->i == 12 || this->i == 13 || this->i == 14 || this->i == 15)
 						{
 							this->items.push_back(new Item(&this->textures["HEALTH_POTION"], "HEAL", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
 						}
-						else if (this->i == 2)
+						else if (this->i == 2 || this->i == 20 || this->i == 21 || this->i == 22 || this->i == 23 || this->i == 24 || this->i == 25)
 						{
 							this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
 						}
-						else if (this->i == 3)
+						else if (this->i == 3 || this->i == 30 || this->i == 31 || this->i == 32 || this->i == 33 || this->i == 34 || this->i == 35)
 						{
 							this->items.push_back(new Item(&this->textures["EXP_POTION"], "EXP", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
 						}
-						else if (this->i == 4)
+						else if (this->i == 4 || this->i == 40 || this->i == 41 || this->i == 42 || this->i == 43 || this->i == 44 || this->i == 45)
 						{
 							this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
 						}
-						else
+						else if(this->i == 5 || this->i == 50 || this->i == 51 || this->i == 52 || this->i == 53 || this->i == 54 || this->i == 55)
 						{
 							this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
@@ -446,27 +532,27 @@ void GameState::updateArrow(const float& dt)
 					if (enemy->getIsDrop())
 					{
 						random();
-						if (this->i == 1)
+						if (this->i == 1 || this->i == 10 || this->i == 11 || this->i == 12 || this->i == 13 || this->i == 14 || this->i == 15)
 						{
 							this->items.push_back(new Item(&this->textures["HEALTH_POTION"], "HEAL", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
 						}
-						else if (this->i == 2)
+						else if (this->i == 2 || this->i == 20 || this->i == 21 || this->i == 22 || this->i == 23 || this->i == 24 || this->i == 25)
 						{
 							this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
 						}
-						else if (this->i == 3)
+						else if (this->i == 3 || this->i == 30 || this->i == 31 || this->i == 32 || this->i == 33 || this->i == 34 || this->i == 35)
 						{
 							this->items.push_back(new Item(&this->textures["EXP_POTION"], "EXP", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
 						}
-						else if (this->i == 4)
+						else if (this->i == 4 || this->i == 40 || this->i == 41 || this->i == 42 || this->i == 43 || this->i == 44 || this->i == 45)
 						{
 							this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
 						}
-						else
+						else if (this->i == 5 || this->i == 50 || this->i == 51 || this->i == 52 || this->i == 53 || this->i == 54 || this->i == 55)
 						{
 							this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
@@ -544,32 +630,33 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 				if (enemy->enemyGetType() == 0)
 				{
 					enemy->loseHP_mummy(dmg);
+					this->mummyGetAttack.play();
 					if (enemy->mummyIsDead())
 					{
 						if (enemy->getIsDrop())
 						{
 							random();
-							if (this->i == 1)
+							if (this->i == 1 || this->i == 10 || this->i == 11 || this->i == 12 || this->i == 13 || this->i == 14 || this->i == 15)
 							{
 								this->items.push_back(new Item(&this->textures["HEALTH_POTION"], "HEAL", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else if (this->i == 2)
+							else if (this->i == 2 || this->i == 20 || this->i == 21 || this->i == 22 || this->i == 23 || this->i == 24 || this->i == 25)
 							{
 								this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else if (this->i == 3)
+							else if (this->i == 3 || this->i == 30 || this->i == 31 || this->i == 32 || this->i == 33 || this->i == 34 || this->i == 35)
 							{
 								this->items.push_back(new Item(&this->textures["EXP_POTION"], "EXP", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else if (this->i == 4)
+							else if (this->i == 4 || this->i == 40 || this->i == 41 || this->i == 42 || this->i == 43 || this->i == 44 || this->i == 45)
 							{
 								this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else
+							else if(this->i == 5 || this->i == 50 || this->i == 51 || this->i == 52 || this->i == 53 || this->i == 54 || this->i == 55)
 							{
 								this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
@@ -581,32 +668,33 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 				else if(enemy->enemyGetType() == 1)
 				{
 					enemy->loseHP_bird(dmg);
+					this->birdGetAttack.play();
 					if (enemy->birdIsDead())
 					{
 						if (enemy->getIsDrop())
 						{
 							random();
-							if (this->i == 1)
+							if (this->i == 1 || this->i == 10 || this->i == 11 || this->i == 12 || this->i == 13 || this->i == 14 || this->i == 15)
 							{
 								this->items.push_back(new Item(&this->textures["HEALTH_POTION"], "HEAL", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else if (this->i == 2)
+							else if (this->i == 2 || this->i == 20 || this->i == 21 || this->i == 22 || this->i == 23 || this->i == 24 || this->i == 25)
 							{
 								this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else if (this->i == 3)
+							else if (this->i == 3 || this->i == 30 || this->i == 31 || this->i == 32 || this->i == 33 || this->i == 34 || this->i == 35)
 							{
 								this->items.push_back(new Item(&this->textures["EXP_POTION"], "EXP", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else if (this->i == 4)
+							else if (this->i == 4 || this->i == 40 || this->i == 41 || this->i == 42 || this->i == 43 || this->i == 44 || this->i == 45)
 							{
 								this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else
+							else if(this->i == 5 || this->i == 50 || this->i == 51 || this->i == 52 || this->i == 53 || this->i == 54 || this->i == 55)
 							{
 								this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
@@ -632,6 +720,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 			{
 				int dmg = static_cast<int>(this->player->getDamage());
 					this->dragon->loseHP_boss(dmg);
+					this->bossgetAttack.play();
 					if (this->dragon->bossIsDead())
 					{
 						this->bg_music.pause();
@@ -664,6 +753,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 			{
 				int dmg1 = enemy->getAttributeComp()->damageMax_mummy;
 				this->player->loseHP(dmg1);
+				this->mummyAttack.play();
 				this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg1, "-", "HP");
 				std::cout << "mummy attack!" << "\n";
 			}
@@ -672,6 +762,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 			{
 				int dmg2 = enemy->getAttributeComp()->damageMax_bird;
 				this->player->loseHP(dmg2);
+				this->birdAttack.play();
 				this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg2, "-", "HP");
 				std::cout << "bird attack!" << "\n";
 			}
@@ -681,6 +772,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 		{
 			int dmg3 = enemy->getAttributeComp()->damageMax_boss;
 			this->player->loseHP(dmg3);
+			this->bossAttack.play();
 			this->tts->addTextTag(NEGATIVE_TAG, this->player->getPosition().x, this->player->getPosition().y, dmg3, "-", "HP");
 			std::cout << "dragon attack!" << "\n";
 		}
@@ -706,26 +798,61 @@ void GameState::updateItemCollision(const float& dt)
 		if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getAttributeComponent()->hp_player <= this->player->getAttributeComponent()->hpMax_player / 2 && item->getType() == "HEAL")
 		{
 			this->player->gainHP(10);
+			this->healPotion.play();
+			this->healPotion.setVolume(20.f);
 			this->items.erase(this->items.begin() + itemCounter);
 			--itemCounter;
 		}
 		else if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && item->getType() == "POISON")
 		{
 			this->player->loseHP(5);
+			this->poisonPotion.play();
+			this->poisonPotion.setVolume(20.f);
 			this->items.erase(this->items.begin() + itemCounter);
 			--itemCounter;
 		}
 		else if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && item->getType() == "EXP")
 		{
 			this->player->gainEXP(30);
+			this->expPotion.play();
+			this->expPotion.setVolume(20.f);
 			this->items.erase(this->items.begin() + itemCounter);
 			--itemCounter;
 		}
 		else if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && item->getType() == "STRENGTH")
 		{
-			this->player->getAttributeComponent()->getStrength(10);
+			this->player->getAttributeComponent()->getStrength(3);
+			this->strengthPotion.play();
+			this->expPotion.setVolume(20.f);
 			this->items.erase(this->items.begin() + itemCounter);
 			--itemCounter;
+		}
+		else  if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && item->getType() == "RANDOM")
+		{
+			random2();
+			if (this->j == 1)
+			{
+				this->player->getAttributeComponent()->getStrength(2);
+			}
+			else if (this->j == 2)
+			{
+				this->player->gainEXP(30);
+			}
+			else if (this->j == 3)
+			{
+				this->player->gainHP(15);
+			}
+			else if(this->j == 4)
+			{
+				this->player->loseHP(10);
+			}
+			else if (this->j == 5)
+			{
+				this->player->getAttributeComponent()->vitality += 5;
+			}
+			this->randomPotion.play();
+
+			this->items.erase(this->items.begin() + itemCounter);
 		}
 		++itemCounter;
 	}

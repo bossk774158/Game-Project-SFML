@@ -20,18 +20,35 @@ private:
     sf::Sprite renderSprite;
 
     int i;
+    int j;
 
     //Music
     sf::Music bg_music;
 
     //Sounds Effect
     std::map<std::string, sf::SoundBuffer*> soundEffects;
+
     sf::Sound swordSound;
     sf::Sound bowSound;
     sf::Sound pickupitemSound;
-    sf::Sound dead;
+
     sf::Sound playerGetAttack;
-    sf::Sound playerFootStep;
+
+    sf::Sound mummyAttack;
+    sf::Sound mummyGetAttack;
+
+    sf::Sound bossAttack;
+    sf::Sound bossgetAttack;
+
+    sf::Sound birdAttack;
+    sf::Sound birdGetAttack;
+
+    sf::Sound healPotion;
+    sf::Sound expPotion;
+    sf::Sound poisonPotion;
+    sf::Sound strengthPotion;
+    sf::Sound randomPotion;
+
 
     //Sound Clock
     sf::Clock soundClock;
@@ -51,6 +68,7 @@ private:
 
     //Item
     std::vector<Item*> items;
+    float dropChance;
 
     //Enemy
     std::vector<Enemy*> activeEnemies;
@@ -73,6 +91,7 @@ private:
     sf::Clock spawnTimer;
 
     //Functions
+    void initVariables();
     void initDeferredRender();
     void initView();
     void initKeybinds();
@@ -99,6 +118,9 @@ public:
     //Modifiers
     void random();
     void itemsRandom();
+
+    void random2();
+    void itemsRandom2();
 
 
     //Functions

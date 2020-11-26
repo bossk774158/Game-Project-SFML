@@ -181,32 +181,10 @@ void Player::update(const float& dt, const sf::View& view)
 	if (this->attacking)
 	{
 		if (this->animationComponent->play("ATTACK", dt, true))
+		{
 			this->attacking = false;
+		}
 	}
-	
-	////Combo1
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-	//{
-	//	this->attacking_combo1 = true;
-	//}
-
-	//if (this->attacking_combo1)
-	//{
-	//	if (this->animationComponent->play("ATTACK_COMBO1", dt, true))
-	//		this->attacking_combo1 = false;
-	//}
-
-	////Combo2
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-	//{
-	//	this->attacking_combo2 = true;
-	//}
-
-	//if (this->attacking_combo2)
-	//{
-	//	if (this->animationComponent->play("ATTACK_COMBO2", dt, true))
-	//		this->attacking_combo2 = false;
-	//}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
 	{

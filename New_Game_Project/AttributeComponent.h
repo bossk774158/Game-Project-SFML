@@ -16,7 +16,14 @@
 #include<SFML/System.hpp>
 class AttributeComponent
 {
+private:
+	std::map<std::string, sf::SoundBuffer*> soundEffects;
+
+	sf::Sound levelUp;
+
+	void initSound();
 public:
+
 	//Leveling
 	int level;
 	int exp;

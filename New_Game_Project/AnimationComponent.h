@@ -118,6 +118,8 @@ private:
 	Animation* lastAnimation;
 	Animation* priorityAnimation;
 
+
+
 public:
 	AnimationComponent(sf::Sprite& sprite, sf::Texture& texture_sheet);
 	virtual ~AnimationComponent();

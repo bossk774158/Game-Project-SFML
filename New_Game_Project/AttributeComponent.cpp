@@ -1,7 +1,18 @@
 #include "AttributeComponent.h"
 
+void AttributeComponent::initSound()
+{
+	this->soundEffects["LEVELUP_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["LEVELUP_SOUND"]->loadFromFile("Sound and Music/sound/levelUp.wav");
+
+	this->levelUp.setBuffer(*this->soundEffects["LEVELUP_SOUND"]);
+	this->levelUp.setVolume(10.f);
+}
+
 AttributeComponent::AttributeComponent(int level)
 {
+	this->initSound();
+
 	this->level = level;
 	this->exp = 0;
 	this->expNext = (50 * pow(this->level, 3) - 150 * pow(this->level, 2) + (UINT64)400 * this->level) / 3;
@@ -10,9 +21,9 @@ AttributeComponent::AttributeComponent(int level)
 	//player
 	this->vitality = 10;
 	this->strength = 5;
-	this->dexterity = 1;
-	this->agility = 1;
-	this->intelligence = 1;
+	this->dexterity = 2;
+	this->agility = 2;
+	this->intelligence = 2;
 
 	//mummy
 	this->vitality_mummy = 3;
@@ -144,7 +155,7 @@ const bool AttributeComponent::bossIsDead() const
 //Functions
 void AttributeComponent::updateState(const bool reset)
 {
-	this->hpMax_player	= this->vitality * 5 + this->vitality + this->strength / 2 + this->intelligence / 5;
+	this->hpMax_player	= (this->vitality * 15 + this->vitality + this->strength + this->intelligence / 5) * this->level / 2;
 	this->damageMin = this->strength * 2 + this->strength / 4 + this->intelligence / 5;
 	this->damageMax = this->strength * 2 + this->strength / 2 + this->intelligence / 5;
 	this->accuracy  = this->dexterity * 5 + this->dexterity / 2 + this->intelligence / 5;
@@ -186,11 +197,13 @@ void AttributeComponent::updateState(const bool reset)
 
 void AttributeComponent::updateLevel()
 {
+	
+
 	while (this->exp >= this->expNext)
 	{
 		++this->level;
 		this->exp -= this->expNext;
-		this->expNext = (50 * pow(this->level, 3) - 150 * pow(this->level, 2) + (UINT64)400 * this->level) / 3;
+		this->expNext = (50 * pow(this->level, 3) - 150 * pow(this->level, 2) + (UINT64)400 * this->level) / 7;
 		++this->attributePoints;
 		this->strength += 2;
 		this->vitality += 2;
@@ -198,6 +211,9 @@ void AttributeComponent::updateLevel()
 		this->intelligence += 2;
 		this->hpMax_player += static_cast<int>((this->vitality * 5 + this->vitality + this->strength / 2 + this->intelligence / 5) / 3);
 		this->hp_player = this->hpMax_player;
+
+		this->levelUp.play();
+		this->levelUp.setVolume(20.f);
 	}
 }
 
