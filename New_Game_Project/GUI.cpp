@@ -1,5 +1,14 @@
  #include "GUI.h"
 
+void gui::Button::initSound()
+{
+	this->soundEffects["HOVER_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["HOVER_SOUND"]->loadFromFile("Sound and Music/sound/button_hover.wav");
+
+	this->hover.setBuffer(*this->soundEffects["HOVER_SOUND"]);
+	this->hover.setVolume(15.f);
+}
+
 gui::Button::Button(float x, float y, float width, float height,
 	sf::Font* font, std::string text, unsigned character_size,
 	sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
@@ -7,6 +16,7 @@ gui::Button::Button(float x, float y, float width, float height,
 	sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color,
 	short unsigned id)
 {
+	this->initSound();
 	this->buttonState = BTN_IDLE;
 	this->id = id;
 	 
@@ -88,7 +98,6 @@ void gui::Button::setId(const short unsigned id)
 	if (this->shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
 	{
 		this->buttonState = BTN_HOVER;
-
 		//Pressed
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{

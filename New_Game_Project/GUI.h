@@ -22,7 +22,11 @@ namespace gui
 	private:
 		short unsigned buttonState;
 		short unsigned id;
+
+		std::map<std::string, sf::SoundBuffer*> soundEffects;
+		sf::Sound hover;
 		
+		void initSound();
 
 		sf::RectangleShape shape;
 		sf::Font* font;

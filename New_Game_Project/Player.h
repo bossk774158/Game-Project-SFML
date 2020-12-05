@@ -13,6 +13,8 @@ private:
     bool attacking_combo1;
     bool attacking_combo2;
 
+    std::string name;
+
 
     unsigned damageMin;
     unsigned damageMax;
@@ -49,6 +51,8 @@ public:
     const bool getDamageTimer();
     const bool& getIsFaceRight();
     const bool& getIsShoot();
+
+    void setName(std::string name);
 
     //Functions
     void loseHP(const int hp);

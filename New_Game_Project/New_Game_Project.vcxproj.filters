@@ -168,6 +168,9 @@
     <ClCompile Include="VictoryState.cpp">
       <Filter>State</Filter>
     </ClCompile>
+    <ClCompile Include="CreateNameState.cpp">
+      <Filter>State\Editor Mode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h">
@@ -286,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="VictoryState.h">
       <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateNameState.h">
+      <Filter>State\Editor Mode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

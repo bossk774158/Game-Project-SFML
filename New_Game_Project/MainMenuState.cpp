@@ -1,6 +1,5 @@
 #include "MainMenuState.h"
 
-
 void MainMenuState::initVariables()
 {
 
@@ -23,7 +22,7 @@ void MainMenuState::initBackground()
 		static_cast<float>(this->window->getSize().y)
 		)
 	);
-	if (!this->bgTexture.loadFromFile("Resources/Images/Backgrounds/mainmenu_bg.png"))
+	if (!this->bgTexture.loadFromFile("Resources/Images/Backgrounds/Battleground3.png"))
 	{
 		throw "Error to download Background";
 	}
@@ -61,33 +60,25 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	std::cout << this->p2pX(20.f) << "\n";
 	this->buttons["GAME_STATE"] = new gui::Button(
 		880.f, 500.f,
 		this->p2pX(7.8f), this->p2pY(4.6f),
 		&this->font, "New Game", 50,
-		sf::Color(20, 20, 20, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(220,220, 220, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150,0), sf::Color(20, 20, 20, 0));
-
-	/*this->buttons["SETTING_STATE"] = new gui::Button(
-		this->p2pX(45.8f), this->p2pY(32.4f),
-		this->p2pX(7.8f), this->p2pY(4.6f),
-		&this->font, "Settings", 50,
-		sf::Color(20, 20, 20, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));*/
 
 	this->buttons["EDITOR_STATE"] = new gui::Button(
 		880.f, 650.f,
 		this->p2pX(7.8f), this->p2pY(4.6f),
 		&this->font, "Editor", 50,
-		sf::Color(20, 20, 20, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(220, 220, 220, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 	this->buttons["EXIT_STATE"] = new gui::Button(
 		880.f, 750.f,
 		this->p2pX(7.8f), this->p2pY(4.6f),
 		&this->font, "Quit", 50,
-		sf::Color(20, 20, 20, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(220, 220, 220, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }
 
@@ -133,12 +124,6 @@ void MainMenuState::updateButtons()
 		this->states->push(new GameState(this->stateData));
 		this->main_music.pause();
 	}
-
-	////Settings
-	//if (this->buttons["SETTING_STATE"]->isPressed())
-	//{
-	//	this->states->push(new SettingsState(this->stateData));
-	//}
 
 	//Editor
 	if (this->buttons["EDITOR_STATE"]->isPressed())

@@ -107,16 +107,10 @@ const bool& Player::getIsShoot()
 	return this->shoot;
 }
 
-//const bool Player::getAttackTimer()
-//{
-//	std::cout << this->attackTimer.getElapsedTime().asMilliseconds() << "\n";
-//	if (this->attackTimer.getElapsedTime().asMilliseconds() >= this->attackTimerMax)
-//	{
-//		this->attackTimer.restart();
-//		return true;
-//	}
-//	return false;
-//}
+void Player::setName(std::string name)
+{
+	this->name.assign(name);
+}
 
 void Player::loseHP(const int hp)
 {

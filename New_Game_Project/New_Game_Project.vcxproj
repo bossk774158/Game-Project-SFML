@@ -158,6 +158,7 @@
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="AttributeComponent.cpp" />
     <ClCompile Include="Bird.cpp" />
+    <ClCompile Include="CreateNameState.cpp" />
     <ClCompile Include="DefaultEditorMode.cpp" />
     <ClCompile Include="Dragon.cpp" />
     <ClCompile Include="EditorMode.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="AttributeComponent.h" />
     <ClInclude Include="Bird.h" />
+    <ClInclude Include="CreateNameState.h" />
     <ClInclude Include="DefaultEditorMode.h" />
     <ClInclude Include="Dragon.h" />
     <ClInclude Include="EditorMode.h" />
