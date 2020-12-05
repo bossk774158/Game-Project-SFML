@@ -454,7 +454,7 @@ void GameState::updateTileMap(const float& dt)
 
 void GameState::updatePlayer(const float& dt)
 {
-
+	//clockScore.restart().asSeconds()
 }
 
 void GameState::updatePlayerIsDead(const float& dt)
@@ -858,6 +858,11 @@ void GameState::updateItemCollision(const float& dt)
 	}
 }
 
+void GameState::updateScore(const float& dt)
+{
+	this->score = this->clockScore.getElapsedTime().asSeconds();
+}
+
 void GameState::update(const float& dt)
 {
 	this->updateMousePositions(&this->view);
@@ -867,6 +872,7 @@ void GameState::update(const float& dt)
 
 	if (!this->paused) //Unpause
 	{
+
 		this->updateView(dt);
 
 		this->updatePlayerInput(dt);

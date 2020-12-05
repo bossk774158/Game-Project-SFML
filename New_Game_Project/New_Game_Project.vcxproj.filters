@@ -168,8 +168,8 @@
     <ClCompile Include="VictoryState.cpp">
       <Filter>State</Filter>
     </ClCompile>
-    <ClCompile Include="CreateNameState.cpp">
-      <Filter>State\Editor Mode</Filter>
+    <ClCompile Include="ScoreBoardState.cpp">
+      <Filter>State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -290,8 +290,8 @@
     <ClInclude Include="VictoryState.h">
       <Filter>State</Filter>
     </ClInclude>
-    <ClInclude Include="CreateNameState.h">
-      <Filter>State\Editor Mode</Filter>
+    <ClInclude Include="ScoreBoardState.h">
+      <Filter>State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

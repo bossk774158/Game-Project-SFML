@@ -19,6 +19,9 @@ private:
     sf::RenderTexture renderTexture;
     sf::Sprite renderSprite;
 
+    sf::Clock clockScore;
+    float score;
+
     int i;
     int j;
 
@@ -139,6 +142,7 @@ public:
     void updateCombat(Enemy* enemy ,const int index, const float& dt);
     void updatePlayerInputAndSound(const float& dt);
     void updateItemCollision(const float& dt);
+    void updateScore(const float& dt);
     void update(const float& dt);
     void render(sf::RenderTarget* target = NULL);
 };

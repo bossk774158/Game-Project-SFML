@@ -108,7 +108,6 @@ void Game::endApplication()
 
 void Game::updateDt()
 {
-
 	this->dt = this->dtClock.restart().asSeconds();
 }
 
