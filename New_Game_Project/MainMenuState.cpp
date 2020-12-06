@@ -67,15 +67,22 @@ void MainMenuState::initButtons()
 		sf::Color(220,220, 220, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150,0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["EDITOR_STATE"] = new gui::Button(
+	this->buttons["SCORE_STATE"] = new gui::Button(
 		880.f, 650.f,
+		this->p2pX(7.8f), this->p2pY(4.6f),
+		&this->font, "Scoreboard", 50,
+		sf::Color(220, 220, 220, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+
+	this->buttons["EDITOR_STATE"] = new gui::Button(
+		880.f, 750.f,
 		this->p2pX(7.8f), this->p2pY(4.6f),
 		&this->font, "Editor", 50,
 		sf::Color(220, 220, 220, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 	this->buttons["EXIT_STATE"] = new gui::Button(
-		880.f, 750.f,
+		880.f, 850.f,
 		this->p2pX(7.8f), this->p2pY(4.6f),
 		&this->font, "Quit", 50,
 		sf::Color(220, 220, 220, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
@@ -123,6 +130,13 @@ void MainMenuState::updateButtons()
 	{
 		this->states->push(new GameState(this->stateData));
 		this->main_music.pause();
+	}
+
+	//Score
+	if (this->buttons["SCORE_STATE"]->isPressed())
+	{
+		std::cout << "Add score" << "\n";
+		this->states->push(new ScoreBoardState(this->stateData));
 	}
 
 	//Editor

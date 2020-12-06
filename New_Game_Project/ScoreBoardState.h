@@ -16,15 +16,16 @@
 #include<SFML/Audio.hpp>
 #include<SFML/Network.hpp>
 #include<SFML/System.hpp>
+
 using namespace std;
 using namespace sf;
 
-class ScoreBoardState
+class ScoreBoardState :
+    public State
 {
 private:
     int player_score;
-
-    sf::Font& font;
+    sf::Font font_number;
     sf::Text menu_text;
 
     sf::Text name_text[5];
@@ -50,8 +51,10 @@ private:
     sf::RectangleShape button_container;
 
     std::map<std::string, gui::Button*> buttons;
+
+    void initKeybinds();
 public:
-    ScoreBoardState(RenderWindow* window, Font& font, Event* ev);
+    ScoreBoardState(StateData* state_data);
     virtual ~ScoreBoardState();
 
     /// Accessors ///
@@ -60,12 +63,16 @@ public:
 
     /// Modifier ///
     void set_player_score(int player_score);
+    void initFont();
+
 
     /// Functions ///
+    void updateInput(const float& dt);
     void add_button(const std::string key, float y, float width, float height, const std::string text);
     void check_score(std::string path);
     void save_high_score(std::string path);
     void update(sf::Vector2i& mouse_pos);
-    void render(sf::RenderTarget& target);
+    void update(const float& dt);
+    void render(sf::RenderTarget* target = NULL);
 };
 

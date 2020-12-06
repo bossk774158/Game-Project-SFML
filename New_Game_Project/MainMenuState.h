@@ -1,7 +1,8 @@
 #pragma once
 #include"GameState.h"
 #include"EditorState.h"
-#include "SettingsState.h"
+#include"SettingsState.h"
+#include"ScoreBoardState.h"
 #include"GUI.h"
 
 class MainMenuState :
