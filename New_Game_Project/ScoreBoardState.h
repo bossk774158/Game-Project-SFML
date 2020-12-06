@@ -1,5 +1,6 @@
 #pragma once
 #include "State.h"
+#include "MainMenuState.h"
 #include "GUI.h"
 #include<iostream>
 #include<ctime>
@@ -48,7 +49,7 @@ private:
 
     /// High Score Board ///
     sf::RectangleShape bg;
-    sf::RectangleShape button_container;
+    sf::RectangleShape container;
 
     std::map<std::string, gui::Button*> buttons;
 
@@ -56,6 +57,8 @@ private:
 public:
     ScoreBoardState(StateData* state_data);
     virtual ~ScoreBoardState();
+
+    void addButton(const std::string key, float y, const std::string text);
 
     /// Accessors ///
     std::map<std::string, gui::Button*>& get_buttons();
@@ -66,12 +69,14 @@ public:
     void initFont();
 
 
+
     /// Functions ///
     void updateInput(const float& dt);
-    void add_button(const std::string key, float y, float width, float height, const std::string text);
+    void initButtons();
     void check_score(std::string path);
     void save_high_score(std::string path);
-    void update(sf::Vector2i& mouse_pos);
+    void updateButtons();
+    void update(const sf::Vector2i& mousePosWindow);
     void update(const float& dt);
     void render(sf::RenderTarget* target = NULL);
 };

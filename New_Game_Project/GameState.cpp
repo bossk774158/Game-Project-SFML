@@ -722,7 +722,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 					{
 						this->bg_music.pause();
 						this->states->pop();
-						this->states->push(new VictoryState(this->stateData));
+						this->states->push(new ScoreBoardState(this->stateData));
 						std::cout << "boss is dead! " << "\n";
 					}
 				this->dragon->resetDamageTimer();

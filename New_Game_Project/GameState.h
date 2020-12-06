@@ -107,7 +107,6 @@ private:
     void initPlayerGui();
     void initArrow();
     void initEnemySystem();
-    void initEnemy();
     void initTileMap();
     void initSystem();
     void initMusic();
