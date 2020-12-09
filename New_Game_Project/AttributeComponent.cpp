@@ -15,36 +15,36 @@ AttributeComponent::AttributeComponent(int level)
 
 	this->level = level;
 	this->exp = 0;
-	this->expNext = (50 * pow(this->level, 3) - 150 * pow(this->level, 2) + (UINT64)400 * this->level) / 3;
+	this->expNext = (50 * pow(this->level, 3) - 150 * pow(this->level, 2) + (UINT64)400 * this->level) / 4;
 	this->attributePoints = 2;
 
 	//player
-	this->vitality = 10;
+	this->vitality = 20;
 	this->strength = 5;
 	this->dexterity = 2;
 	this->agility = 2;
 	this->intelligence = 2;
 
 	//mummy
-	this->vitality_mummy = 3;
-	this->strength_mummy = 3;
-	this->dexterity_mummy = 1;
-	this->agility_mummy = 1;
-	this->intelligence_mummy = 1;
+	this->vitality_mummy = 5;
+	this->strength_mummy = 5;
+	this->dexterity_mummy = 3;
+	this->agility_mummy = 3;
+	this->intelligence_mummy = 3;
 
 	//bird
-	this->vitality_bird = 10;
-	this->strength_bird = 6;
-	this->dexterity_bird = 3;
-	this->agility_bird = 3;
-	this->intelligence_bird = 3;
+	this->vitality_bird = 15;
+	this->strength_bird = 10;
+	this->dexterity_bird = 6;
+	this->agility_bird = 6;
+	this->intelligence_bird = 6;
 
 	//boss
-	this->vitality_boss = 50;
-	this->strength_boss = 30;
-	this->dexterity_boss = 20;
-	this->agility_boss = 20;
-	this->intelligence_boss = 20;
+	this->vitality_boss = 70;
+	this->strength_boss = 50;
+	this->dexterity_boss = 40;
+	this->agility_boss = 40;
+	this->intelligence_boss = 40;
 
 	this->updateLevel();
 	this->updateState(true);

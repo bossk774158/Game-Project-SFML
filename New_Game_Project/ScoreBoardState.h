@@ -1,6 +1,5 @@
 #pragma once
-#include "State.h"
-#include "MainMenuState.h"
+//#include "MainMenuState.h"
 #include "GUI.h"
 #include<iostream>
 #include<ctime>
@@ -21,8 +20,7 @@
 using namespace std;
 using namespace sf;
 
-class ScoreBoardState :
-    public State
+class ScoreBoardState
 {
 private:
     int player_score;
@@ -55,10 +53,8 @@ private:
 
     void initKeybinds();
 public:
-    ScoreBoardState(StateData* state_data);
+    ScoreBoardState(RenderWindow* window, Font& font, Event* ev);
     virtual ~ScoreBoardState();
-
-    void addButton(const std::string key, float y, const std::string text);
 
     /// Accessors ///
     std::map<std::string, gui::Button*>& get_buttons();
@@ -75,9 +71,8 @@ public:
     void initButtons();
     void check_score(std::string path);
     void save_high_score(std::string path);
-    void updateButtons();
     void update(const sf::Vector2i& mousePosWindow);
     void update(const float& dt);
-    void render(sf::RenderTarget* target = NULL);
+    void render(sf::RenderTarget& target);
 };
 

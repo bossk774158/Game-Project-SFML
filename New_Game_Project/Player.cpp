@@ -31,6 +31,15 @@ void Player::initAnimation()
 
 }
 
+void Player::initSoundEffect()
+{
+	this->soundEffects["SWORD_SOUND"] = new sf::SoundBuffer;
+	this->soundEffects["SWORD_SOUND"]->loadFromFile("Sound and Music/sound/sword.wav");
+
+	this->swordSound.setBuffer(*this->soundEffects["SWORD_SOUND"]);
+	this->swordSound.setVolume(10.f);
+}
+
 //Constructors /Destructors 
 Player::Player(float x,float y,sf::Texture& texture_sheet)
 {
@@ -52,6 +61,7 @@ Player::Player(float x,float y,sf::Texture& texture_sheet)
 	this->animationComponent->addAnimation("ATTACK", 0.7f, 0, 2, 6, 2, 34, 36);
 	this->animationComponent->addAnimation("SHOOT", 0.5f, 0, 3, 6, 3, 34, 36);
 	
+	this->initSoundEffect();
 }
 
 Player::~Player()

@@ -2,10 +2,11 @@
 
 void ScoreBoardState::initKeybinds()
 {
+
 }
 
-ScoreBoardState::ScoreBoardState(StateData* state_data)
-    :State(state_data)
+ScoreBoardState::ScoreBoardState(RenderWindow* window, Font& font, Event* ev)
+    :font_number(font)
 {
     this->initFont();
     this->player_score = 0;
@@ -77,19 +78,6 @@ ScoreBoardState::~ScoreBoardState()
     }
 }
 
-void ScoreBoardState::addButton(const std::string key, float y, const std::string text)
-{
-    float width = 250.f;
-    float height = 50.f;
-    float x = this->container.getPosition().x + this->container.getSize().x / 2.f - width / 2.f;
-
-    this->buttons[key] = new gui::Button(
-        x, y, width, height,
-        &this->font_number, text, 50,
-        sf::Color(80, 80, 80, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-        sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
-}
-
 const bool ScoreBoardState::is_button_pressed(const string key)
 {
     if (this->input.length() > 0) {
@@ -106,7 +94,7 @@ void ScoreBoardState::set_player_score(int player_score)
 
 void ScoreBoardState::initFont()
 {
-    if (!this->font_number.loadFromFile("Fonts/Honeybae.otf"))
+    if (!this->font_number.loadFromFile("Fonts/8-BIT WONDER.TTF"))
     {
         throw("Error to download font");
     }
@@ -232,22 +220,6 @@ void ScoreBoardState::save_high_score(string path)
     ofs.is_open();
 }
 
-void ScoreBoardState::updateButtons()
-{
-    /*Update all the buttons and handle the functionality*/
-    for (auto& i : this->buttons)
-    {
-        i.second->update(mousePosWindow);
-    }
-
-    //Back to main menu
-    if (this->buttons["EXIT_STATE"]->isPressed())
-    {
-        this->states->pop();
-        this->states->push(new MainMenuState(this->stateData));
-    }
-}
-
 void ScoreBoardState::update(const sf::Vector2i& mousePosWindow)
 {
     for (auto& i : this->buttons) {
@@ -283,27 +255,26 @@ void ScoreBoardState::update(const sf::Vector2i& mousePosWindow)
 
 void ScoreBoardState::update(const float& dt)
 {
-    this->updateMousePositions();
-    this->updateButtons();
+    
 }
 
-void ScoreBoardState::render(RenderTarget* target)
+void ScoreBoardState::render(RenderTarget& target)
 {
-    target->draw(this->container);
+    target.draw(this->container);
 
     for (auto& i : this->buttons) {
-        i.second->render(*target);
+        i.second->render(target);
     }
 
-    target->draw(this->menu_text);
+    target.draw(this->menu_text);
 
     for (int i = 0; i < 5; i++) {
         if (i != this->score_pos) {
-            target->draw(this->name_text[i]);
+            target.draw(this->name_text[i]);
         }
         else {
             /// Input Name ///
-            target->draw(this->name_input_bg);
+            target.draw(this->name_input_bg);
 
             this->total_time += clock.restart().asSeconds();
             if (this->total_time >= 0.5) {
@@ -312,12 +283,12 @@ void ScoreBoardState::render(RenderTarget* target)
             }
 
             if (this->cursor_show) {
-                target->draw(this->name_input_cursor);
+                target.draw(this->name_input_cursor);
             }
 
-            target->draw(this->text_input);
+            target.draw(this->text_input);
         }
 
-        target->draw(this->score_text[i]);
+        target.draw(this->score_text[i]);
     }
 }

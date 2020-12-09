@@ -4,6 +4,12 @@
 void GameState::initVariables()
 {
 	this->dropChance = 60.f;
+	this->highScore = false;
+}
+
+void GameState::initScoreboard()
+{
+	this->scoreboard = new ScoreBoardState(this->window, this->font, this->ev);
 }
 
 void GameState::initDeferredRender()
@@ -279,6 +285,7 @@ void GameState::initSoundEffect()
 GameState::GameState(StateData* state_data)
 	:State(state_data)
 {
+	this->initScoreboard();
 	this->initDeferredRender();
 	this->initView();
 	this->initKeybinds();
@@ -451,7 +458,7 @@ void GameState::updateTileMap(const float& dt)
 
 void GameState::updatePlayer(const float& dt)
 {
-	//clockScore.restart().asSeconds()
+	
 }
 
 void GameState::updatePlayerIsDead(const float& dt)
@@ -506,7 +513,7 @@ void GameState::updateArrow(const float& dt)
 							this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
 						}
-						else if (this->i == 3 || this->i == 30 || this->i == 31 || this->i == 32 || this->i == 33 || this->i == 34 || this->i == 35)
+						else if (this->i == 3 || this->i == 30 || this->i == 31 || this->i == 32)
 						{
 							this->items.push_back(new Item(&this->textures["EXP_POTION"], "EXP", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
@@ -516,7 +523,7 @@ void GameState::updateArrow(const float& dt)
 							this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
 						}
-						else if(this->i == 5 || this->i == 50 || this->i == 51 || this->i == 52 || this->i == 53 || this->i == 54 || this->i == 55)
+						else if(this->i == 5 || this->i == 50 || this->i == 51)
 						{
 							this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
@@ -539,7 +546,7 @@ void GameState::updateArrow(const float& dt)
 							this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
 						}
-						else if (this->i == 3 || this->i == 30 || this->i == 31 || this->i == 32 || this->i == 33 || this->i == 34 || this->i == 35)
+						else if (this->i == 3 || this->i == 30 || this->i == 31 || this->i == 32)
 						{
 							this->items.push_back(new Item(&this->textures["EXP_POTION"], "EXP", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
@@ -549,7 +556,7 @@ void GameState::updateArrow(const float& dt)
 							this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
 						}
-						else if (this->i == 5 || this->i == 50 || this->i == 51 || this->i == 52 || this->i == 53 || this->i == 54 || this->i == 55)
+						else if (this->i == 5 || this->i == 50 || this->i == 51)
 						{
 							this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 							std::cout << "Item::heal drop!" << "\n";
@@ -599,7 +606,7 @@ void GameState::updateCombatAndEnemies(const float& dt)
 		}
 		else if (enemy->birdIsDead())
 		{
-			this->player->gainEXP(40);
+			this->player->gainEXP(150);
 			this->tts->addTextTag(EXP_TAG, this->player->getPosition().x - 50.f, this->player->getPosition().y + 30.f, static_cast<int>(enemy->getGainExp()), "+", "EXP");
 
 			this->enemySystem->removeEnemy(index);
@@ -643,7 +650,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 								this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else if (this->i == 3 || this->i == 30 || this->i == 31 || this->i == 32 || this->i == 33 || this->i == 34 || this->i == 35)
+							else if (this->i == 3 || this->i == 30 || this->i == 31 || this->i == 32)
 							{
 								this->items.push_back(new Item(&this->textures["EXP_POTION"], "EXP", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
@@ -653,7 +660,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 								this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else if(this->i == 5 || this->i == 50 || this->i == 51 || this->i == 52 || this->i == 53 || this->i == 54 || this->i == 55)
+							else if(this->i == 5 || this->i == 50 || this->i == 51)
 							{
 								this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
@@ -681,7 +688,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 								this->items.push_back(new Item(&this->textures["POISON_POTION"], "POISON", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else if (this->i == 3 || this->i == 30 || this->i == 31 || this->i == 32 || this->i == 33 || this->i == 34 || this->i == 35)
+							else if (this->i == 3 || this->i == 30 || this->i == 31 || this->i == 32)
 							{
 								this->items.push_back(new Item(&this->textures["EXP_POTION"], "EXP", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
@@ -691,7 +698,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 								this->items.push_back(new Item(&this->textures["STRENGTH_POTION"], "STRENGTH", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
 							}
-							else if(this->i == 5 || this->i == 50 || this->i == 51 || this->i == 52 || this->i == 53 || this->i == 54 || this->i == 55)
+							else if(this->i == 5 || this->i == 50 || this->i == 51)
 							{
 								this->items.push_back(new Item(&this->textures["RANDOM_POTION"], "RANDOM", enemy->getCenter().x + 10.f, enemy->getCenter().y + enemy->getGlobalBounds().height - 40.f));
 								std::cout << "Item::heal drop!" << "\n";
@@ -720,9 +727,8 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 					this->bossgetAttack.play();
 					if (this->dragon->bossIsDead())
 					{
+						this->highScore = true;
 						this->bg_music.pause();
-						this->states->pop();
-						this->states->push(new ScoreBoardState(this->stateData));
 						std::cout << "boss is dead! " << "\n";
 					}
 				this->dragon->resetDamageTimer();
@@ -733,15 +739,26 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("SHOOT"))))
 		{
-			if (this->shootTimer.getElapsedTime().asSeconds() > 0.5f && this->player->getIsShoot() == false)
+			/*if (this->shootTimer.getElapsedTime().asSeconds() > 0.5f && this->player->getIsShoot() == false)
+			{*/
+			if (this->player->getIsShoot() == false)
 			{
-				if(this->player->getIsFaceRight())
-						this->arrows.push_back(new Arrow(this->texture["ARROW"], this->player->getPos().x, this->player->getPos().y, -1.f, 0.f, 1500.f));
+				if (this->player->getIsFaceRight())
+				{
+					this->arrows.push_back(new Arrow(this->texture["ARROW"], this->player->getPos().x, this->player->getPos().y, -1.f, 0.f, 1500.f));
+					this->bowSound.play();
+				}
 				else
-						this->arrows.push_back(new Arrow(this->texture["ARROW"], this->player->getPos().x, this->player->getPos().y, 1.f, 0.f, 1500.f));
-				this->shootTimer.restart();
+				{
+					this->arrows.push_back(new Arrow(this->texture["ARROW"], this->player->getPos().x, this->player->getPos().y, 1.f, 0.f, 1500.f));
+					this->bowSound.play();
+				}
+					
+				//this->shootTimer.restart();
 				std::cout << "shot!" << "\n";
 			}
+					
+			//}
 		}
 
 		if (enemy->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getDamageTimer())
@@ -781,10 +798,6 @@ void GameState::updatePlayerInputAndSound(const float& dt)
 	{
 		this->swordSound.play();
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
-	{
-		this->bowSound.play();
-	}
 }
 
 void GameState::updateItemCollision(const float& dt)
@@ -802,7 +815,7 @@ void GameState::updateItemCollision(const float& dt)
 		}
 		else if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && item->getType() == "POISON")
 		{
-			this->player->loseHP(5);
+			this->player->loseHP(10);
 			this->poisonPotion.play();
 			this->poisonPotion.setVolume(20.f);
 			this->items.erase(this->items.begin() + itemCounter);
@@ -810,7 +823,7 @@ void GameState::updateItemCollision(const float& dt)
 		}
 		else if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && item->getType() == "EXP")
 		{
-			this->player->gainEXP(30);
+			this->player->gainEXP(150);
 			this->expPotion.play();
 			this->expPotion.setVolume(20.f);
 			this->items.erase(this->items.begin() + itemCounter);
@@ -818,7 +831,7 @@ void GameState::updateItemCollision(const float& dt)
 		}
 		else if (item->getGlobalBounds().intersects(this->player->getGlobalBounds()) && item->getType() == "STRENGTH")
 		{
-			this->player->getAttributeComponent()->getStrength(3);
+			this->player->getAttributeComponent()->getStrength(2);
 			this->strengthPotion.play();
 			this->expPotion.setVolume(20.f);
 			this->items.erase(this->items.begin() + itemCounter);
@@ -833,11 +846,11 @@ void GameState::updateItemCollision(const float& dt)
 			}
 			else if (this->j == 2)
 			{
-				this->player->gainEXP(30);
+				this->player->gainEXP(150);
 			}
 			else if (this->j == 3)
 			{
-				this->player->gainHP(15);
+				this->player->gainHP(50);
 			}
 			else if(this->j == 4)
 			{
@@ -857,7 +870,7 @@ void GameState::updateItemCollision(const float& dt)
 
 void GameState::updateScore(const float& dt)
 {
-	this->score = this->clockScore.getElapsedTime().asSeconds();
+	//this->score = this->clockScore.getElapsedTime().asSeconds();
 }
 
 void GameState::update(const float& dt)
@@ -893,6 +906,8 @@ void GameState::update(const float& dt)
 		this->tts->update(dt);
 
 		this->updatePlayerIsDead(dt);
+		
+		this->scoreboard->update(dt);
 	}
 	else //Pause
 	{
@@ -903,51 +918,58 @@ void GameState::update(const float& dt)
 
 void GameState::render(sf::RenderTarget* target)
 {
-	if (!target)
-		target = this->window;
+		if (!target)
+			target = this->window;
 
-	this->renderTexture.clear();
-
-	this->renderTexture.setView(this->view);
-
-	this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
-
-	for (auto* enemy : this->activeEnemies)
+	if (this->highScore == false)
 	{
-		enemy->render(this->renderTexture);
-	}
+		this->renderTexture.clear();
 
-	for (auto* Item : this->items)
-	{
-		Item->render(this->renderTexture);
-	}
+		this->renderTexture.setView(this->view);
 
-	this->player->render(this->renderTexture);
+		this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
 
-	this->dragon->render(this->renderTexture);
+		for (auto* enemy : this->activeEnemies)
+		{
+			enemy->render(this->renderTexture);
+		}
 
-	for (auto* arrow : this->arrows)
-	{
-		arrow->render(this->renderTexture);
-	}
+		for (auto* Item : this->items)
+		{
+			Item->render(this->renderTexture);
+		}
 
-	this->tts->render(this->renderTexture);
+		this->player->render(this->renderTexture);
 
-	//Render Gui
-	this->renderTexture.setView(this->renderTexture.getDefaultView());
-	this->playerGui->render(this->renderTexture);
+		this->dragon->render(this->renderTexture);
 
-	if (this->paused) //Pause menu render
-	{
+		for (auto* arrow : this->arrows)
+		{
+			arrow->render(this->renderTexture);
+		}
+
+		this->tts->render(this->renderTexture);
+
+		//Render Gui
 		this->renderTexture.setView(this->renderTexture.getDefaultView());
-		this->pmenu->render(this->renderTexture);
+		this->playerGui->render(this->renderTexture);
+
+		if (this->paused) //Pause menu render
+		{
+			this->renderTexture.setView(this->renderTexture.getDefaultView());
+			this->pmenu->render(this->renderTexture);
+		}
+
+		//DEBUG TEXT
+		this->renderTexture.draw(this->debugText);
+
+		//FINAL RENDER
+		this->renderTexture.display();
+		//this->renderSprite.setTexture(this->renderTexture.getTexture());
+		target->draw(this->renderSprite);
 	}
-
-	//DEBUG TEXT
-	this->renderTexture.draw(this->debugText);
-
-	//FINAL RENDER
-	this->renderTexture.display();
-	//this->renderSprite.setTexture(this->renderTexture.getTexture());
-	target->draw(this->renderSprite);
+	else
+	{
+		this->scoreboard->render(this->renderTexture);
+	}
 }

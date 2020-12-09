@@ -10,6 +10,7 @@
 #include "VictoryState.h"
 #include "Dragon.h"
 #include "EnemySpawnerTile.h"
+#include "ScoreBoardState.h"
 
 class GameState :
     public State
@@ -21,6 +22,11 @@ private:
 
     sf::Clock clockScore;
     float score;
+
+    //Scoreboard
+    bool highScore;
+    ScoreBoardState* scoreboard;
+    sf::Event* ev;
 
     int i;
     int j;
@@ -95,6 +101,7 @@ private:
 
     //Functions
     void initVariables();
+    void initScoreboard();
     void initDeferredRender();
     void initView();
     void initKeybinds();
@@ -123,7 +130,6 @@ public:
 
     void random2();
     void itemsRandom2();
-
 
     //Functions
     void updateView(const float& dt);

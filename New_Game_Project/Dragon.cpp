@@ -31,7 +31,7 @@ Dragon::Dragon(float x, float y, sf::Texture& texture_sheet, Entity& player)
 	this->initVariables();
 	this->initGui();
 
-	this->createHitboxComponent(this->sprite, 0.f, 0.f, 130.f, 140.f);
+	this->createHitboxComponent(this->sprite, 0.f, 30.f, 100.f, 120.f);
 	this->createMovementComponent(200.f, 1500.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
 	this->createAttributeComponent(1);
@@ -91,11 +91,13 @@ void Dragon::update(const float& dt, const sf::View& view)
 	this->movementComponent->update(dt);
 
 	this->hpBar.setSize(sf::Vector2f(145.f * (static_cast<float>(this->attributeComponent->hp_boss) / this->attributeComponent->hpMax_boss), 15.f));
-	this->hpBar.setPosition(this->sprite.getPosition());
+	this->hpBar.setPosition(this->sprite.getPosition().x-20, this->sprite.getPosition().y+ 30.f);
 
 	this->updateAnimation(dt);
 
 	this->hitboxComponent->update();
+
+	
 
 	this->follow->update(dt);
 }

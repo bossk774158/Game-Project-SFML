@@ -15,6 +15,9 @@ private:
 
     std::string name;
 
+    //Sounds Effect
+    std::map<std::string, sf::SoundBuffer*> soundEffects;
+    sf::Sound swordSound;
 
     unsigned damageMin;
     unsigned damageMax;
@@ -35,6 +38,7 @@ private:
     void initVariables();
     void initComponents();
     void initAnimation();
+    void initSoundEffect();
 
 
 public:
