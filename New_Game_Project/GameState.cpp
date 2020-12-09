@@ -732,7 +732,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 					{
 						this->bg_music.pause();
 						
-						this->score = (1 / this->scoreTime) * (1 / this->player->getAttributeComponent()->level) * 1000;
+						this->score = (1 / this->scoreTime) * (1 / this->player->getAttributeComponent()->level) * 10000;
 
 						std::cout << this->score << "\n";
 
