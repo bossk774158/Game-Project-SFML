@@ -20,12 +20,15 @@ private:
     sf::RenderTexture renderTexture;
     sf::Sprite renderSprite;
 
+    //Score
     sf::Clock clockScore;
-    float score;
+    float scoreTime;
+    unsigned int score;
 
     //Scoreboard
     bool highScore;
-    ScoreBoardState* scoreboard;
+    bool changeState;
+    ScoreBoardState scoreboard;
     sf::Event* ev;
 
     int i;
@@ -148,6 +151,7 @@ public:
     void updatePlayerInputAndSound(const float& dt);
     void updateItemCollision(const float& dt);
     void updateScore(const float& dt);
+    void updateScoreboard(const float& dt);
     void update(const float& dt);
     void render(sf::RenderTarget* target = NULL);
 };

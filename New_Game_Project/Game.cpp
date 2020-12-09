@@ -70,6 +70,7 @@ void Game::initStateData()
 	this->stateData.gfxSettings = &this->gfxSettings;
 	this->stateData.supportedKeys = &this->supportedKeys;
 	this->stateData.states = &this->states;
+	this->stateData.ev = &this->sfEvent;
 	this->stateData.gridSize = this->gridSize;
 }
 

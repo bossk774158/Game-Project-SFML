@@ -1,18 +1,21 @@
 #include "ScoreBoardState.h"
 
-void ScoreBoardState::initKeybinds()
-{
 
+void ScoreBoardState::initFont()
+{
+    if (!this->font_number2.loadFromFile("Fonts/novem___.ttf"))
+    {
+        throw("Error to download font");
+    }
 }
 
 ScoreBoardState::ScoreBoardState(RenderWindow* window, Font& font, Event* ev)
-    :font_number(font)
+    :font_number(font), ev(ev)
 {
     this->initFont();
     this->player_score = 0;
     this->total_time = 0.f;
     this->cursor_show = true;
-    this->ev = ev;
 
     /// Init Background ///
     this->bg.setSize(
@@ -37,10 +40,10 @@ ScoreBoardState::ScoreBoardState(RenderWindow* window, Font& font, Event* ev)
     );
 
     /// Init Text ///
-    this->menu_text.setFont(font_number);
+    this->menu_text.setFont(font_number2);
     this->menu_text.setCharacterSize(40);
     this->menu_text.setFillColor(Color(255, 255, 255, 200));
-    this->menu_text.setString("HIGH SCORE");
+    this->menu_text.setString("Score Board");
     this->menu_text.setPosition(
         this->container.getPosition().x + this->container.getSize().x / 2 - this->menu_text.getGlobalBounds().width / 2,
         this->container.getPosition().y + 30.f
@@ -48,7 +51,7 @@ ScoreBoardState::ScoreBoardState(RenderWindow* window, Font& font, Event* ev)
 
     /// Init Name && Score Text ///
     for (int i = 0; i < 5; i++) {
-        this->name_text[i].setFont(font_number);
+        this->name_text[i].setFont(font_number2);
         this->name_text[i].setFillColor(Color(255, 255, 255, 200));
         this->name_text[i].setString(this->name[i]);
         this->name_text[i].setPosition(
@@ -58,7 +61,7 @@ ScoreBoardState::ScoreBoardState(RenderWindow* window, Font& font, Event* ev)
     }
 
     for (int i = 0; i < 5; i++) {
-        this->score_text[i].setFont(font_number);
+        this->score_text[i].setFont(font_number2);
         this->score_text[i].setFillColor(Color(255, 255, 255, 200));
         this->score_text[i].setString(to_string(this->score[i]));
         this->score_text[i].setPosition(
@@ -66,7 +69,7 @@ ScoreBoardState::ScoreBoardState(RenderWindow* window, Font& font, Event* ev)
             this->container.getPosition().y + 120.f + 50.f * i
         );
     }
-    this->initButtons();
+
 }
 
 ScoreBoardState::~ScoreBoardState()
@@ -76,6 +79,11 @@ ScoreBoardState::~ScoreBoardState()
     {
         delete i->second;
     }
+}
+
+map<string, gui::Button*>& ScoreBoardState::get_buttons()
+{
+    return this->buttons;
 }
 
 const bool ScoreBoardState::is_button_pressed(const string key)
@@ -92,30 +100,17 @@ void ScoreBoardState::set_player_score(int player_score)
     this->player_score = player_score;
 }
 
-void ScoreBoardState::initFont()
+
+void ScoreBoardState::add_button(const string key, float y, float width, float height, const string text)
 {
-    if (!this->font_number.loadFromFile("Fonts/8-BIT WONDER.TTF"))
-    {
-        throw("Error to download font");
-    }
-}
+    float x = this->container.getPosition().x + this->container.getSize().x / 2 - width / 2;
 
-void ScoreBoardState::updateInput(const float& dt)
-{
-
-}
-
-void ScoreBoardState::initButtons()
-{
-    float width = 250.f;
-    float height = 50.f;
-    float x = this->container.getPosition().x + this->container.getSize().x / 2.f - width / 2.f;
-
-    this->buttons["EXIT_STATE"] = new gui::Button(
-        x, 800.f, width, height,
-        &this->font_number, "Back", 50,
-        sf::Color(80, 80, 80, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-        sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+    this->buttons[key] = new gui::Button(x, y, width, height,
+        &this->font_number, text, 50,
+        Color(255, 255, 255, 150), Color(255, 255, 255, 255), Color(20, 20, 20, 50),
+        Color(70, 70, 70, 200), Color(150, 150, 150, 200), Color(20, 20, 20, 200),
+        Color(255, 255, 255, 200), Color(255, 255, 255, 255), Color(20, 20, 20, 50)
+    );
 }
 
 void ScoreBoardState::check_score(string path)
@@ -227,7 +222,6 @@ void ScoreBoardState::update(const sf::Vector2i& mousePosWindow)
     }
 
     /// Input Name ////
-    //cout << this->ev->text.unicode << endl;
     if (this->ev->type == Event::EventType::TextEntered)
     {
         if (this->ev->text.unicode != 13) {

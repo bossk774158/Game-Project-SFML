@@ -24,7 +24,8 @@ class ScoreBoardState
 {
 private:
     int player_score;
-    sf::Font font_number;
+    sf::Font& font_number;
+    sf::Font font_number2;
     sf::Text menu_text;
 
     sf::Text name_text[5];
@@ -51,24 +52,21 @@ private:
 
     std::map<std::string, gui::Button*> buttons;
 
-    void initKeybinds();
+    void initFont();
+
 public:
     ScoreBoardState(RenderWindow* window, Font& font, Event* ev);
-    virtual ~ScoreBoardState();
+    virtual ~ScoreBoardState(); 
 
     /// Accessors ///
-    std::map<std::string, gui::Button*>& get_buttons();
+    map<string, gui::Button*>& get_buttons();
     const bool is_button_pressed(const std::string key);
 
     /// Modifier ///
     void set_player_score(int player_score);
-    void initFont();
-
-
 
     /// Functions ///
-    void updateInput(const float& dt);
-    void initButtons();
+    void add_button(const string key, float y, float width, float height, const string text);
     void check_score(std::string path);
     void save_high_score(std::string path);
     void update(const sf::Vector2i& mousePosWindow);

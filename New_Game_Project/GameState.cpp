@@ -5,12 +5,13 @@ void GameState::initVariables()
 {
 	this->dropChance = 60.f;
 	this->highScore = false;
+	this->changeState = false;
 }
 
-void GameState::initScoreboard()
-{
-	this->scoreboard = new ScoreBoardState(this->window, this->font, this->ev);
-}
+//void GameState::initScoreboard()
+//{
+//	this->scoreboard = new ScoreBoardState(this->window, this->font, this->ev);
+//}
 
 void GameState::initDeferredRender()
 {
@@ -283,9 +284,9 @@ void GameState::initSoundEffect()
 }
 
 GameState::GameState(StateData* state_data)
-	:State(state_data)
+	:State(state_data), scoreboard(state_data->window,this->font_number,state_data->ev)
 {
-	this->initScoreboard();
+	//this->initScoreboard();
 	this->initDeferredRender();
 	this->initView();
 	this->initKeybinds();
@@ -303,6 +304,8 @@ GameState::GameState(StateData* state_data)
 	this->initSystem();
 	this->initMusic();
 	this->initSoundEffect();
+
+	this->scoreboard.add_button("OK", 700, 200, 50, "OK");
 }
 GameState::~GameState()
 {
@@ -727,8 +730,16 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 					this->bossgetAttack.play();
 					if (this->dragon->bossIsDead())
 					{
-						this->highScore = true;
 						this->bg_music.pause();
+						
+						this->score = (1 / this->scoreTime) * (1 / this->player->getAttributeComponent()->level) * 1000;
+
+						std::cout << this->score << "\n";
+
+						this->scoreboard.set_player_score(this->score);
+						this->scoreboard.check_score("sacore.slmp");
+						this->clockScore.restart();
+						this->highScore = true;
 						std::cout << "boss is dead! " << "\n";
 					}
 				this->dragon->resetDamageTimer();
@@ -870,7 +881,14 @@ void GameState::updateItemCollision(const float& dt)
 
 void GameState::updateScore(const float& dt)
 {
-	//this->score = this->clockScore.getElapsedTime().asSeconds();
+	this->scoreTime = clockScore.getElapsedTime().asSeconds();
+
+	//std::cout << this->scoreTime << "\n";
+}
+
+void GameState::updateScoreboard(const float& dt)
+{
+	this->scoreboard.update(this->mousePosWindow);
 }
 
 void GameState::update(const float& dt)
@@ -906,8 +924,17 @@ void GameState::update(const float& dt)
 		this->tts->update(dt);
 
 		this->updatePlayerIsDead(dt);
+
+		if (this->highScore) {
+			this->updateScoreboard(dt);
+			if (scoreboard.is_button_pressed("OK")) {
+				this->scoreboard.save_high_score("sacore.slmp");
+				this->states->pop();
+			}
+		}
+
+		this->updateScore(dt);
 		
-		this->scoreboard->update(dt);
 	}
 	else //Pause
 	{
@@ -962,14 +989,14 @@ void GameState::render(sf::RenderTarget* target)
 
 		//DEBUG TEXT
 		this->renderTexture.draw(this->debugText);
-
-		//FINAL RENDER
-		this->renderTexture.display();
-		//this->renderSprite.setTexture(this->renderTexture.getTexture());
-		target->draw(this->renderSprite);
 	}
 	else
 	{
-		this->scoreboard->render(this->renderTexture);
+		this->scoreboard.render(this->renderTexture);
 	}
+	//FINAL RENDER
+	this->renderTexture.display();
+
+	//this->renderSprite.setTexture(this->renderTexture.getTexture());
+	target->draw(this->renderSprite);
 }
