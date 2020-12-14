@@ -6,6 +6,7 @@ void GameState::initVariables()
 	this->dropChance = 60.f;
 	this->highScore = false;
 	this->changeState = false;
+	this->delay = false;
 }
 
 //void GameState::initScoreboard()
@@ -142,6 +143,7 @@ void GameState::initPauseMenu()
 void GameState::initkeyTime()
 {
 	this->keyTimeMax = 0.2f;
+	this->keyTimeSword = 0.7f;
 	this->keyTimer.restart();
 }
 
@@ -173,6 +175,10 @@ void GameState::initArrow()
 	this->texture["ARROW"] = new sf::Texture();
 	if (!this->texture["ARROW"]->loadFromFile("Resources/Images/Sprites/Player/Bullet.png"))
 		std::cout << "ERROR_BULLET" << "\n";
+
+	this->texture["FLIPARROW"] = new sf::Texture();
+	if (!this->texture["FLIPARROW"]->loadFromFile("Resources/Images/Sprites/Player/FlipBullet.png"))
+		std::cout << "ERROR_FLIPBULLET" << "\n";
 }
 
 void GameState::initEnemySystem()
@@ -386,6 +392,18 @@ const bool GameState::getKeyTime()
 		return false;
 }
 
+const bool GameState::getKeyTimeSword()
+{
+	if (this->keyTimer.getElapsedTime().asSeconds() >= this->keyTimeSword)
+	{
+		this->keyTimer.restart();
+		return true;
+	}
+
+
+	return false;
+}
+
 void GameState::updateView(const float& dt)
 {
 		this->view.setCenter(
@@ -416,28 +434,36 @@ void GameState::updateInput(const float& dt)
 void GameState::updatePlayerInput(const float& dt)
 {
 	//Update player Input
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("SHOOT"))))
 		{
-			this->player->move(-1.f, 0.f, dt);
+			this->player->move(0.f, 0.f, dt);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
+		else
 		{
-			this->player->move(1.f, 0.f, dt);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
+			{
+				this->player->move(-1.f, 0.f, dt);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
+			{
+				this->player->move(1.f, 0.f, dt);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
+			{
+				this->player->move(0.f, -1.f, dt);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
+			{
+				this->player->move(0.f, 1.f, dt);
+			}
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
-		{
-			this->player->move(0.f, -1.f, dt);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
-		{
-			this->player->move(0.f, 1.f, dt);
-		}
+	
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Y))
 		{
 			this->player->getAttributeComponent()->damageMax = 4000.f;
-			this->player->getAttributeComponent()->hp_player = 2000;
-			this->player->getAttributeComponent()->hpMax_player = 2000;
+			this->player->getAttributeComponent()->hp_player = 20000;
+			this->player->getAttributeComponent()->hpMax_player = 20000;
 			this->player->setPosition(850.f, 1420.f);
 		}
 }
@@ -646,7 +672,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) 
 			&& enemy->getGlobalBounds().contains(this->mousePosView)
-			&& enemy->getDistance(*this->player) < 55.f)
+			&& enemy->getDistance(*this->player) < 60.f)
 		{
 			if (this->punchTimer.getElapsedTime().asSeconds() > 0.5f && enemy->getDamageTimerDone())
 			{
@@ -767,13 +793,11 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("SHOOT"))))
 		{
-			/*if (this->shootTimer.getElapsedTime().asSeconds() > 0.5f && this->player->getIsShoot() == false)
-			{*/
 			if (this->player->getIsShoot() == false)
 			{
 				if (this->player->getIsFaceRight())
 				{
-					this->arrows.push_back(new Arrow(this->texture["ARROW"], this->player->getPos().x, this->player->getPos().y, -1.f, 0.f, 1500.f));
+					this->arrows.push_back(new Arrow(this->texture["FLIPARROW"], this->player->getPos().x, this->player->getPos().y, -1.f, 0.f, 1500.f));
 					this->bowSound.play();
 				}
 				else
@@ -782,11 +806,8 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 					this->bowSound.play();
 				}
 					
-				//this->shootTimer.restart();
 				std::cout << "shot!" << "\n";
 			}
-					
-			//}
 		}
 
 		if (enemy->getGlobalBounds().intersects(this->player->getGlobalBounds()) && this->player->getDamageTimer())
@@ -822,7 +843,7 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 
 void GameState::updatePlayerInputAndSound(const float& dt)
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->soundClock.getElapsedTime().asSeconds() > 0.5f)
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeyTimeSword())
 	{
 		this->swordSound.play();
 	}
@@ -973,14 +994,14 @@ void GameState::render(sf::RenderTarget* target)
 
 		this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
 
-		for (auto* enemy : this->activeEnemies)
-		{
-			enemy->render(this->renderTexture);
-		}
-
 		for (auto* Item : this->items)
 		{
 			Item->render(this->renderTexture);
+		}
+
+		for (auto* enemy : this->activeEnemies)
+		{
+			enemy->render(this->renderTexture);
 		}
 
 		this->player->render(this->renderTexture);

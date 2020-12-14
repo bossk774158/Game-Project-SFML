@@ -22,6 +22,8 @@ private:
 	sf::Vector2f direction;
 	float movementSpeed;
 
+	bool flip;
+
 public:
 	Arrow();
 	Arrow(sf::Texture* bullet_arrow,float pos_x, float pos_y, float dir_shoot_x, float dir_shoot_y, float movement_speed);
@@ -31,6 +33,7 @@ public:
 	sf::FloatRect getbounds() const;
 	
 	void flipArrow();
+	const bool getFlipArrow();
 	bool isIntersects(sf::FloatRect other);
 
 	void update(const float& dt);

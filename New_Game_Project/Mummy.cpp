@@ -7,7 +7,6 @@ void Mummy::initVariables()
 
 void Mummy::initAnimation()
 {
-
 	this->animationComponent->addAnimation("IDLE", 1.5f, 0, 0, 3, 0, 60, 45);
 	this->animationComponent->addAnimation("ATTACK_LEFT", 1.1f, 0, 1, 5, 1, 40, 45);
 	this->animationComponent->addAnimation("WALK_LEFT", 1.f, 0, 2, 5, 2, 40, 45);

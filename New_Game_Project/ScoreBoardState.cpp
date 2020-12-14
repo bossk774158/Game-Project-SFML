@@ -91,6 +91,10 @@ const bool ScoreBoardState::is_button_pressed(const string key)
     if (this->input.length() > 0) {
         return this->buttons[key]->isPressed();
     }
+    else
+    {
+        return this->buttons[key]->isPressed();
+    }
 
     return false;
 }

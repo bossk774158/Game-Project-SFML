@@ -40,7 +40,7 @@ AttributeComponent::AttributeComponent(int level)
 	this->intelligence_bird = 6;
 
 	//boss
-	this->vitality_boss = 70;
+	this->vitality_boss = 60;
 	this->strength_boss = 50;
 	this->dexterity_boss = 40;
 	this->agility_boss = 40;

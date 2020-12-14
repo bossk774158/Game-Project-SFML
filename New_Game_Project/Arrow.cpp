@@ -15,6 +15,8 @@ Arrow::Arrow(sf::Texture* bullet_arrow, float pos_x, float pos_y, float dir_shoo
 	this->direction.x = dir_shoot_x;
 	this->direction.y = dir_shoot_y;
 	this->movementSpeed = movement_speed;
+
+	this->flip = false;
 }
 
 Arrow::~Arrow()
@@ -30,6 +32,12 @@ sf::FloatRect Arrow::getbounds() const
 void Arrow::flipArrow()
 {
 	this->shape.setScale(-0.3f, 0.3f);
+	this->flip;
+}
+
+const bool Arrow::getFlipArrow()
+{
+	return this->flip;
 }
 
 bool Arrow::isIntersects(sf::FloatRect other)

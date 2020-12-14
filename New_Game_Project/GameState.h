@@ -12,6 +12,8 @@
 #include "EnemySpawnerTile.h"
 #include "ScoreBoardState.h"
 
+#include "Mummy.h"
+
 class GameState :
     public State
 {
@@ -33,6 +35,9 @@ private:
 
     int i;
     int j;
+
+    //Mummy
+    Mummy* mummy;
 
     //Music
     sf::Music bg_music;
@@ -60,6 +65,8 @@ private:
     sf::Sound poisonPotion;
     sf::Sound strengthPotion;
     sf::Sound randomPotion;
+
+    bool delay;
 
 
     //Sound Clock
@@ -101,8 +108,10 @@ private:
     sf::Clock shootTimer;
     sf::Clock punchTimer;
     sf::Clock spawnTimer;
+
     sf::Clock keyTimer;
     float keyTimeMax;
+    float keyTimeSword;
 
     //Functions
     void initVariables();
@@ -138,6 +147,8 @@ public:
 
     //Accessors
     const bool getKeyTime();
+    const bool getKeyTimeSword();
+
 
     //Functions
     void updateView(const float& dt);
