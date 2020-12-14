@@ -416,8 +416,6 @@ void GameState::updateInput(const float& dt)
 void GameState::updatePlayerInput(const float& dt)
 {
 	//Update player Input
-	if (this->playerGui->getTabOpen() == false)
-	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
 		{
 			this->player->move(-1.f, 0.f, dt);
@@ -442,7 +440,6 @@ void GameState::updatePlayerInput(const float& dt)
 			this->player->getAttributeComponent()->hpMax_player = 2000;
 			this->player->setPosition(850.f, 1420.f);
 		}
-	}
 }
 
 void GameState::updatePlayerGui(const float& dt)

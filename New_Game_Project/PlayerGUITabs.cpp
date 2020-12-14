@@ -51,7 +51,7 @@ void PlayerGUITabs::toggleCharacterTab()
 
 void PlayerGUITabs::update()
 {
-
+	this->characterTab.update();
 }
 
 void PlayerGUITabs::render(sf::RenderTarget& target)

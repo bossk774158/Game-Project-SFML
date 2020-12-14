@@ -57,6 +57,7 @@ public:
     const bool& getIsShoot();
 
     void setName(std::string name);
+    const std::string toStringCharacterTab() const;
 
     //Functions
     void loseHP(const int hp);

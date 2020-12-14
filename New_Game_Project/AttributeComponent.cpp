@@ -156,8 +156,8 @@ const bool AttributeComponent::bossIsDead() const
 void AttributeComponent::updateState(const bool reset)
 {
 	this->hpMax_player	= (this->vitality * 15 + this->vitality + this->strength + this->intelligence / 5) * this->level / 2;
-	this->damageMin = this->strength * 2 + this->strength / 4 + this->intelligence / 5;
-	this->damageMax = this->strength * 2 + this->strength / 2 + this->intelligence / 5;
+	this->damageMin = this->strength + 1 + this->strength / 4 + this->intelligence / 5;
+	this->damageMax = this->strength + 3 + this->strength / 2 + this->intelligence / 5;
 	this->accuracy  = this->dexterity * 5 + this->dexterity / 2 + this->intelligence / 5;
 	this->defence   = this->agility * 2 + this->agility / 4 + this->intelligence / 5;
 	this->luck		= this->intelligence * 2 + this->intelligence / 5;

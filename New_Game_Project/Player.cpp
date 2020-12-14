@@ -122,6 +122,21 @@ void Player::setName(std::string name)
 	this->name.assign(name);
 }
 
+const std::string Player::toStringCharacterTab() const
+{
+	std::stringstream ss;
+
+	ss << " Str: " << this->attributeComponent->strength << "\n\n"
+		<< " Agi: " << this->attributeComponent->agility << "\n\n"
+		<< " Int: " << this->attributeComponent->intelligence << "\n\n"
+		<< " Dex: " << this->attributeComponent->dexterity << "\n\n"
+		<< " Vit: " << this->attributeComponent->vitality << "\n\n"
+		<< " Damage Min: " << this->attributeComponent->damageMin << "\n\n"
+		<< " Damage Max: " << this->attributeComponent->damageMax;
+
+	return ss.str();
+}
+
 void Player::loseHP(const int hp)
 {
 	this->attributeComponent->hp_player -= hp;
