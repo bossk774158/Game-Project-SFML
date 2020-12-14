@@ -158,6 +158,7 @@
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="AttributeComponent.cpp" />
     <ClCompile Include="Bird.cpp" />
+    <ClCompile Include="CharacterTab.cpp" />
     <ClCompile Include="DefaultEditorMode.cpp" />
     <ClCompile Include="Dragon.cpp" />
     <ClCompile Include="EditorMode.cpp" />
@@ -180,12 +181,14 @@
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerGui.cpp" />
+    <ClCompile Include="PlayerGUITabs.cpp" />
     <ClCompile Include="RegularTile.cpp" />
     <ClCompile Include="ScoreBoardState.cpp" />
     <ClCompile Include="SettingsState.cpp" />
     <ClCompile Include="GraphicsSettings.cpp" />
     <ClCompile Include="SkillComponent.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="Tab.cpp" />
     <ClCompile Include="TextTagSystem.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMap.cpp" />
@@ -200,6 +203,7 @@
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="AttributeComponent.h" />
     <ClInclude Include="Bird.h" />
+    <ClInclude Include="CharacterTab.h" />
     <ClInclude Include="DefaultEditorMode.h" />
     <ClInclude Include="Dragon.h" />
     <ClInclude Include="EditorMode.h" />
@@ -223,11 +227,13 @@
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerGui.h" />
+    <ClInclude Include="PlayerGUITabs.h" />
     <ClInclude Include="RegularTile.h" />
     <ClInclude Include="ScoreBoardState.h" />
     <ClInclude Include="SettingsState.h" />
     <ClInclude Include="SkillComponent.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="Tab.h" />
     <ClInclude Include="TextTagSystem.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />

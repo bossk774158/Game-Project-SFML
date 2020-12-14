@@ -1,6 +1,5 @@
 #pragma once
-#include"Player.h"
-#include "GUI.h"
+#include "PlayerGUITabs.h"
 
 class Player;
 class sf::RectangleShape;
@@ -9,8 +8,8 @@ class PlayerGui
 {
 private:
 	Player* player;
-	
 	sf::Font font;
+
 
 	//Level bar
 	std::string levelBarString;
@@ -32,27 +31,36 @@ private:
 	sf::RectangleShape hpBarBack;
 	sf::RectangleShape hpBarInner;
 
+	//Player GUI Tabs
+	PlayerGUITabs* playerTabs;
+
 	void initFont();
 	void initLevelBar();
 	void initEXPBar();
 	void initHPBar();
+	void initPlayerTabs(sf::Font& font, Player& player);
 
 
 public:
 	PlayerGui(Player* player);
 	virtual ~PlayerGui();
 
+	//Accessors
+	const bool getTabOpen() const;
+
 	//Functions
-
-
 	void updateLevelBar();
 	void updateEXPBar();
 	void updateHPBar();
+	void updatePlayerTabs();
+
 	void update(const float& dt);
 
 	void renderLevelBar(sf::RenderTarget& target);
 	void renderEXPBar(sf::RenderTarget& target);
 	void renderHPBar(sf::RenderTarget& target);
+	void renderPlayerTabs(sf::RenderTarget& target);
+
 	void render(sf::RenderTarget& target);
 };
 

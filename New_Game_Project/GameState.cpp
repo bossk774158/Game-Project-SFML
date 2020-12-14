@@ -369,10 +369,20 @@ void GameState::itemsRandom2()
 
 void GameState::updateView(const float& dt)
 {
-	this->view.setCenter(
-		std::floor(this->player->getPosition().x + (static_cast<float>(this->mousePosWindow.x) - static_cast<float>(this->stateData->gfxSettings->resolution.width / 2)) / 5.f),
-		std::floor(this->player->getPosition().y + (static_cast<float>(this->mousePosWindow.y) - static_cast<float>(this->stateData->gfxSettings->resolution.height / 2)) / 5.f)
-	);
+	if (this->playerGui->getTabOpen())
+	{
+		this->view.setCenter(
+			std::floor(this->player->getPosition().x + (static_cast<float>(this->mousePosWindow.x) - static_cast<float>(this->stateData->gfxSettings->resolution.width / 2)) / 5.f),
+			std::floor(this->player->getPosition().y + (static_cast<float>(this->mousePosWindow.y) - static_cast<float>(this->stateData->gfxSettings->resolution.height / 2)) / 5.f)
+		);
+	}
+	else
+	{
+		this->view.setCenter(
+			std::floor(this->player->getPosition().x + (static_cast<float>(this->mousePosWindow.x) - static_cast<float>(this->stateData->gfxSettings->resolution.width / 2)) / 5.f),
+			std::floor(this->player->getPosition().y + (static_cast<float>(this->mousePosWindow.y) - static_cast<float>(this->stateData->gfxSettings->resolution.height / 2)) / 5.f)
+		);
+	}
 }
 
 void GameState::updateInput(const float& dt)
@@ -461,7 +471,9 @@ void GameState::updateTileMap(const float& dt)
 
 void GameState::updatePlayer(const float& dt)
 {
-	
+	this->player->update(dt, this->view);
+
+	this->playerGui->update(dt);
 }
 
 void GameState::updatePlayerIsDead(const float& dt)
@@ -903,13 +915,11 @@ void GameState::update(const float& dt)
 
 		this->updateView(dt);
 
+		this->updatePlayer(dt);
+
 		this->updatePlayerInput(dt);
 
 		this->updateTileMap(dt);
-
-		this->player->update(dt, this->view);
-
-		this->playerGui->update(dt);
 
 		this->updateArrow(dt);
 

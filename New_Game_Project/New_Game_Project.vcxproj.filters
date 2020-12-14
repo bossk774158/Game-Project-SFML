@@ -171,6 +171,15 @@
     <ClCompile Include="ScoreBoardState.cpp">
       <Filter>State</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerGUITabs.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterTab.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Tab.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameState.h">
@@ -292,6 +301,15 @@
     </ClInclude>
     <ClInclude Include="ScoreBoardState.h">
       <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGUITabs.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterTab.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Tab.h">
+      <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

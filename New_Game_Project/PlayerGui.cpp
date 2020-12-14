@@ -65,6 +65,13 @@ void PlayerGui::initHPBar()
 	this->hpBarText.setPosition(this->hpBarInner.getPosition().x + 10.f, this->hpBarInner.getPosition().y + 5.f);
 }
 
+void PlayerGui::initPlayerTabs(sf::Font& font, Player& player)
+{
+	this->playerTabs = new PlayerGUITabs(font, player);
+}
+
+
+
 PlayerGui::PlayerGui(Player* player)
 {
 	this->player = player;
@@ -73,11 +80,17 @@ PlayerGui::PlayerGui(Player* player)
 	this->initLevelBar();
 	this->initEXPBar();
 	this->initHPBar();
+	this->initPlayerTabs(font ,*player);
 }
 
 PlayerGui::~PlayerGui()
 {
+	delete this->playerTabs;
+}
 
+const bool PlayerGui::getTabOpen() const
+{
+	return this->playerTabs->tabsOpen();
 }
 
 void PlayerGui::updateLevelBar()
@@ -117,11 +130,17 @@ void PlayerGui::updateHPBar()
 	this->hpBarText.setString(this->hpBarString);
 }
 
+void PlayerGui::updatePlayerTabs()
+{
+	this->playerTabs->update();
+}
+
 void PlayerGui::update(const float& dt)
 {
 	this->updateLevelBar();
 	this->updateEXPBar();
 	this->updateHPBar();
+	this->updatePlayerTabs();
 }
 
 void PlayerGui::renderLevelBar(sf::RenderTarget& target)
@@ -144,9 +163,15 @@ void PlayerGui::renderHPBar(sf::RenderTarget& target)
 	target.draw(this->hpBarText);
 }
 
+void PlayerGui::renderPlayerTabs(sf::RenderTarget& target)
+{
+	this->playerTabs->render(target);
+}
+
 void PlayerGui::render(sf::RenderTarget& target)
 {
 	this->renderLevelBar(target);
 	this->renderEXPBar(target);
 	this->renderHPBar(target);
+	this->renderPlayerTabs(target);
 }
