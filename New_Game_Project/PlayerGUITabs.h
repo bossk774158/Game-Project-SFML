@@ -43,6 +43,8 @@ public:
 	const bool getKeyTime();
 	const bool tabsOpen();
 
+	void toggleCharacterTab();
+
 	void update();
 	void render(sf::RenderTarget& target);
 

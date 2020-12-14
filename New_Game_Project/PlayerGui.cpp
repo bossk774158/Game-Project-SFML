@@ -93,6 +93,11 @@ const bool PlayerGui::getTabOpen() const
 	return this->playerTabs->tabsOpen();
 }
 
+void PlayerGui::toggleCharacterTab()
+{
+	this->playerTabs->toggleCharacterTab();
+}
+
 void PlayerGui::updateLevelBar()
 {
 	this->levelBarString = std::to_string(this->player->getAttributeComponent()->level);

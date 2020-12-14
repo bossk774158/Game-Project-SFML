@@ -24,7 +24,7 @@ void CharacterTab::update()
 {
 	if (!this->hidden)
 	{
-
+		
 	}
 }
 

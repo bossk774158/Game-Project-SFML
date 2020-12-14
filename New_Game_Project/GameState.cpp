@@ -139,6 +139,12 @@ void GameState::initPauseMenu()
 	this->pmenu->addButton("QUIT", 600.f, "Quit");
 }
 
+void GameState::initkeyTime()
+{
+	this->keyTimeMax = 0.2f;
+	this->keyTimer.restart();
+}
+
 void GameState::initDebugText()
 {
 	this->debugText.setFont(this->font_number);
@@ -293,6 +299,7 @@ GameState::GameState(StateData* state_data)
 	this->initFonts();
 	this->initTextures();
 	this->initPauseMenu();
+	this->initkeyTime();
 	this->initDebugText();
 	this->initPlayers(); 
 	this->initDragon();
@@ -367,22 +374,25 @@ void GameState::itemsRandom2()
 	}
 }
 
+const bool GameState::getKeyTime()
+{
+		if (this->keyTimer.getElapsedTime().asSeconds() >= this->keyTimeMax)
+		{
+			this->keyTimer.restart();
+			return true;
+		}
+
+
+		return false;
+}
+
 void GameState::updateView(const float& dt)
 {
-	if (this->playerGui->getTabOpen())
-	{
 		this->view.setCenter(
 			std::floor(this->player->getPosition().x + (static_cast<float>(this->mousePosWindow.x) - static_cast<float>(this->stateData->gfxSettings->resolution.width / 2)) / 5.f),
 			std::floor(this->player->getPosition().y + (static_cast<float>(this->mousePosWindow.y) - static_cast<float>(this->stateData->gfxSettings->resolution.height / 2)) / 5.f)
 		);
-	}
-	else
-	{
-		this->view.setCenter(
-			std::floor(this->player->getPosition().x + (static_cast<float>(this->mousePosWindow.x) - static_cast<float>(this->stateData->gfxSettings->resolution.width / 2)) / 5.f),
-			std::floor(this->player->getPosition().y + (static_cast<float>(this->mousePosWindow.y) - static_cast<float>(this->stateData->gfxSettings->resolution.height / 2)) / 5.f)
-		);
-	}
+	
 }
 
 void GameState::updateInput(const float& dt)
@@ -406,43 +416,43 @@ void GameState::updateInput(const float& dt)
 void GameState::updatePlayerInput(const float& dt)
 {
 	//Update player Input
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
+	if (this->playerGui->getTabOpen() == false)
 	{
-		this->player->move(-1.f, 0.f, dt);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
+		{
+			this->player->move(-1.f, 0.f, dt);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
+		{
+			this->player->move(1.f, 0.f, dt);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
+		{
+			this->player->move(0.f, -1.f, dt);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
+		{
+			this->player->move(0.f, 1.f, dt);
+		}
 
-		
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
-	{
-		this->player->move(1.f, 0.f, dt);
-
-		
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
-	{
-		this->player->move(0.f, -1.f, dt);
-
-		
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
-	{
-		this->player->move(0.f, 1.f, dt);
-
-		
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Y))
-	{
-		this->player->getAttributeComponent()->damageMax = 4000.f;
-		this->player->getAttributeComponent()->hp_player = 2000;
-		this->player->getAttributeComponent()->hpMax_player = 2000;
-		this->player->setPosition(850.f, 1420.f);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Y))
+		{
+			this->player->getAttributeComponent()->damageMax = 4000.f;
+			this->player->getAttributeComponent()->hp_player = 2000;
+			this->player->getAttributeComponent()->hpMax_player = 2000;
+			this->player->setPosition(850.f, 1420.f);
+		}
 	}
 }
 
 void GameState::updatePlayerGui(const float& dt)
 {
 	this->playerGui->update(dt);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Tab) && this->getKeyTime())
+	{
+		this->playerGui->toggleCharacterTab();
+	}
 }
 
 void GameState::updatePauseMenuButtons()
@@ -472,8 +482,6 @@ void GameState::updateTileMap(const float& dt)
 void GameState::updatePlayer(const float& dt)
 {
 	this->player->update(dt, this->view);
-
-	this->playerGui->update(dt);
 }
 
 void GameState::updatePlayerIsDead(const float& dt)
@@ -915,11 +923,13 @@ void GameState::update(const float& dt)
 
 		this->updateView(dt);
 
-		this->updatePlayer(dt);
-
 		this->updatePlayerInput(dt);
 
 		this->updateTileMap(dt);
+
+		this->updatePlayer(dt);
+
+		this->updatePlayerGui(dt);
 
 		this->updateArrow(dt);
 

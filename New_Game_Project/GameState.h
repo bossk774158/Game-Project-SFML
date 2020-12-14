@@ -97,20 +97,22 @@ private:
     std::map<std::string, sf::Texture*> texture;
     std::vector<Arrow*> arrows;
 
+    //Clock
     sf::Clock shootTimer;
     sf::Clock punchTimer;
-
     sf::Clock spawnTimer;
+    sf::Clock keyTimer;
+    float keyTimeMax;
 
     //Functions
     void initVariables();
-    void initScoreboard();
     void initDeferredRender();
     void initView();
     void initKeybinds();
     void initFonts();
     void initTextures();
     void initPauseMenu();
+    void initkeyTime();
     void initDebugText();
     void initPlayers();
     void initDragon();
@@ -133,6 +135,9 @@ public:
 
     void random2();
     void itemsRandom2();
+
+    //Accessors
+    const bool getKeyTime();
 
     //Functions
     void updateView(const float& dt);
